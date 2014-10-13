@@ -3,12 +3,9 @@ import javax.swing.*;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
 import java.awt.GridLayout;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -16,6 +13,8 @@ import java.util.Random;
 public class VentanaPrincipal extends JFrame{
 
 
+	private static final long serialVersionUID = 1096374592905539346L;
+	
 	static JPanel arrayPaneles [][]= new JPanel [4][3];
 	static ArrayList <JLabel> arrayDeTopos = new ArrayList<>();
 	MiRunnable miHilo = null;  // Hilo principal del juego
