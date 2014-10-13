@@ -1,3 +1,4 @@
+package ventanas;
 import javax.swing.*;
 
 import java.awt.Color;
@@ -33,8 +34,8 @@ public class VentanaPrincipal extends JFrame{
 				arrayPaneles [i][j] = new JPanel();
 				arrayPaneles[i][j].setBorder(BorderFactory.createLineBorder(Color.BLACK));
 				add(arrayPaneles[i][j]);
-				int k = i;
-				int l = j;
+				final int k = i;
+				final int l = j;
 				arrayPaneles[i][j].addMouseListener(new MouseListener ()
 				{
 
