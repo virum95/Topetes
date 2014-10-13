@@ -1,28 +1,23 @@
 package animales.topos;
-import java.util.Random;
+
+import excepciones.FueraDeCuadricula;
+import animales.Animal;
 
 /** Clase para definir instancias lógicas de topos con posición y puntos.
  * @author Gaizka
  *
  */
-public class Topete {
+public class Topete extends Animal{
 	
-	protected double puntos;  	// Puntos que otorga matar al topo
-	protected int posX;			// Posicion en el eje de las X de la cuadricula 
-	protected int posY;			// Posicion en el eje de las Y de la cuadricula
-	protected final int ANCHO_CUADRICULA = 3;	// Ancho de la cuadricula
-	protected final int ALTO_CUADRICULA = 4;	// Alto de la cuadricula
-	
+	protected int puntos;  	// Puntos que otorga matar al topo	
 	
 	/** Constructor de la clase, crea un topo con 10 de puntuacion,
 	 *  la imagen caracteristica y una posicion aleatoria en la cuadricula
 	 * 
 	 */
 	public Topete() {
-		Random r = new Random();
+		super();
 		puntos = 10;
-		posX = r.nextInt(ANCHO_CUADRICULA);
-		posY = r.nextInt(ALTO_CUADRICULA);		
 	}
 
 	/** Metodo para obtener el numero de puntos que da matar al topo
@@ -35,48 +30,40 @@ public class Topete {
 	/** Metodo para cambiar el valor de un topo
 	 * @param puntos Nuevo valor para los puntos del topo
 	 */
-	public void setPuntos(double puntos) {
+	public void setPuntos(int puntos) {
 		this.puntos = puntos;
 	}
 
-	/** Metodo que devuelve la posicion del topo en el eje de las X
-	 * @return Posicion en el eje de las X
+	/** Metodo que permite matar al topo y sumar la puntuacion del topo a la puntuacion total
+	 * @param puntuacionActual Puntuacion actual de la partida
+	 * @return Puntuacion despues de matar al topo (Puntuacion anterior + valor del topo)
 	 */
-	public int getPosX() {
-		return posX;
-	}
-
-	/** Metodo para cambiar la posicion del topo en el eje de las X
-	 * @param posX Nueva posicion para el topo en el eje de las X
-	 */
-	public void setPosX(int posX) {
-		this.posX = posX;
-	}
-
-	/** Metodo que devuelve la posicion del topo en el eje de las Y
-	 * @return Posicion en el eje de las Y
-	 */
-	public int getPosY() {
-		return posY;
-	}
-
-	/** Metodo para cambiar la posicion del topo en el eje de las Y
-	 * @param posX Nueva posicion para el topo en el eje de las Y
-	 */
-	public void setPosY(int posY) {
-		this.posY = posY;
+	public int mataTopo( int puntuacionActual){
+		return puntos + puntuacionActual;
 	}
 	
 	@Override
 	public String toString() {
-		return "Posicion: ("+posX+","+posY+")";		
+		return "Topo: "+super.toString();
 	}
 	
 	public static void main(String[] args) {
-		for(int i = 0; i < 60; i++){
-			Topete t1 = new Topete();
-			System.out.println(t1);			
+		Topete t1 = new Topete();
+		System.out.println(t1);			
+		System.out.println("Posicion X del topete: "+t1.getPosX());
+		try {
+			t1.setPosX(9);
+		} catch (FueraDeCuadricula e) {
+			System.out.println("Fuera de la cuadricula");
+			e.printStackTrace();
 		}
+		try {
+			t1.setPosX(2);
+		} catch (FueraDeCuadricula e) {
+			System.out.println("Fuera de la cuadricula");
+			e.printStackTrace();
+		}
+		System.out.println(t1);
 	}
 
 }
