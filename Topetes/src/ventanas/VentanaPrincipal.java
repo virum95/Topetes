@@ -1,6 +1,8 @@
 package ventanas;
 import javax.swing.*;
 
+import animales.topos.Topete;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
@@ -16,7 +18,7 @@ public class VentanaPrincipal extends JFrame{
 	private static final long serialVersionUID = 1096374592905539346L;
 
 	static JPanel arrayPaneles [][]= new JPanel [4][3];
-	static ArrayList <JLabel> arrayDeTopos = new ArrayList<>();
+	static ArrayList <Topete> arrayDeTopos = new ArrayList<>();
 	MiRunnable miHilo = null;  // Hilo principal del juego
 
 	public VentanaPrincipal() {

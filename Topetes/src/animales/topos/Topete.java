@@ -10,7 +10,7 @@ import animales.Animal;
 public class Topete extends Animal{
 	
 	protected int puntos;  	// Puntos que otorga matar al topo	
-	
+	long fechaCreacion;
 	
 	/** Constructor de la clase, crea un topo con 10 de puntuacion,
 	 *  la imagen caracteristica y una posicion aleatoria en la cuadricula
@@ -19,6 +19,7 @@ public class Topete extends Animal{
 	public Topete() {
 		super();
 		puntos = 10;
+		fechaCreacion = System.currentTimeMillis();
 	}
 
 	/** Metodo para obtener el numero de puntos que da matar al topo
