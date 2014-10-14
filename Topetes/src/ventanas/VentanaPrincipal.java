@@ -86,19 +86,21 @@ public class VentanaPrincipal extends JFrame{
 
 	public static void creaTopo ()
 	{
-//		JLabel labelTopo = new JLabel("TOPO");
+		//		JLabel labelTopo = new JLabel("TOPO");
 		JLabelTopete labelTopo = new JLabelTopete();
 		arrayDeTopos.add(new JLabelTopete());
 		Random r = new Random();
-		int x = r.nextInt(4);
-		int y = r.nextInt(3);
-		ImageIcon icon = createImage("img/topete1.png", "my logo");
-		JLabel top = new JLabel(icon);
+		int x;
+		int y;
+		do{
+			x = r.nextInt(4);
+			y = r.nextInt(3);
+		}while(arrayPaneles[x][y].getComponents().length==1); //Evita que si ya hay un topo en el espacio seleccionado, se cree otro
 		arrayPaneles[x][y].add(labelTopo);
 		arrayPaneles[x][y].validate();
-		System.out.println("-->" + x +" "+ y + "<--" );
 		arrayPaneles[x][y].repaint();	//Repaint a los paneles para que añada otro topo
-		System.out.println("asdf");
+		System.out.println(arrayDeTopos.size());
+		
 
 
 	}
@@ -126,7 +128,7 @@ class MiRunnable implements Runnable {
 			VentanaPrincipal.creaTopo();
 
 			try {
-				Thread.sleep( 2000 );
+				Thread.sleep( 1000 );
 			} catch (Exception e) {
 			}
 		}
