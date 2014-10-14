@@ -14,14 +14,14 @@ public class VentanaPrincipal extends JFrame{
 
 
 	private static final long serialVersionUID = 1096374592905539346L;
-	
+
 	static JPanel arrayPaneles [][]= new JPanel [4][3];
 	static ArrayList <JLabel> arrayDeTopos = new ArrayList<>();
 	MiRunnable miHilo = null;  // Hilo principal del juego
 
 	public VentanaPrincipal() {
 
-		
+
 		arrayDeTopos = new ArrayList<>();
 		GridLayout gridLayout = new GridLayout();
 		gridLayout.setColumns(3);
@@ -79,55 +79,57 @@ public class VentanaPrincipal extends JFrame{
 			}
 		}
 	}
-	
+
 
 	public static void creaTopo ()
 	{
 		JLabel labelTopo = new JLabel("TOPO");
 		arrayDeTopos.add(labelTopo);
 		Random r = new Random();
-		arrayPaneles[r.nextInt(4)][r.nextInt(3)].add(labelTopo);
-		System.out.println("-->" + r.nextInt(4) +" "+ r.nextInt(3) + "<--" );
-		for (int i = 0; i < 4; i++) { 
-			for (int j = 0; j < 3; j++) {
-				
-				arrayPaneles[i][j].repaint();	//Repaint a los paneles para que añada otro topo
-				System.out.println("asdf");
-			}
-		}
-		
+		int x = r.nextInt(4);
+		int y = r.nextInt(3);
+		arrayPaneles[x][y].add(labelTopo);
+		arrayPaneles[x][y].validate();
+		System.out.println("-->" + x +" "+ y + "<--" );
+		arrayPaneles[x][y].repaint();	//Repaint a los paneles para que añada otro topo
+		System.out.println("asdf");
+
+
 	}
 	public static void main(String[] args) {
 		VentanaPrincipal ventana = new VentanaPrincipal();
 		ventana.miHilo = new MiRunnable();  // Sintaxis de new para clase interna
 		Thread nuevoHilo = new Thread( ventana.miHilo );
 		nuevoHilo.start();
+
 	}
 }
 
-	
-	/**
-	 * @author rubensancor
-	 * Clase robada a anoni para el hilo :D
-	 */
-	class MiRunnable implements Runnable {
-		boolean sigo = true;
 
-		@Override
-		public void run() {
-			while (sigo) {
+/**
+ * @author rubensancor
+ * Clase robada a anoni para el hilo :D
+ */
+class MiRunnable implements Runnable {
+	boolean sigo = true;
+
+	@Override
+	public void run() {
+
+		while (sigo) {
 			VentanaPrincipal.creaTopo();
-			
+
 			try {
-				Thread.sleep( 5200 );
+				Thread.sleep( 1200 );
 			} catch (Exception e) {
 			}
-			}
 		}
-		/** Ordena al hilo detenerse en cuanto sea posible
-		 */
-		public void acaba() {
-			sigo = false;
-		}
+	}
+	/** Ordena al hilo detenerse en cuanto sea posible
+	 */
+	public void acaba() {
+		sigo = false;
 
 	}
+
+}

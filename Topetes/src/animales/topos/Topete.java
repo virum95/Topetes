@@ -11,6 +11,7 @@ public class Topete extends Animal{
 	
 	protected int puntos;  	// Puntos que otorga matar al topo	
 	
+	
 	/** Constructor de la clase, crea un topo con 10 de puntuacion,
 	 *  la imagen caracteristica y una posicion aleatoria en la cuadricula
 	 * 
