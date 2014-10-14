@@ -2,6 +2,7 @@ package ventanas;
 import javax.swing.*;
 
 import animales.topos.Topete;
+import animales.topos.jlabels.JLabelTopete;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -18,7 +19,7 @@ public class VentanaPrincipal extends JFrame{
 	private static final long serialVersionUID = 1096374592905539346L;
 
 	static JPanel arrayPaneles [][]= new JPanel [4][3];
-	static ArrayList <Topete> arrayDeTopos = new ArrayList<>();
+	static ArrayList <JLabelTopete> arrayDeTopos = new ArrayList<>();
 	MiRunnable miHilo = null;  // Hilo principal del juego
 
 	public VentanaPrincipal() {
@@ -85,11 +86,14 @@ public class VentanaPrincipal extends JFrame{
 
 	public static void creaTopo ()
 	{
-		JLabel labelTopo = new JLabel("TOPO");
-		arrayDeTopos.add(labelTopo);
+//		JLabel labelTopo = new JLabel("TOPO");
+		JLabelTopete labelTopo = new JLabelTopete();
+		arrayDeTopos.add(new JLabelTopete());
 		Random r = new Random();
 		int x = r.nextInt(4);
 		int y = r.nextInt(3);
+		ImageIcon icon = createImage("img/topete1.png", "my logo");
+		JLabel top = new JLabel(icon);
 		arrayPaneles[x][y].add(labelTopo);
 		arrayPaneles[x][y].validate();
 		System.out.println("-->" + x +" "+ y + "<--" );
@@ -122,7 +126,7 @@ class MiRunnable implements Runnable {
 			VentanaPrincipal.creaTopo();
 
 			try {
-				Thread.sleep( 1200 );
+				Thread.sleep( 2000 );
 			} catch (Exception e) {
 			}
 		}
