@@ -2,6 +2,7 @@ package animales.topos;
 
 import java.io.ObjectInputStream.GetField;
 
+import ventanas.VentanaPrincipal;
 import excepciones.FueraDeCuadricula;
 import animales.Animal;
 import animales.topos.jlabels.JLabelTopete;
@@ -14,8 +15,9 @@ public class Topete extends Animal{
 	
 	protected int puntos;  	// Puntos que otorga matar al topo	
 	long fechaCreacion;
-	int vidas; // Numero de vidas que tiene el topo
-	JLabelTopete img; // TODO: Imagen para cada topo
+	protected int vidas; // Numero de vidas que tiene el topo
+	protected JLabelTopete img; // TODO: Imagen para cada topo
+	protected TipoTopo tipo;
 	
 	
 	/** Constructor de la clase, crea un topo con 10 de puntuacion,
@@ -27,6 +29,7 @@ public class Topete extends Animal{
 		img = new JLabelTopete();
 		puntos = 10;
 		fechaCreacion = System.currentTimeMillis();
+		tipo = t;
 		switch (t) {
 		case NORMAL:
 			vidas = 1;
@@ -79,18 +82,38 @@ public class Topete extends Animal{
 	/** Metodo que resta una vida al topo
 	 * 
 	 */
-	public void pegaTopo() {
+	public boolean pegaTopo() {
 		vidas--;
-//		if(vidas == 0) mataTopo(puntuacionActual);
+		if(vidas == 0) return mataTopo();
+		else return false;
 
 	}
 	
-	/** Metodo que permite matar al topo y sumar la puntuacion del topo a la puntuacion total
+	/** Metodo que permite matar al topo y devolver un
 	 * @param puntuacionActual Puntuacion actual de la partida
 	 * @return Puntuacion despues de matar al topo (Puntuacion anterior + valor del topo)
 	 */
-	public int mataTopo( int puntuacionActual){
-		return puntos + puntuacionActual;
+	public boolean mataTopo(){
+		switch (tipo) {
+		case NORMAL:
+			VentanaPrincipal.puntuacion+=5;
+			break;
+		case MASAO:
+			VentanaPrincipal.puntuacion+=15;
+			break;
+		case CASCO:
+			VentanaPrincipal.puntuacion+=25;
+			break;
+		case JUGGERNAUT:
+			VentanaPrincipal.puntuacion+=50;
+			break;
+		case BOSS:
+			VentanaPrincipal.puntuacion+=500;
+			break;
+		default:
+			break;
+		}
+		return true;
 	}
 	
 	@Override

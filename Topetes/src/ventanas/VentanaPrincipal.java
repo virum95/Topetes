@@ -122,7 +122,7 @@ public class VentanaPrincipal extends JFrame{
 	public static boolean estamosLLenos(){
 		for (int i = 0; i < arrayTopos.length; i++) {
 			for (int j = 0; j < arrayTopos[i].length; j++) {
-				if(ar[i][j])
+				if(arrayTopos[i][j]==null)
 			}
 		}
 	}

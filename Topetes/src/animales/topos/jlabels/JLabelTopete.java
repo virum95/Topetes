@@ -6,6 +6,7 @@ import javax.swing.JLabel;
 public class JLabelTopete extends JLabel {
 
 	private static final long serialVersionUID = 741001305416508022L;
+	int id;
 	
 	public JLabelTopete() { 
 		try {
@@ -16,5 +17,7 @@ public class JLabelTopete extends JLabel {
 		}
 		setVisible(true);
 	}
+	
+	// TODO: movimiento de salir
 
 }
