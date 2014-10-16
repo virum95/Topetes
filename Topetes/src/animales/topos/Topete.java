@@ -1,7 +1,10 @@
 package animales.topos;
 
+import java.io.ObjectInputStream.GetField;
+
 import excepciones.FueraDeCuadricula;
 import animales.Animal;
+import animales.topos.jlabels.JLabelTopete;
 
 /** Clase para definir instancias lógicas de topos con posición y puntos.
  * @author Gaizka
@@ -11,15 +14,38 @@ public class Topete extends Animal{
 	
 	protected int puntos;  	// Puntos que otorga matar al topo	
 	long fechaCreacion;
+	int vidas; // Numero de vidas que tiene el topo
+	JLabelTopete img; // TODO: Imagen para cada topo
+	
 	
 	/** Constructor de la clase, crea un topo con 10 de puntuacion,
 	 *  la imagen caracteristica y una posicion aleatoria en la cuadricula
 	 * 
 	 */
-	public Topete() {
+	public Topete( TipoTopo t) {
 		super();
+		img = new JLabelTopete();
 		puntos = 10;
 		fechaCreacion = System.currentTimeMillis();
+		switch (t) {
+		case NORMAL:
+			vidas = 1;
+			break;
+		case MASAO:
+			vidas = 2;			
+			break;
+		case CASCO:
+			vidas = 3;
+			break;
+		case JUGGERNAUT:
+			vidas = 5;			
+			break;
+		case BOSS:
+			vidas = 10;			
+			break;
+		default:
+			break;
+		}
 	}
 
 	/** Metodo para obtener el numero de puntos que da matar al topo
@@ -36,6 +62,29 @@ public class Topete extends Animal{
 		this.puntos = puntos;
 	}
 
+	/** Metodo para devolver la imagen del topo
+	 * @return
+	 */
+	public JLabelTopete getImg() {
+		return img;
+	}
+	
+	/** Metodo para devolver las vidas del topo
+	 * @return
+	 */
+	public int getVidas() {
+		return vidas;
+	}
+	
+	/** Metodo que resta una vida al topo
+	 * 
+	 */
+	public void pegaTopo() {
+		vidas--;
+//		if(vidas == 0) mataTopo(puntuacionActual);
+
+	}
+	
 	/** Metodo que permite matar al topo y sumar la puntuacion del topo a la puntuacion total
 	 * @param puntuacionActual Puntuacion actual de la partida
 	 * @return Puntuacion despues de matar al topo (Puntuacion anterior + valor del topo)
@@ -50,8 +99,7 @@ public class Topete extends Animal{
 	}
 	
 	public static void main(String[] args) {
-		Topete t1 = new Topete();
-		System.out.println(t1);			
+		Topete t1 = new Topete(TipoTopo.NORMAL);			
 		System.out.println("Posicion X del topete: "+t1.getPosX());
 		try {
 			t1.setPosX(9);

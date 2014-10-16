@@ -1,16 +1,18 @@
 package ventanas;
 import javax.swing.*;
 
+import animales.topos.TipoTopo;
 import animales.topos.Topete;
 import animales.topos.jlabels.JLabelTopete;
 
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.Panel;
+import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
-import java.util.Random;
 
 
 public class VentanaPrincipal extends JFrame{
@@ -20,10 +22,11 @@ public class VentanaPrincipal extends JFrame{
 
 	static JPanel arrayPaneles [][] = new JPanel [4][3];
 	static int arrayAlternativo [][] = new int [4][3];	//Array alternativo con el numero de veces clicadas en ese panel
-	static ArrayList <JLabelTopete> arrayDeTopos = new ArrayList<>();
+	static ArrayList <Topete> arrayDeTopos = new ArrayList<>();
 	MiRunnable miHilo = null;  // Hilo principal del juego
 
 	public VentanaPrincipal() {
+		setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
 		// Inicialización del panel
 		for (int i2 = 0; i2 < arrayAlternativo.length; i2++) {
 			for (int j2 = 0; j2 < arrayAlternativo[i2].length; j2++) {
@@ -46,8 +49,6 @@ public class VentanaPrincipal extends JFrame{
 				arrayPaneles [i][j] = new JPanel();
 				arrayPaneles[i][j].setBorder(BorderFactory.createLineBorder(Color.BLACK));
 				add(arrayPaneles[i][j]);
-				final int k = i;
-				final int l = j;
 				arrayPaneles[i][j].addMouseListener(new MouseListener ()
 				{
 
@@ -68,17 +69,18 @@ public class VentanaPrincipal extends JFrame{
 					}
 
 					@Override
-					public void mouseReleased(MouseEvent e) {
+					public void mouseReleased(MouseEvent e) {	// TODO Hay que saber a que topo golpea para saber cuantas vidas tiene y matarlo
 						try{
-							System.out.println("ENTRA EN EL PANEL"+k+l);
-							arrayAlternativo[k][l]++;
-							if(arrayAlternativo[k][l]==2){
-								arrayPaneles[k][l].remove(arrayPaneles[k][l].getComponent(0));
-								arrayDeTopos.remove(0);
-								arrayPaneles[k][l].repaint();
-								arrayAlternativo[k][l] = 0;
+							if(e.getComponent() instanceof JLabelTopete){
+								Topete temp = arrayPaneles[k][l].getComponent(0);							
+								temp.pegaTopo();
+								if(temp.getVidas()<=0){
+									arrayPaneles[k][l].remove(arrayPaneles[k][l].getComponent(0));
+									arrayDeTopos.remove(0);
+									arrayPaneles[k][l].repaint();
+									arrayAlternativo[k][l] = 0;
+								}
 							}
-
 						}catch(ArrayIndexOutOfBoundsException a)
 						{
 							System.out.println("NO HAY JLABEL");
@@ -97,20 +99,18 @@ public class VentanaPrincipal extends JFrame{
 
 	public static void creaTopo ()
 	{
-		JLabelTopete labelTopo = new JLabelTopete();
-		arrayDeTopos.add(new JLabelTopete());
-		Random r = new Random();
-		int x;
-		int y;
+		Topete topo;
 		do{
-			x = r.nextInt(4);
-			y = r.nextInt(3);
-		}while(arrayPaneles[x][y].getComponents().length==1); //Evita que si ya hay un topo en el espacio seleccionado, se cree otro
-		arrayPaneles[x][y].add(labelTopo);
-		arrayPaneles[x][y].validate();
-		arrayPaneles[x][y].repaint();	//Repaint a los paneles para que añada otro topo
+					
+			topo = new Topete(TipoTopo.NORMAL);
+			
+		}while(arrayPaneles[topo.getPosX()][topo.getPosY()].getComponents().length==1);  //Evita que si ya hay un topo en el espacio seleccionado, se cree otro 
+		arrayDeTopos.add(topo);
+		arrayPaneles[topo.getPosX()][topo.getPosY()].add(topo.getImg());
+		arrayPaneles[topo.getPosX()][topo.getPosY()].validate();
+		arrayPaneles[topo.getPosX()][topo.getPosY()].repaint();	//Repaint a los paneles para que añada otro topo
 		System.out.println(arrayDeTopos.size());
-
+		
 
 
 	}
@@ -135,7 +135,9 @@ class MiRunnable implements Runnable {
 	public void run() {
 
 		while (sigo) {
-			VentanaPrincipal.creaTopo();
+			
+			if(VentanaPrincipal.arrayDeTopos.size()<12)
+//			VentanaPrincipal.creaTopo();
 
 			try {
 				Thread.sleep( 1000 );

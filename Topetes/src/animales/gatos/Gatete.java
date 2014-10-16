@@ -1,6 +1,8 @@
 package animales.gatos;
 
-public class Gatete {
+import animales.Animal;
+
+public class Gatete extends Animal{
 
 	protected int posX;			// Posicion en el eje de las X de la cuadricula 
 	protected int posY;			// Posicion en el eje de las Y de la cuadricula
@@ -25,5 +27,12 @@ public class Gatete {
 	@Override
 	public String toString() {
 		return "Gato: "+super.toString();
+	}
+	
+	public static void main(String[] args) {
+		for (int i = 0; i < 60; i++) {
+			Gatete g = new Gatete();
+			System.out.println(g);
+		}
 	}
 }

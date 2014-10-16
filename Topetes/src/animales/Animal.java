@@ -14,8 +14,8 @@ public abstract class Animal {
 
 	protected int posX;			// Posicion en el eje de las X de la cuadricula 
 	protected int posY;			// Posicion en el eje de las Y de la cuadricula
-	protected final int ANCHO_CUADRICULA = 3;	// Ancho de la cuadricula
-	protected final int ALTO_CUADRICULA = 4;	// Alto de la cuadricula
+	protected final int ALTO_CUADRICULA = 3;	// Ancho de la cuadricula
+	protected final int ANCHO_CUADRICULA = 4;	// Alto de la cuadricula
 
 	/** Constructor de la clase, crea un animal con 
 	 *  una posicion aleatoria en la cuadricula
@@ -63,5 +63,6 @@ public abstract class Animal {
 	public String toString() {
 		return "Posicion: ("+posX+","+posY+")";		
 	}
+	
 	
 }
