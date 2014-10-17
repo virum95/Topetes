@@ -104,14 +104,14 @@ public class VentanaPrincipal extends JFrame{
 		do{
 			Random r = new Random();
 			int i = r.nextInt(100);
-			if(i<36)
-			topo = new Topete(TipoTopo.NORMAL); //35
-			else if (i>35 && i<76) {
+			if(i<41)
+			topo = new Topete(TipoTopo.NORMAL); //40
+			else if (i>40 && i<71) {
 				topo = new Topete(TipoTopo.MASAO);//30
-			}else if (i>75 && i <91) {
+			}else if (i>70 && i <91) {
 				topo = new Topete(TipoTopo.CASCO);//15
 			}else if (i>90) {
-				topo = new Topete(TipoTopo.JUGGERNAUT);
+				topo = new Topete(TipoTopo.JUGGERNAUT);//15
 			}
 		}while(arrayPaneles[topo.getPosX()][topo.getPosY()].getComponents().length==1);  //Evita que si ya hay un topo en el espacio seleccionado, se cree otro 
 		arrayTopos[topo.getPosX()][topo.getPosY()]=topo;
