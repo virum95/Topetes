@@ -3,17 +3,11 @@ import javax.swing.*;
 
 import animales.topos.TipoTopo;
 import animales.topos.Topete;
-import animales.topos.jlabels.JLabelTopete;
-
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
-import java.awt.Panel;
-import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.util.ArrayDeque;
-import java.util.ArrayList;
 import java.util.Random;
 
 
@@ -42,13 +36,14 @@ public class VentanaPrincipal extends JFrame{
 		setLayout(gridLayout);
 		setVisible(true);
 		setSize(new Dimension(400,600));
-
+		
 		for(int i=0; i<gridLayout.getRows(); i++)
 		{
 			for(int j=0 ; j<gridLayout.getColumns(); j++)
 			{
 				arrayPaneles [i][j] = new JPanel();
 				arrayPaneles[i][j].setBorder(BorderFactory.createLineBorder(Color.BLACK));
+				
 				add(arrayPaneles[i][j]);
 				final int k = i;
 				final int l = j;

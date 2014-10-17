@@ -1,6 +1,5 @@
 package animales.topos;
 
-import java.io.ObjectInputStream.GetField;
 
 import ventanas.VentanaPrincipal;
 import excepciones.FueraDeCuadricula;
@@ -26,7 +25,7 @@ public class Topete extends Animal{
 	 */
 	public Topete( TipoTopo t) {
 		super();
-		img = new JLabelTopete();
+		img = new JLabelTopete(t);
 		puntos = 10;
 		fechaCreacion = System.currentTimeMillis();
 		tipo = t;
