@@ -14,6 +14,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Random;
 
 
 public class VentanaPrincipal extends JFrame{
@@ -21,8 +22,7 @@ public class VentanaPrincipal extends JFrame{
 
 	private static final long serialVersionUID = 1096374592905539346L;
 
-	static JPanel arrayPaneles [][] = new JPanel [4][3]; // Array de paneles que contienen los jlabel de los topos
-	static int arrayAlternativo [][] = new int [4][3];	//Array alternativo con el numero de veces clicadas en ese panel
+	public static JPanel arrayPaneles [][] = new JPanel [4][3]; // Array de paneles que contienen los jlabel de los topos
 	static Topete arrayTopos[][] = new Topete[4][3]; //Array que va a contener los topos
 	MiRunnable miHilo = null;  // Hilo principal del juego
 	public static int puntuacion;
@@ -30,9 +30,9 @@ public class VentanaPrincipal extends JFrame{
 	public VentanaPrincipal() {
 		setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
 		// Inicialización del panel
-		for (int i2 = 0; i2 < arrayAlternativo.length; i2++) {
-			for (int j2 = 0; j2 < arrayAlternativo[i2].length; j2++) {
-				arrayAlternativo[i2][j2] = 0;
+		for (int i2 = 0; i2 < arrayTopos.length; i2++) {
+			for (int j2 = 0; j2 < arrayTopos[i2].length; j2++) {
+				arrayTopos[i2][j2] = null;
 			}
 
 		}
@@ -50,6 +50,8 @@ public class VentanaPrincipal extends JFrame{
 				arrayPaneles [i][j] = new JPanel();
 				arrayPaneles[i][j].setBorder(BorderFactory.createLineBorder(Color.BLACK));
 				add(arrayPaneles[i][j]);
+				final int k = i;
+				final int l = j;
 				arrayPaneles[i][j].addMouseListener(new MouseListener ()
 				{
 
@@ -70,30 +72,22 @@ public class VentanaPrincipal extends JFrame{
 					}
 
 					@Override
-					public void mouseReleased(MouseEvent e) {
+					public void mouseReleased(MouseEvent e) { // Metodo que golpea al topo y le resta vidas, si las vidas estan a 0 lo mata
 						try{
-							//							if(e.getComponent() instanceof JLabelTopete){
-							JLabel temp = (JLabel) e.getComponent();
-							for (int i = 0; i<arrayPaneles.length; i++) {
-								for (int j= 0; j<arrayPaneles[i].length; j++) {
-									if(arrayPaneles[i][j].equals(temp))
-										arrayTopos[i][j].pegaTopo();
+							if(arrayTopos[k][l].pegaTopo()){
+								arrayPaneles[k][l].remove(arrayPaneles[k][l].getComponent(0));
+								arrayTopos[k][l] = null;
+								arrayPaneles[k][l].repaint();
+							}		
 
-									System.out.println(arrayTopos[i][j].getVidas());
-									//									if(topete.getVidas()<=0){
-									//										arrayPaneles[k][l].remove(arrayPaneles[k][l].getComponent(0));
-									//										arrayDeTopos.remove(0);
-									//										arrayPaneles[k][l].repaint();
-									//										arrayAlternativo[k][l] = 0;
-									//									}
-								}
-
-							}
 						}catch(ArrayIndexOutOfBoundsException a)
 						{
 							System.out.println("NO HAY JLABEL");
 						} catch(IndexOutOfBoundsException e12){
 
+						}catch (NullPointerException e2) {
+							System.out.println("No hay topo aqui");
+							//TODO resta uno o algo parecido a un contador de golpes fallados
 						}
 					}
 
@@ -109,7 +103,23 @@ public class VentanaPrincipal extends JFrame{
 	{
 		Topete topo;
 		do{
-
+			Random r = new Random();
+			int i = r.nextInt(100);
+			switch (i) {
+			case 1:
+					topo = new Topete(TipoTopo.NORMAL);
+				break;
+			case 2:
+				if(puntuacion>=150)
+				break;
+			case 3:
+				break;
+			case 4:
+				break;
+			case 5:
+				break;
+				
+			}
 			topo = new Topete(TipoTopo.NORMAL);
 
 		}while(arrayPaneles[topo.getPosX()][topo.getPosY()].getComponents().length==1);  //Evita que si ya hay un topo en el espacio seleccionado, se cree otro 
@@ -123,8 +133,10 @@ public class VentanaPrincipal extends JFrame{
 		for (int i = 0; i < arrayTopos.length; i++) {
 			for (int j = 0; j < arrayTopos[i].length; j++) {
 				if(arrayTopos[i][j]==null)
+					return false;
 			}
 		}
+		return true;
 	}
 
 	public static void main(String[] args) {
@@ -149,7 +161,7 @@ class MiRunnable implements Runnable {
 
 		while (sigo) {
 
-			if(VentanaPrincipal.arrayTopos.size()<12)
+			if(!VentanaPrincipal.estamosLLenos())
 				VentanaPrincipal.creaTopo();
 
 			try {
