@@ -156,7 +156,7 @@ class MiRunnable implements Runnable {
 				VentanaPrincipal.creaTopo();
 
 			try {
-				Thread.sleep( 1000 );
+				Thread.sleep( 1 );
 			} catch (Exception e) {
 			}
 		}
