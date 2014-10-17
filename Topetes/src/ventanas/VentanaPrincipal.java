@@ -94,29 +94,25 @@ public class VentanaPrincipal extends JFrame{
 	}
 
 
-	public static void creaTopo ()
+	/**
+	 * Crea un topo, cada tipo tiene una probabilidad de salir
+	 * TODO a medida que el juego avanza tienen que cambiar las probabilidades
+	 */
+	public static void creaTopo () 
 	{
-		Topete topo;
+		Topete topo = null;
 		do{
 			Random r = new Random();
 			int i = r.nextInt(100);
-			switch (i) {
-			case 1:
-					topo = new Topete(TipoTopo.NORMAL);
-				break;
-			case 2:
-				if(puntuacion>=150)
-				break;
-			case 3:
-				break;
-			case 4:
-				break;
-			case 5:
-				break;
-				
+			if(i<36)
+			topo = new Topete(TipoTopo.NORMAL); //35
+			else if (i>35 && i<76) {
+				topo = new Topete(TipoTopo.MASAO);//30
+			}else if (i>75 && i <91) {
+				topo = new Topete(TipoTopo.CASCO);//15
+			}else if (i>90) {
+				topo = new Topete(TipoTopo.JUGGERNAUT);
 			}
-			topo = new Topete(TipoTopo.NORMAL);
-
 		}while(arrayPaneles[topo.getPosX()][topo.getPosY()].getComponents().length==1);  //Evita que si ya hay un topo en el espacio seleccionado, se cree otro 
 		arrayTopos[topo.getPosX()][topo.getPosY()]=topo;
 		arrayPaneles[topo.getPosX()][topo.getPosY()].add(topo.getImg());
