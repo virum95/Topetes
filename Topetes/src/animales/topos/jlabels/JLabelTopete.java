@@ -1,14 +1,8 @@
 package animales.topos.jlabels;
 
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Image;
-import java.awt.RenderingHints;
-
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
-import ventanas.VentanaPrincipal;
 import animales.topos.TipoTopo;
 
 public class JLabelTopete extends JLabel {
@@ -28,11 +22,10 @@ public class JLabelTopete extends JLabel {
 				this.setIcon(new ImageIcon("src/img/topeteMasaoR.png"));
 				break;			
 			case CASCO:
-				this.setText("Casco");
 				this.setIcon(new ImageIcon("src/img/topeteCascoR.png"));
 				break;
 			case JUGGERNAUT:
-				this.setText("Juggernaut");
+				this.setIcon(new ImageIcon("src/img/topeteJuggernautR.png"));
 				break;
 			case BOSS:
 				this.setText("Boss");
