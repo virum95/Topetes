@@ -28,9 +28,14 @@ public class JLabelTopete extends JLabel {
 				this.setIcon(new ImageIcon("src/img/topeteMasaoR.png"));
 				break;			
 			case CASCO:
+				this.setText("Casco");
 				this.setIcon(new ImageIcon("src/img/topeteCascoR.png"));
 				break;
-			default:
+			case JUGGERNAUT:
+				this.setText("Juggernaut");
+				break;
+			case BOSS:
+				this.setText("Boss");
 				break;
 			}
 		} catch (Exception e) {

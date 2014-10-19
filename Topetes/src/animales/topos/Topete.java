@@ -78,6 +78,12 @@ public class Topete extends Animal{
 		return vidas;
 	}
 	
+	/** Metodo para devolver el momento exacto en el que se creo el topo
+	 * @return
+	 */
+	public long getFechaCreacion() {
+		return fechaCreacion;
+	}
 	/** Metodo que resta una vida al topo
 	 * 
 	 */

@@ -20,6 +20,7 @@ public class VentanaPrincipal extends JFrame{
 	static Topete arrayTopos[][] = new Topete[4][3]; //Array que va a contener los topos
 	MiRunnable miHilo = null;  // Hilo principal del juego
 	public static int puntuacion;
+	public static int eliminados;
 
 	public VentanaPrincipal() {
 		setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
@@ -30,20 +31,29 @@ public class VentanaPrincipal extends JFrame{
 			}
 
 		}
+		eliminados = 0;
 		GridLayout gridLayout = new GridLayout();
 		gridLayout.setColumns(3);
 		gridLayout.setRows(4);
 		setLayout(gridLayout);
+//		JPanel puntuacion = new JPanel();
+//		JLabel jlPutn = new JLabel("Puntuacion: ");
+//		
+//		puntuacion.add(jlPutn);
+//		add(puntuacion);
+//		puntuacion.setSize(400, 50);
+//		puntuacion.setLocation(0, 600);
 		setVisible(true);
-		setSize(new Dimension(400,600));
+		setSize(new Dimension(400,650));
 		
+
 		for(int i=0; i<gridLayout.getRows(); i++)
 		{
 			for(int j=0 ; j<gridLayout.getColumns(); j++)
 			{
 				arrayPaneles [i][j] = new JPanel();
 				arrayPaneles[i][j].setBorder(BorderFactory.createLineBorder(Color.BLACK));
-				
+
 				add(arrayPaneles[i][j]);
 				final int k = i;
 				final int l = j;
@@ -105,7 +115,7 @@ public class VentanaPrincipal extends JFrame{
 			Random r = new Random();
 			int i = r.nextInt(100);
 			if(i<41)
-			topo = new Topete(TipoTopo.NORMAL); //40
+				topo = new Topete(TipoTopo.NORMAL); //40
 			else if (i>40 && i<71) {
 				topo = new Topete(TipoTopo.MASAO);//30
 			}else if (i>70 && i <91) {
@@ -130,6 +140,27 @@ public class VentanaPrincipal extends JFrame{
 		return true;
 	}
 
+	/** Metodo que mira que topo lleva demasiado tiempo y lo elimina si se pasa
+	 * @param maxTiempo Maximo del tiempo que puede estar el topo en la pantalla
+	 * @return
+	 */
+	public static int quitaTopo(long maxTiempo){
+		for (int i = 0; i < arrayTopos.length; i++) {
+			for (int j = 0; j < arrayTopos[i].length; j++) {
+				if(arrayTopos[i][j]!=null){
+					if(System.currentTimeMillis()- arrayTopos[i][j].getFechaCreacion()>=maxTiempo){
+						arrayPaneles[i][j].remove(arrayPaneles[i][j].getComponent(0));
+						arrayTopos[i][j] = null;
+						arrayPaneles[i][j].repaint();
+						eliminados++;
+						return 1;
+					}
+				}
+			}
+		}
+		return 0;
+	}
+
 	public static void main(String[] args) {
 		VentanaPrincipal ventana = new VentanaPrincipal();
 		ventana.miHilo = new MiRunnable();  // Sintaxis de new para clase interna
@@ -149,14 +180,19 @@ class MiRunnable implements Runnable {
 
 	@Override
 	public void run() {
-
 		while (sigo) {
-
-			if(!VentanaPrincipal.estamosLLenos())
-				VentanaPrincipal.creaTopo();
+			
+			if(!VentanaPrincipal.estamosLLenos()){
+				VentanaPrincipal.creaTopo();}
+			
+			System.out.println(VentanaPrincipal.eliminados);
+			VentanaPrincipal.quitaTopo(6000);
+			if (VentanaPrincipal.eliminados>2) {
+				acaba();	
+			}
 
 			try {
-				Thread.sleep( 1 );
+				Thread.sleep( 1200 );
 			} catch (Exception e) {
 			}
 		}
