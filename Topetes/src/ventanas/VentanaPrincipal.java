@@ -66,7 +66,9 @@ public class VentanaPrincipal extends JFrame{
 			{
 				arrayPaneles [i][j] = new JPanel();
 				arrayPaneles[i][j].setBorder(BorderFactory.createLineBorder(Color.BLACK));
+				// 2
 				panelDePaneles.add(arrayPaneles[i][j], BorderLayout.CENTER);
+				// 2
 				panelMain.repaint();
 				final int k = i;
 				final int l = j;
