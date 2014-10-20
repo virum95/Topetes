@@ -66,7 +66,6 @@ public class VentanaPrincipal extends JFrame{
 			{
 				arrayPaneles [i][j] = new JPanel();
 				arrayPaneles[i][j].setBorder(BorderFactory.createLineBorder(Color.BLACK));
-				
 				panelDePaneles.add(arrayPaneles[i][j], BorderLayout.CENTER);
 				panelMain.repaint();
 				final int k = i;
@@ -100,8 +99,8 @@ public class VentanaPrincipal extends JFrame{
 								arrayPaneles[k][l].remove(arrayPaneles[k][l].getComponent(0));
 								arrayTopos[k][l] = null;
 								arrayPaneles[k][l].repaint();
-								puntuacion+= arrayTopos[k][l].pegaTopo();
-								System.out.println(arrayTopos[k][l].pegaTopo());
+								puntuacion+= arrayTopos[k][l].getPuntos();
+								System.out.println(puntuacion);
 								jlPutn.setText("Puntuacion: "+ puntuacion); 
 								panelMain.repaint();
 							}		
@@ -139,8 +138,9 @@ public class VentanaPrincipal extends JFrame{
 		do{
 			Random r = new Random();
 			int i = r.nextInt(100);
-			if(i<41)
+			if(i<41){
 				topo = new Topete(TipoTopo.NORMAL); //40
+				System.out.println(topo.getPuntos());}
 			else if (i>40 && i<71) {
 				topo = new Topete(TipoTopo.MASAO);//30
 			}else if (i>70 && i <91) {
