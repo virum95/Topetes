@@ -46,7 +46,7 @@ public class VentanaPrincipal extends JFrame{
 		panelDePaneles.setLayout(gridLayout);
 		
 		JPanel jlpuntuacion = new JPanel();
-		
+		//1
 		jlPutn = new JLabel("Puntuacion: "+ puntuacion);
 		
 		jlpuntuacion.add(jlPutn);
@@ -70,6 +70,7 @@ public class VentanaPrincipal extends JFrame{
 				panelMain.repaint();
 				final int k = i;
 				final int l = j;
+				//1
 				
 				
 
@@ -108,7 +109,7 @@ public class VentanaPrincipal extends JFrame{
 						{
 							System.out.println("NO HAY JLABEL");
 						} catch(IndexOutOfBoundsException e12){
-
+//1
 						}catch (NullPointerException e2) {
 							System.out.println("No hay topo aqui");
 							//TODO resta uno o algo parecido a un contador de golpes fallados
