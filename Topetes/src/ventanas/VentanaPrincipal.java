@@ -188,7 +188,8 @@ class MiRunnable implements Runnable {
 			System.out.println(VentanaPrincipal.eliminados);
 			VentanaPrincipal.quitaTopo(6000);
 			if (VentanaPrincipal.eliminados>2) {
-				acaba();	
+				acaba();
+				//TODO cuando acaba no tiene que dejar matar mas topos.
 			}
 
 			try {
