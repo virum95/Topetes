@@ -69,6 +69,7 @@ public class VentanaPrincipal extends JFrame{
 				// 2
 				panelDePaneles.add(arrayPaneles[i][j], BorderLayout.CENTER);
 				// 2
+				//1
 				panelMain.repaint();
 				final int k = i;
 				final int l = j;
