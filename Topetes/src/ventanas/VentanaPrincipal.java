@@ -46,7 +46,6 @@ public class VentanaPrincipal extends JFrame{
 		panelDePaneles.setLayout(gridLayout);
 		
 		JPanel jlpuntuacion = new JPanel();
-		//1
 		jlPutn = new JLabel("Puntuacion: "+ puntuacion);
 		
 		jlpuntuacion.add(jlPutn);
@@ -66,14 +65,12 @@ public class VentanaPrincipal extends JFrame{
 			{
 				arrayPaneles [i][j] = new JPanel();
 				arrayPaneles[i][j].setBorder(BorderFactory.createLineBorder(Color.BLACK));
-				// 2
+
 				panelDePaneles.add(arrayPaneles[i][j], BorderLayout.CENTER);
-				// 2
-				//1
+
 				panelMain.repaint();
 				final int k = i;
 				final int l = j;
-				//1
 				
 				
 
@@ -101,18 +98,16 @@ public class VentanaPrincipal extends JFrame{
 						try{
 							if(arrayTopos[k][l].pegaTopo() != 0){
 								arrayPaneles[k][l].remove(arrayPaneles[k][l].getComponent(0));
+								puntuacion+= arrayTopos[k][l].getPuntos();
+								jlPutn.setText("Puntuacion: "+ puntuacion);
 								arrayTopos[k][l] = null;
 								arrayPaneles[k][l].repaint();
-								puntuacion+= arrayTopos[k][l].getPuntos();
-								System.out.println(puntuacion);
-								jlPutn.setText("Puntuacion: "+ puntuacion); 
 								panelMain.repaint();
 							}		
 						}catch(ArrayIndexOutOfBoundsException a)
 						{
 							System.out.println("NO HAY JLABEL");
 						} catch(IndexOutOfBoundsException e12){
-//1
 						}catch (NullPointerException e2) {
 							System.out.println("No hay topo aqui");
 							//TODO resta uno o algo parecido a un contador de golpes fallados
@@ -142,9 +137,8 @@ public class VentanaPrincipal extends JFrame{
 		do{
 			Random r = new Random();
 			int i = r.nextInt(100);
-			if(i<41){
+			if(i<41)
 				topo = new Topete(TipoTopo.NORMAL); //40
-				System.out.println(topo.getPuntos());}
 			else if (i>40 && i<71) {
 				topo = new Topete(TipoTopo.MASAO);//30
 			}else if (i>70 && i <91) {
