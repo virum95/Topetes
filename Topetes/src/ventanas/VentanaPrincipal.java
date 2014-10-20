@@ -3,6 +3,8 @@ import javax.swing.*;
 
 import animales.topos.TipoTopo;
 import animales.topos.Topete;
+
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
@@ -21,7 +23,10 @@ public class VentanaPrincipal extends JFrame{
 	MiRunnable miHilo = null;  // Hilo principal del juego
 	public static int puntuacion;
 	public static int eliminados;
-
+	public JPanel panelMain = new JPanel();
+	public JPanel panelDePaneles = new JPanel();
+	public JLabel jlPutn; 
+	
 	public VentanaPrincipal() {
 		setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
 		// Inicialización del panel
@@ -29,22 +34,30 @@ public class VentanaPrincipal extends JFrame{
 			for (int j2 = 0; j2 < arrayTopos[i2].length; j2++) {
 				arrayTopos[i2][j2] = null;
 			}
-
+			add(panelMain);
+			panelMain.validate();
+			panelMain.repaint();
+			panelMain.setLayout(new BorderLayout());
 		}
 		eliminados = 0;
 		GridLayout gridLayout = new GridLayout();
 		gridLayout.setColumns(3);
 		gridLayout.setRows(4);
-		setLayout(gridLayout);
-//		JPanel puntuacion = new JPanel();
-//		JLabel jlPutn = new JLabel("Puntuacion: ");
-//		
-//		puntuacion.add(jlPutn);
-//		add(puntuacion);
-//		puntuacion.setSize(400, 50);
-//		puntuacion.setLocation(0, 600);
+		panelDePaneles.setLayout(gridLayout);
+		
+		JPanel jlpuntuacion = new JPanel();
+		
+		jlPutn = new JLabel("Puntuacion: "+ puntuacion);
+		
+		jlpuntuacion.add(jlPutn);
+		panelMain.add(panelDePaneles,BorderLayout.CENTER);
+		panelMain.add(jlpuntuacion, BorderLayout.NORTH);
+		
 		setVisible(true);
-		setSize(new Dimension(400,650));
+		setSize(new Dimension(400,715));
+		panelMain.validate();
+		panelMain.repaint();
+		
 		
 
 		for(int i=0; i<gridLayout.getRows(); i++)
@@ -53,10 +66,13 @@ public class VentanaPrincipal extends JFrame{
 			{
 				arrayPaneles [i][j] = new JPanel();
 				arrayPaneles[i][j].setBorder(BorderFactory.createLineBorder(Color.BLACK));
-
-				add(arrayPaneles[i][j]);
+				panelDePaneles.add(arrayPaneles[i][j], BorderLayout.CENTER);
+				panelMain.repaint();
 				final int k = i;
 				final int l = j;
+				
+				
+
 				arrayPaneles[i][j].addMouseListener(new MouseListener ()
 				{
 
@@ -79,12 +95,15 @@ public class VentanaPrincipal extends JFrame{
 					@Override
 					public void mouseReleased(MouseEvent e) { // Metodo que golpea al topo y le resta vidas, si las vidas estan a 0 lo mata
 						try{
-							if(arrayTopos[k][l].pegaTopo()){
+							if(arrayTopos[k][l].pegaTopo() != 0){
 								arrayPaneles[k][l].remove(arrayPaneles[k][l].getComponent(0));
 								arrayTopos[k][l] = null;
 								arrayPaneles[k][l].repaint();
+								puntuacion+= arrayTopos[k][l].getPuntos();
+								System.out.println(puntuacion);
+								jlPutn.setText("Puntuacion: "+ puntuacion); 
+								panelMain.repaint();
 							}		
-
 						}catch(ArrayIndexOutOfBoundsException a)
 						{
 							System.out.println("NO HAY JLABEL");
@@ -104,6 +123,11 @@ public class VentanaPrincipal extends JFrame{
 	}
 
 
+	public static int getPuntuacion() {
+		return puntuacion;
+	}
+
+
 	/**
 	 * Crea un topo, cada tipo tiene una probabilidad de salir
 	 * TODO a medida que el juego avanza tienen que cambiar las probabilidades
@@ -114,8 +138,9 @@ public class VentanaPrincipal extends JFrame{
 		do{
 			Random r = new Random();
 			int i = r.nextInt(100);
-			if(i<41)
+			if(i<41){
 				topo = new Topete(TipoTopo.NORMAL); //40
+				System.out.println(topo.getPuntos());}
 			else if (i>40 && i<71) {
 				topo = new Topete(TipoTopo.MASAO);//30
 			}else if (i>70 && i <91) {

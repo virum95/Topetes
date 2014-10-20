@@ -26,24 +26,28 @@ public class Topete extends Animal{
 	public Topete( TipoTopo t) {
 		super();
 		img = new JLabelTopete(t);
-		puntos = 10;
 		fechaCreacion = System.currentTimeMillis();
 		tipo = t;
 		switch (t) {
 		case NORMAL:
 			vidas = 1;
+			puntos = 5;
 			break;
 		case MASAO:
-			vidas = 2;			
+			vidas = 2;		
+			puntos = 15;
 			break;
 		case CASCO:
 			vidas = 3;
+			puntos = 25;
 			break;
 		case JUGGERNAUT:
-			vidas = 5;			
+			vidas = 5;	
+			puntos = 50;
 			break;
 		case BOSS:
-			vidas = 10;			
+			vidas = 10;
+			puntos = 500;
 			break;
 		default:
 			break;
@@ -53,7 +57,7 @@ public class Topete extends Animal{
 	/** Metodo para obtener el numero de puntos que da matar al topo
 	 * @return Puntos que vale el topo
 	 */
-	public double getPuntos() {
+	public int getPuntos() {
 		return puntos;
 	}
 
@@ -87,10 +91,13 @@ public class Topete extends Animal{
 	/** Metodo que resta una vida al topo
 	 * 
 	 */
-	public boolean pegaTopo() {
+	public int pegaTopo() {
 		vidas--;
-		if(vidas == 0) return mataTopo();
-		else return false;
+		if(vidas == 0)
+			{
+			return this.getPuntos();
+			}
+		else return 0;
 
 	}
 	
