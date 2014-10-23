@@ -4,10 +4,7 @@ import javax.swing.*;
 import animales.topos.TipoTopo;
 import animales.topos.Topete;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.GridLayout;
+import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.Random;
@@ -52,6 +49,13 @@ public class VentanaPrincipal extends JFrame{
 		panelMain.add(panelDePaneles,BorderLayout.CENTER);
 		panelMain.add(jlpuntuacion, BorderLayout.NORTH);
 		
+		
+		//Imagen del cursor cambiar lo de dentro del getImage para que cambie 
+		 Toolkit toolkit = Toolkit.getDefaultToolkit();
+		 Image imagen = toolkit.getImage("src/img/mazoSinFondo.png");
+		 Cursor c = toolkit.createCustomCursor(imagen , new Point(panelMain.getX(), panelMain.getY()), "img");
+		 panelMain.setCursor (c);
+		  
 		setVisible(true);
 		setSize(new Dimension(400,715));
 		panelMain.validate();

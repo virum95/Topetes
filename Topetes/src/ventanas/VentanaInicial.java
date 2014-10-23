@@ -3,6 +3,10 @@ package ventanas;
 import javax.swing.*;
 
 import java.awt.BorderLayout;
+import java.awt.Cursor;
+import java.awt.Image;
+import java.awt.Point;
+import java.awt.Toolkit;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
@@ -44,6 +48,12 @@ public class VentanaInicial extends JFrame{
 		});
 		getContentPane().add(btnNewButton);
 		
+		//Imagen del cursor cambiar lo de dentro del getImage para que cambie 
+		Toolkit toolkit = Toolkit.getDefaultToolkit();
+		 Image imagen = toolkit.getImage("src/img/mazoSinFondo.png");
+		 Cursor c = toolkit.createCustomCursor(imagen , new Point(getContentPane().getX(), getContentPane().getY()), "img");
+		 getContentPane().setCursor (c);
+		 
 		JButton btnNewButton_1 = new JButton();
 		btnNewButton_1.setIcon(new ImageIcon("src/img/botonSCORE.png"));
 		btnNewButton_1.setBounds(64, 78, 121, 33);
