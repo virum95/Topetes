@@ -1,7 +1,6 @@
 package animales.topos;
 
 
-import ventanas.VentanaPrincipal;
 import excepciones.FueraDeCuadricula;
 import animales.Animal;
 import animales.topos.jlabels.JLabelTopete;

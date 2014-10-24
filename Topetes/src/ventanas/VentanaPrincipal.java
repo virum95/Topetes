@@ -159,7 +159,6 @@ public class VentanaPrincipal extends JFrame{
 				topo = new Topete(TipoTopo.CASCO);//15
 			}else if (i>90) {
 				topo = new Topete(TipoTopo.JUGGERNAUT);//15
-				System.out.println("JUGERNAUT");
 			}
 		}while(arrayPaneles[topo.getPosX()][topo.getPosY()].getComponents().length==1);  //Evita que si ya hay un topo en el espacio seleccionado, se cree otro 
 		arrayTopos[topo.getPosX()][topo.getPosY()]=topo;
