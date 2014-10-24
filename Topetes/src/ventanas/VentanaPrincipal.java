@@ -10,7 +10,7 @@ import java.awt.event.MouseListener;
 import java.util.Random;
 
 
-public class VentanaPrincipal extends JFrame{
+public class VentanaPrincipal {
 
 
 	private static final long serialVersionUID = 1096374592905539346L;
@@ -21,19 +21,21 @@ public class VentanaPrincipal extends JFrame{
 	public static int puntuacion;
 	public static int eliminados;
 	public static boolean mazo;
+	public static JFrame ventana;
 	public JPanel panelMain = new JPanel();
 	public JPanel panelDePaneles = new JPanel();
 	public JLabel jlPutn; 
 
 	public VentanaPrincipal() {
 		mazo = true;
-		setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
+		ventana = new JFrame();
+		ventana.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
 		// Inicialización del panel
 		for (int i2 = 0; i2 < arrayTopos.length; i2++) {
 			for (int j2 = 0; j2 < arrayTopos[i2].length; j2++) {
 				arrayTopos[i2][j2] = null;
 			}
-			add(panelMain);
+			ventana.add(panelMain);
 			panelMain.validate();
 			panelMain.repaint();
 			panelMain.setLayout(new BorderLayout());
@@ -58,8 +60,8 @@ public class VentanaPrincipal extends JFrame{
 		Cursor c = toolkit.createCustomCursor(imagen , new Point(panelMain.getX(), panelMain.getY()), "img");
 		panelMain.setCursor (c);
 		
-		setVisible(true);
-		setSize(new Dimension(400,715));
+		ventana.setVisible(true);
+		ventana.setSize(new Dimension(400,715));
 		panelMain.validate();
 		panelMain.repaint();
 
@@ -159,7 +161,6 @@ public class VentanaPrincipal extends JFrame{
 				topo = new Topete(TipoTopo.CASCO);//15
 			}else if (i>90) {
 				topo = new Topete(TipoTopo.JUGGERNAUT);//15
-				System.out.println("JUGERNAUT");
 			}
 		}while(arrayPaneles[topo.getPosX()][topo.getPosY()].getComponents().length==1);  //Evita que si ya hay un topo en el espacio seleccionado, se cree otro 
 		arrayTopos[topo.getPosX()][topo.getPosY()]=topo;
@@ -201,8 +202,8 @@ public class VentanaPrincipal extends JFrame{
 		return acaba;
 	}
 	
-	public void cierraVentana() {
-		dispose();
+	public static  void borraVentana() {
+		ventana.dispose();
 	}
 
 	public static void main(String[] args) {
@@ -249,6 +250,7 @@ class MiRunnable implements Runnable {
 			System.exit(0);			
 		} else {
 			//TODO: Cerrar la ventana cuando se abre una nueva
+			VentanaPrincipal.borraVentana();
 			VentanaPrincipal.puntuacion = 0;
 			VentanaPrincipal.main(null);
 		}
