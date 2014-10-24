@@ -51,10 +51,10 @@ public class VentanaPrincipal extends JFrame{
 		
 		
 		//Imagen del cursor cambiar lo de dentro del getImage para que cambie 
-		 Toolkit toolkit = Toolkit.getDefaultToolkit();
-		 Image imagen = toolkit.getImage("src/img/mazoSinFondo.png");
-		 Cursor c = toolkit.createCustomCursor(imagen , new Point(panelMain.getX(), panelMain.getY()), "img");
-		 panelMain.setCursor (c);
+//		 Toolkit toolkit = Toolkit.getDefaultToolkit();
+//		 Image imagen = toolkit.getImage("src/img/mazoSinFondo.png");
+//		 Cursor c = toolkit.createCustomCursor(imagen , new Point(panelMain.getX(), panelMain.getY()), "img");
+//		 panelMain.setCursor (c);
 		  
 		setVisible(true);
 		setSize(new Dimension(400,715));
