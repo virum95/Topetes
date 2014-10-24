@@ -20,11 +20,13 @@ public class VentanaPrincipal extends JFrame{
 	MiRunnable miHilo = null;  // Hilo principal del juego
 	public static int puntuacion;
 	public static int eliminados;
+	public static boolean mazo;
 	public JPanel panelMain = new JPanel();
 	public JPanel panelDePaneles = new JPanel();
 	public JLabel jlPutn; 
-	
+
 	public VentanaPrincipal() {
+		mazo = true;
 		setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
 		// Inicialización del panel
 		for (int i2 = 0; i2 < arrayTopos.length; i2++) {
@@ -41,27 +43,27 @@ public class VentanaPrincipal extends JFrame{
 		gridLayout.setColumns(3);
 		gridLayout.setRows(4);
 		panelDePaneles.setLayout(gridLayout);
-		
+
 		JPanel jlpuntuacion = new JPanel();
 		jlPutn = new JLabel("Puntuacion: "+ puntuacion);
-		
+
 		jlpuntuacion.add(jlPutn);
 		panelMain.add(panelDePaneles,BorderLayout.CENTER);
 		panelMain.add(jlpuntuacion, BorderLayout.NORTH);
-		
-		
+
+
 		//Imagen del cursor cambiar lo de dentro del getImage para que cambie 
-//		 Toolkit toolkit = Toolkit.getDefaultToolkit();
-//		 Image imagen = toolkit.getImage("src/img/mazoSinFondo.png");
-//		 Cursor c = toolkit.createCustomCursor(imagen , new Point(panelMain.getX(), panelMain.getY()), "img");
-//		 panelMain.setCursor (c);
-		  
+		Toolkit toolkit = Toolkit.getDefaultToolkit();
+		Image imagen = toolkit.getImage("src/img/mazoSinFondo.png");
+		Cursor c = toolkit.createCustomCursor(imagen , new Point(panelMain.getX(), panelMain.getY()), "img");
+		panelMain.setCursor (c);
+
 		setVisible(true);
 		setSize(new Dimension(400,715));
 		panelMain.validate();
 		panelMain.repaint();
-		
-		
+
+
 
 		for(int i=0; i<gridLayout.getRows(); i++)
 		{
@@ -75,14 +77,15 @@ public class VentanaPrincipal extends JFrame{
 				panelMain.repaint();
 				final int k = i;
 				final int l = j;
-				
-				
+
+
 
 				arrayPaneles[i][j].addMouseListener(new MouseListener ()
 				{
-
+					// Metodo que golpea al topo y le resta vidas, si las vidas estan a 0 lo mata
 					@Override
 					public void mouseClicked(MouseEvent e) {
+
 					}
 
 					@Override
@@ -95,27 +98,32 @@ public class VentanaPrincipal extends JFrame{
 
 					@Override
 					public void mousePressed(MouseEvent e) {
+						try{
+							if(mazo){
+								if(arrayTopos[k][l].pegaTopo()){
+									mazo = false;
+								}
+								if(arrayTopos[k][l].getVidas() == 0){
+									arrayPaneles[k][l].remove(arrayPaneles[k][l].getComponent(0));
+									puntuacion+= arrayTopos[k][l].getPuntos();
+									jlPutn.setText("Puntuacion: "+ puntuacion);
+									arrayTopos[k][l] = null;
+									arrayPaneles[k][l].repaint();
+									panelMain.repaint();
+								}	
+							}
+						}catch(ArrayIndexOutOfBoundsException a)
+						{
+							//							System.out.println("NO HAY JLABEL");
+						} catch(IndexOutOfBoundsException e12){
+						}catch (NullPointerException e2) {
+							//							System.out.println("No hay topo aqui");
+							//TODO resta uno o algo parecido a un contador de golpes fallados
+						}
 					}
 
 					@Override
-					public void mouseReleased(MouseEvent e) { // Metodo que golpea al topo y le resta vidas, si las vidas estan a 0 lo mata
-						try{
-							if(arrayTopos[k][l].pegaTopo() != 0){
-								arrayPaneles[k][l].remove(arrayPaneles[k][l].getComponent(0));
-								puntuacion+= arrayTopos[k][l].getPuntos();
-								jlPutn.setText("Puntuacion: "+ puntuacion);
-								arrayTopos[k][l] = null;
-								arrayPaneles[k][l].repaint();
-								panelMain.repaint();
-							}		
-						}catch(ArrayIndexOutOfBoundsException a)
-						{
-							System.out.println("NO HAY JLABEL");
-						} catch(IndexOutOfBoundsException e12){
-						}catch (NullPointerException e2) {
-							System.out.println("No hay topo aqui");
-							//TODO resta uno o algo parecido a un contador de golpes fallados
-						}
+					public void mouseReleased(MouseEvent e) { 
 					}
 
 				}
@@ -144,7 +152,7 @@ public class VentanaPrincipal extends JFrame{
 			if(i<41)
 				topo = new Topete(TipoTopo.NORMAL); //40
 			else if (i>40 && i<71) {
-				topo = new Topete(TipoTopo.MASAO);//30
+				topo = new Topete(TipoTopo.PINCHO);//30
 			}else if (i>70 && i <91) {
 				topo = new Topete(TipoTopo.CASCO);//15
 			}else if (i>90) {
@@ -171,7 +179,8 @@ public class VentanaPrincipal extends JFrame{
 	 * @param maxTiempo Maximo del tiempo que puede estar el topo en la pantalla
 	 * @return
 	 */
-	public static int quitaTopo(long maxTiempo){
+	public static boolean quitaTopo(long maxTiempo){
+		boolean acaba = false;
 		for (int i = 0; i < arrayTopos.length; i++) {
 			for (int j = 0; j < arrayTopos[i].length; j++) {
 				if(arrayTopos[i][j]!=null){
@@ -180,12 +189,17 @@ public class VentanaPrincipal extends JFrame{
 						arrayTopos[i][j] = null;
 						arrayPaneles[i][j].repaint();
 						eliminados++;
-						return 1;
+						if (VentanaPrincipal.eliminados>2) 
+							acaba = true;
 					}
 				}
 			}
 		}
-		return 0;
+		return acaba;
+	}
+	
+	public void cierraVentana() {
+		dispose();
 	}
 
 	public static void main(String[] args) {
@@ -208,23 +222,40 @@ class MiRunnable implements Runnable {
 	@Override
 	public void run() {
 		while (sigo) {
-			
 			if(!VentanaPrincipal.estamosLLenos()){
 				VentanaPrincipal.creaTopo();}
-			
-			System.out.println(VentanaPrincipal.eliminados);
-			VentanaPrincipal.quitaTopo(6000);
 			if (VentanaPrincipal.eliminados>2) {
 				acaba();
-				//TODO cuando acaba no tiene que dejar matar mas topos.
 			}
-
 			try {
 				Thread.sleep( 1200 );
 			} catch (Exception e) {
 			}
+			if(VentanaPrincipal.quitaTopo(3000))
+				acaba();
+		}
+		String player = JOptionPane.showInputDialog(null,
+				"Fin del Juego. Fin del Juego. Tu puntuacion final ha sido de "+VentanaPrincipal.puntuacion+". Introduce el nombre del jugador:", 
+				"Game Over",
+				JOptionPane.INFORMATION_MESSAGE);
+		if(JOptionPane.showConfirmDialog(null, 
+				 "¿Jugar Otra vez?",
+				"GAME OVER",
+				JOptionPane.YES_NO_OPTION) == 1){
+			System.exit(0);			
+		} else {
+			
+			VentanaPrincipal.puntuacion = 0;
+			VentanaPrincipal.main(null);
 		}
 	}
+
+	//	private int calculoTiempo() {
+	//		int tiempo = 6000;
+	////		if(puntuacion<)
+	//		
+	//	}
+
 	/** Ordena al hilo detenerse en cuanto sea posible
 	 */
 	public void acaba() {

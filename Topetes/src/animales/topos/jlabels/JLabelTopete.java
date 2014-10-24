@@ -18,7 +18,7 @@ public class JLabelTopete extends JLabel {
 			case NORMAL:
 				this.setIcon(new ImageIcon("src/img/topeteNormalR.png"));
 				break;
-			case MASAO:
+			case PINCHO:
 				this.setIcon(new ImageIcon("src/img/topeteMasaoR.png"));
 				break;			
 			case CASCO:

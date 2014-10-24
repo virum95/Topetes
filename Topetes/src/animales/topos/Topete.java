@@ -33,9 +33,9 @@ public class Topete extends Animal{
 			vidas = 1;
 			puntos = 5;
 			break;
-		case MASAO:
-			vidas = 2;		
-			puntos = 15;
+		case PINCHO:
+			vidas = 1;		
+			puntos = 0;
 			break;
 		case CASCO:
 			vidas = 3;
@@ -88,45 +88,20 @@ public class Topete extends Animal{
 	public long getFechaCreacion() {
 		return fechaCreacion;
 	}
-	/** Metodo que resta una vida al topo
-	 * 
+	
+	
+	/** Metodo que le resta vida al topo
+	 * @return devuelve true si el topo es un topo pincho y false si no lo es
 	 */
-	public int pegaTopo() {
+	public boolean pegaTopo() {
 		vidas--;
-		if(vidas == 0)
+		if(tipo == TipoTopo.PINCHO)
 			{
-			return this.getPuntos();
+			return true;
 			}
-		else return 0;
-
+		else return false;
 	}
 	
-	/** Metodo que permite matar al topo y devolver un
-	 * @param puntuacionActual Puntuacion actual de la partida
-	 * @return Puntuacion despues de matar al topo (Puntuacion anterior + valor del topo)
-	 */
-	public boolean mataTopo(){
-		switch (tipo) {
-		case NORMAL:
-			VentanaPrincipal.puntuacion+=5;
-			break;
-		case MASAO:
-			VentanaPrincipal.puntuacion+=15;
-			break;
-		case CASCO:
-			VentanaPrincipal.puntuacion+=25;
-			break;
-		case JUGGERNAUT:
-			VentanaPrincipal.puntuacion+=50;
-			break;
-		case BOSS:
-			VentanaPrincipal.puntuacion+=500;
-			break;
-		default:
-			break;
-		}
-		return true;
-	}
 	
 	@Override
 	public String toString() {
