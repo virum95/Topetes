@@ -7,6 +7,11 @@ import animales.topos.Topete;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.Writer;
 import java.util.Random;
 
 
@@ -23,7 +28,7 @@ public class VentanaPrincipal extends JFrame{
 	public JPanel panelMain = new JPanel();
 	public JPanel panelDePaneles = new JPanel();
 	public JLabel jlPutn; 
-	
+
 	public VentanaPrincipal() {
 		setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
 		// Inicialización del panel
@@ -41,27 +46,27 @@ public class VentanaPrincipal extends JFrame{
 		gridLayout.setColumns(3);
 		gridLayout.setRows(4);
 		panelDePaneles.setLayout(gridLayout);
-		
+
 		JPanel jlpuntuacion = new JPanel();
 		jlPutn = new JLabel("Puntuacion: "+ puntuacion);
-		
+
 		jlpuntuacion.add(jlPutn);
 		panelMain.add(panelDePaneles,BorderLayout.CENTER);
 		panelMain.add(jlpuntuacion, BorderLayout.NORTH);
-		
-		
-		//Imagen del cursor cambiar lo de dentro del getImage para que cambie 
-//		 Toolkit toolkit = Toolkit.getDefaultToolkit();
-//		 Image imagen = toolkit.getImage("src/img/mazoSinFondo.png");
-//		 Cursor c = toolkit.createCustomCursor(imagen , new Point(panelMain.getX(), panelMain.getY()), "img");
-//		 panelMain.setCursor (c);
-		  
+
+
+		//		Imagen del cursor cambiar lo de dentro del getImage para que cambie 
+//		Toolkit toolkit = Toolkit.getDefaultToolkit();
+//		Image imagen = toolkit.getImage("src/img/mazoSinFondo.png");
+//		Cursor c = toolkit.createCustomCursor(imagen , new Point(panelMain.getX(), panelMain.getY()), "img");
+//		panelMain.setCursor (c);
+
 		setVisible(true);
 		setSize(new Dimension(400,715));
 		panelMain.validate();
 		panelMain.repaint();
-		
-		
+
+
 
 		for(int i=0; i<gridLayout.getRows(); i++)
 		{
@@ -75,8 +80,8 @@ public class VentanaPrincipal extends JFrame{
 				panelMain.repaint();
 				final int k = i;
 				final int l = j;
-				
-				
+
+
 
 				arrayPaneles[i][j].addMouseListener(new MouseListener ()
 				{
@@ -188,6 +193,20 @@ public class VentanaPrincipal extends JFrame{
 		return 0;
 	}
 
+	public static void escribeScore(int puntos){
+		try {
+			String score = Integer.toString(puntos);
+			Writer output = null;
+			File file = new File("score.txt");
+			output = new BufferedWriter(new FileWriter(file));
+			output.write(score);
+			output.close(); 
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+
 	public static void main(String[] args) {
 		VentanaPrincipal ventana = new VentanaPrincipal();
 		ventana.miHilo = new MiRunnable();  // Sintaxis de new para clase interna
@@ -208,14 +227,15 @@ class MiRunnable implements Runnable {
 	@Override
 	public void run() {
 		while (sigo) {
-			
+
 			if(!VentanaPrincipal.estamosLLenos()){
 				VentanaPrincipal.creaTopo();}
-			
+
 			System.out.println(VentanaPrincipal.eliminados);
 			VentanaPrincipal.quitaTopo(6000);
 			if (VentanaPrincipal.eliminados>2) {
 				acaba();
+				VentanaPrincipal.escribeScore(VentanaPrincipal.getPuntuacion());
 				//TODO cuando acaba no tiene que dejar matar mas topos.
 			}
 
@@ -229,6 +249,7 @@ class MiRunnable implements Runnable {
 	 */
 	public void acaba() {
 		sigo = false;
+		
 
 	}
 
