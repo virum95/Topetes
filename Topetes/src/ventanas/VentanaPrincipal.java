@@ -222,7 +222,7 @@ class MiRunnable implements Runnable {
 				Thread.sleep( 1200 );
 			} catch (Exception e) {
 			}
-		}
+		}	
 	}
 	/** Ordena al hilo detenerse en cuanto sea posible
 	 */
