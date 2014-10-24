@@ -33,10 +33,10 @@ public class Topete extends Animal{
 			vidas = 1;
 			puntos = 5;
 			break;
-		case PINCHO:
-			vidas = 1;		
-			puntos = 0;
-			break;
+//		case PINCHO:
+//			vidas = 1;		
+//			puntos = 0;
+//			break;
 		case CASCO:
 			vidas = 3;
 			puntos = 25;

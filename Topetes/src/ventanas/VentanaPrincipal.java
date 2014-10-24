@@ -57,7 +57,7 @@ public class VentanaPrincipal extends JFrame{
 		Image imagen = toolkit.getImage("src/img/mazoSinFondo.png");
 		Cursor c = toolkit.createCustomCursor(imagen , new Point(panelMain.getX(), panelMain.getY()), "img");
 		panelMain.setCursor (c);
-
+		
 		setVisible(true);
 		setSize(new Dimension(400,715));
 		panelMain.validate();
@@ -149,14 +149,17 @@ public class VentanaPrincipal extends JFrame{
 		do{
 			Random r = new Random();
 			int i = r.nextInt(100);
-			if(i<41)
+			if(i<70)
 				topo = new Topete(TipoTopo.NORMAL); //40
+
 			else if (i>40 && i<71) {
-				topo = new Topete(TipoTopo.PINCHO);//30
+//				topo = new Topete(TipoTopo.PINCHO);//30
+				topo = new Topete(TipoTopo.NORMAL); //TODO: pincho aqui
 			}else if (i>70 && i <91) {
 				topo = new Topete(TipoTopo.CASCO);//15
 			}else if (i>90) {
 				topo = new Topete(TipoTopo.JUGGERNAUT);//15
+				System.out.println("JUGERNAUT");
 			}
 		}while(arrayPaneles[topo.getPosX()][topo.getPosY()].getComponents().length==1);  //Evita que si ya hay un topo en el espacio seleccionado, se cree otro 
 		arrayTopos[topo.getPosX()][topo.getPosY()]=topo;
@@ -231,6 +234,7 @@ class MiRunnable implements Runnable {
 				Thread.sleep( 1200 );
 			} catch (Exception e) {
 			}
+
 			if(VentanaPrincipal.quitaTopo(3000))
 				acaba();
 		}
@@ -244,11 +248,12 @@ class MiRunnable implements Runnable {
 				JOptionPane.YES_NO_OPTION) == 1){
 			System.exit(0);			
 		} else {
-			
+			//TODO: Cerrar la ventana cuando se abre una nueva
 			VentanaPrincipal.puntuacion = 0;
 			VentanaPrincipal.main(null);
 		}
 	}
+
 
 	//	private int calculoTiempo() {
 	//		int tiempo = 6000;
