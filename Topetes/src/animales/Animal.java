@@ -2,6 +2,10 @@ package animales;
 
 import java.util.Random;
 
+import javax.swing.JLabel;
+
+import animales.jlabels.JLabelGatete;
+import animales.jlabels.JLabelTopete;
 import excepciones.FueraDeCuadricula;
 
 /** Clase padre de todos los animales del juego
@@ -16,6 +20,8 @@ public abstract class Animal {
 	protected int posY;			// Posicion en el eje de las Y de la cuadricula
 	protected final int ALTO_CUADRICULA = 3;	// Ancho de la cuadricula
 	protected final int ANCHO_CUADRICULA = 4;	// Alto de la cuadricula
+	protected long fechaCreacion; // Fecha en la que se ha creado el topo
+	protected JLabel img;
 
 	/** Constructor de la clase, crea un animal con 
 	 *  una posicion aleatoria en la cuadricula
@@ -57,6 +63,20 @@ public abstract class Animal {
 	public void setPosY(int posY) throws FueraDeCuadricula {
 		this.posY = posY;
 		if(posX > ALTO_CUADRICULA) throw new FueraDeCuadricula();
+	}
+	
+	/** Metodo para devolver la imagen del topo
+	 * @return
+	 */
+	public JLabel getImg() {
+			return img;
+	}
+	
+	/** Metodo para devolver el momento exacto en el que se creo el topo
+	 * @return fecha en la que se creo el topo
+	 */
+	public long getFechaCreacion() {
+		return fechaCreacion;
 	}
 	
 	@Override

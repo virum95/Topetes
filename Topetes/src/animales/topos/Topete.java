@@ -3,7 +3,7 @@ package animales.topos;
 
 import excepciones.FueraDeCuadricula;
 import animales.Animal;
-import animales.topos.jlabels.JLabelTopete;
+import animales.jlabels.JLabelTopete;
 
 /** Clase para definir instancias lógicas de topos con posición y puntos.
  * @author Gaizka
@@ -12,9 +12,7 @@ import animales.topos.jlabels.JLabelTopete;
 public class Topete extends Animal{
 	
 	protected int puntos;  	// Puntos que otorga matar al topo	
-	long fechaCreacion;
 	protected int vidas; // Numero de vidas que tiene el topo
-	protected JLabelTopete img; // TODO: Imagen para cada topo
 	protected TipoTopo tipo;
 	
 	
@@ -67,12 +65,7 @@ public class Topete extends Animal{
 		this.puntos = puntos;
 	}
 
-	/** Metodo para devolver la imagen del topo
-	 * @return
-	 */
-	public JLabelTopete getImg() {
-		return img;
-	}
+
 	
 	/** Metodo para devolver las vidas del topo
 	 * @return
@@ -80,14 +73,6 @@ public class Topete extends Animal{
 	public int getVidas() {
 		return vidas;
 	}
-	
-	/** Metodo para devolver el momento exacto en el que se creo el topo
-	 * @return
-	 */
-	public long getFechaCreacion() {
-		return fechaCreacion;
-	}
-	
 	
 	/** Metodo que le resta vida al topo
 	 * @return devuelve true si el topo es un topo pincho y false si no lo es
