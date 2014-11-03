@@ -109,7 +109,7 @@ public class Topete extends Animal{
 	}
 	
 	public static void main(String[] args) {
-		Topete t1 = new Topete(TipoTopo.NORMAL);			
+		Topete t1 = new Topete(TipoTopo.PINCHO);			
 		System.out.println("Posicion X del topete: "+t1.getPosX());
 		try {
 			t1.setPosX(9);

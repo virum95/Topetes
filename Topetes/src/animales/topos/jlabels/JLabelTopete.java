@@ -1,8 +1,14 @@
 package animales.topos.jlabels;
 
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.RenderingHints;
+
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
+import ventanas.VentanaPrincipal;
 import animales.topos.TipoTopo;
 
 public class JLabelTopete extends JLabel {
@@ -40,30 +46,30 @@ public class JLabelTopete extends JLabel {
 	}
 
 	////	 Redefinición del paintComponent para que se escale el gráfico
-	//	@Override
-	//	protected void paintComponent(Graphics g) {
-	////		super.paintComponent(g);   // En este caso no nos sirve el pintado normal de un JLabel
-	//		Image img;
-	//		switch (tipo) {
-	//		case NORMAL:
-	//			img = new ImageIcon("src/img/topeteNormal.png").getImage();
-	//			break;
-	//		case MASAO:
-	//			img = new ImageIcon("src/img/topeteMasao.png").getImage();
-	//			break;
-	//		default:
-	//			img = null;
-	//			break;
-	//		}
-	//		Graphics2D g2 = (Graphics2D) g;  // El Graphics realmente es Graphics2D
-	//		// Escalado más fino con estos 3 parámetros:
-	//		g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION,RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-	//		g2.setRenderingHint(RenderingHints.KEY_RENDERING,RenderingHints.VALUE_RENDER_QUALITY);
-	//		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);	
-	//		
-	//        g2.drawImage( img, 0, 0, 10, 30, null );
-	//
-	//	}
+		@Override
+		protected void paintComponent(Graphics g) {
+	//		super.paintComponent(g);   // En este caso no nos sirve el pintado normal de un JLabel
+			Image img;
+			switch (tipo) {
+			case NORMAL:
+				img = new ImageIcon("src/img/topeteNormalRN.png").getImage();
+				break;
+			case PINCHO:
+				img = new ImageIcon("src/img/topeteMasaoRN.png").getImage();
+				break;
+			default:
+				img = null;
+				break;
+			}
+			Graphics2D g2 = (Graphics2D) g;  // El Graphics realmente es Graphics2D
+			// Escalado más fino con estos 3 parámetros:
+			g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION,RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+			g2.setRenderingHint(RenderingHints.KEY_RENDERING,RenderingHints.VALUE_RENDER_QUALITY);
+			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);	
+			
+	        g2.drawImage( img, 0, 0, 120, 150, null );
+	
+		}
 	// TODO: movimiento de salir
 
 }

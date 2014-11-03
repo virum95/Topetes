@@ -153,7 +153,6 @@ public class VentanaPrincipal {
 			int i = r.nextInt(100);
 			if(i<70)
 				topo = new Topete(TipoTopo.NORMAL); //40
-
 			else if (i>40 && i<71) {
 //				topo = new Topete(TipoTopo.PINCHO);//30
 				topo = new Topete(TipoTopo.NORMAL); //TODO: pincho aqui
@@ -162,6 +161,7 @@ public class VentanaPrincipal {
 			}else if (i>90) {
 				topo = new Topete(TipoTopo.JUGGERNAUT);//15
 			}
+			System.out.println(topo.getVidas());
 		}while(arrayPaneles[topo.getPosX()][topo.getPosY()].getComponents().length==1);  //Evita que si ya hay un topo en el espacio seleccionado, se cree otro 
 		arrayTopos[topo.getPosX()][topo.getPosY()]=topo;
 		arrayPaneles[topo.getPosX()][topo.getPosY()].add(topo.getImg());
@@ -218,7 +218,7 @@ public class VentanaPrincipal {
 
 /**
  * @author rubensancor
- * Clase robada a anoni para el hilo :D
+ * Clase robada a andoni para el hilo :D
  */
 class MiRunnable implements Runnable {
 	boolean sigo = true;
