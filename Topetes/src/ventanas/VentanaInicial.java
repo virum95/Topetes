@@ -66,35 +66,23 @@ public class VentanaInicial extends JFrame{
 			
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				VentanaPrincipal ventana = new VentanaPrincipal();
-				ventana.miHilo = new MiRunnable();  // Sintaxis de new para clase interna
-				Thread nuevoHilo = new Thread( ventana.miHilo );
-				nuevoHilo.start();
-				dispose();
+				new VentanaSeleccionTipo();
 			}
 			
 			@Override
 			public void mousePressed(MouseEvent e) {
-				
-				
 			}
 			
 			@Override
 			public void mouseExited(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
 			}
 			
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
 			}
 			
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
 			}
 		});
 		getContentPane().add(btnNewButton_2);
