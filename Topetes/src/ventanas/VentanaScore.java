@@ -1,7 +1,6 @@
 package ventanas;
 
 import javax.swing.*;
-
 import java.awt.BorderLayout;
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -26,8 +25,8 @@ public class VentanaScore extends JFrame{
 	public static void readFile(String fileName) throws IOException {
 		BufferedReader br = new BufferedReader(new FileReader(fileName));
 		try {
-			String line = null;
-			while((line = br.readLine())!= null){
+			String line = br.readLine();
+			while(line != null){
 				listaScore.add(line);
 				}
 
@@ -46,15 +45,14 @@ public class VentanaScore extends JFrame{
 	public static void main(String[] args) {
 		VentanaScore asd = new VentanaScore();
 		try {
-			readFile("C:/Users/Eva/git/Topetes/Topetes/score.txt");
+			readFile("score.txt");
 			for (String string : listaScore) {
-				JLabel jlscore = new JLabel();
+				JLabel jlscore = new JLabel(string);
 				asd.add(jlscore);
+				jlscore.setVisible(true);
 			}
 			
 		} catch (IOException e) {
-
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
