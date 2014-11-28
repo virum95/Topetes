@@ -12,23 +12,50 @@ import java.awt.event.MouseListener;
 import java.util.Random;
 
 
-public class VentanaPrincipal {
+public class VentanaPrincipal extends JFrame{
 
-	public static JPanel arrayPaneles [][] = new JPanel [4][3]; // Array de paneles que contienen los jlabel de los topos
-	static Animal arrayAnimales[][] = new Animal[4][3]; //Array que va a contener los topos
-	MiRunnable miHilo = null;  // Hilo principal del juego
-	public static int puntuacion;
-	public static int eliminados;
-	public static boolean mazo;
-	public static boolean sigo;
-	public static JFrame ventana;
-	public JPanel panelMain = new JPanel();
-	public JPanel panelDePaneles = new JPanel();
-	public JLabel jlPutn; 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	protected JPanel arrayPaneles [][] = new JPanel [4][3]; // Array de paneles que contienen los jlabel de los topos
+	protected Animal arrayAnimales[][] = new Animal[4][3]; //Array que va a contener los topos
+	protected MiRunnable miHilo = null;  // Hilo principal del juego
+	protected int puntuacion;
+	protected int eliminados;
+	protected boolean mazo;
+	protected boolean sigo;
+	protected static VentanaPrincipal ventana;
+	protected JPanel panelMain = new JPanel();
+	protected JPanel panelDePaneles = new JPanel();
+	protected JLabel jlPutn; 
+	protected boolean gatoMuerto = false;
 
-	public VentanaPrincipal() {
-		mazo = true;
-		ventana = new JFrame();
+	
+	
+	public void setArrayAnimales(int posX, int posY, Animal animal) {
+		this.arrayAnimales[posX][posY] = animal;
+	}
+
+
+	public JPanel getArrayPaneles(int posX, int posY) {
+		return arrayPaneles[posX][posY];
+	}
+
+
+	public Animal getArrayAnimales(int posX, int posY) {
+		return arrayAnimales[posX][posY];
+	}
+
+
+	public JPanel getPanelMain() {
+		return panelMain;
+	}
+
+
+	public void creaTodo() {
+//		mazo = true;
+		ventana = getVentana();
 		ventana.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
 		// Inicialización del panel
 		for (int i2 = 0; i2 < arrayAnimales.length; i2++) {
@@ -60,7 +87,7 @@ public class VentanaPrincipal {
 		Cursor c = toolkit.createCustomCursor(imagen , new Point(panelMain.getX(), panelMain.getY()), "img");
 		panelMain.setCursor (c);
 
-		ventana.setVisible(true);
+
 		ventana.setSize(new Dimension(700,715));
 		panelMain.validate();
 		panelMain.repaint();
@@ -74,7 +101,7 @@ public class VentanaPrincipal {
 				arrayPaneles [i][j] = new JPanel();
 				arrayPaneles[i][j].setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
-				panelDePaneles.add(arrayPaneles[i][j], BorderLayout.CENTER);
+				panelDePaneles.add(arrayPaneles[i][j]);
 
 				panelMain.repaint();
 				final int k = i;
@@ -109,10 +136,11 @@ public class VentanaPrincipal {
 									}
 							}
 							else{
-								//TODO: QUE HAGA ALGO AL GOLPEAR UN GATO
 								arrayPaneles[k][l].remove(arrayPaneles[k][l].getComponent(0));
 								arrayAnimales[k][l] = null;
 								arrayPaneles[k][l].repaint();
+								gatoMuerto = true;
+								
 							}
 						}catch(ArrayIndexOutOfBoundsException a)
 						{
@@ -133,10 +161,16 @@ public class VentanaPrincipal {
 
 			}
 		}
+		ventana.setVisible(true);
+	}
+	
+	
+	public boolean isGatoMuerto() {
+		return gatoMuerto;
 	}
 
 
-	public static int getPuntuacion() {
+	public int getPuntuacion() {
 		return puntuacion;
 	}
 
@@ -145,7 +179,7 @@ public class VentanaPrincipal {
 	 * Crea un topo, cada tipo tiene una probabilidad de salir
 	 * TODO a medida que el juego avanza tienen que cambiar las probabilidades
 	 */
-	public static void creaAnimal () {//TODO: Revisar Probabilidades y añadir pincho 
+	public void creaAnimal () {//TODO: Revisar Probabilidades y añadir pincho 
 		Animal animal = null;
 		do{
 			Random r = new Random();
@@ -159,14 +193,20 @@ public class VentanaPrincipal {
 			}else if (i>90) {
 				animal = new Topete(TipoTopo.JUGGERNAUT);//15
 			}
-		}while(arrayPaneles[animal.getPosX()][animal.getPosY()].getComponents().length==1);  //Evita que si ya hay un topo en el espacio seleccionado, se cree otro 
-		arrayAnimales[animal.getPosX()][animal.getPosY()]=animal;
-		arrayPaneles[animal.getPosX()][animal.getPosY()].add(animal.getImg());
-		arrayPaneles[animal.getPosX()][animal.getPosY()].validate();
-		arrayPaneles[animal.getPosX()][animal.getPosY()].repaint();	//Repaint a los paneles para que añada otro topo
+		}while(getArrayPaneles(animal
+				.getPosX(), animal
+				.getPosY())
+				.getComponents()
+				.length==1);  //Evita que si ya hay un topo en el espacio seleccionado, se cree otro 
+		setArrayAnimales(animal.getPosX(), animal.getPosY(), animal);
+		getArrayPaneles(animal.getPosX(), animal.getPosY()).setLayout( new FlowLayout(FlowLayout.CENTER));
+		getArrayPaneles(animal.getPosX(), animal.getPosY()).setBorder( BorderFactory.createLineBorder(Color.blue));
+		getArrayPaneles(animal.getPosX(), animal.getPosY()).add(animal.getImg());
+		getArrayPaneles(animal.getPosX(), animal.getPosY()).validate();
+		getArrayPaneles(animal.getPosX(), animal.getPosY()).repaint();	//Repaint a los paneles para que añada otro topo
 	}
 
-	public static boolean estamosLLenos(){
+	public boolean estamosLLenos(){
 		for (int i = 0; i < arrayAnimales.length; i++) {
 			for (int j = 0; j < arrayAnimales[i].length; j++) {
 				if(arrayAnimales[i][j]==null)
@@ -180,7 +220,7 @@ public class VentanaPrincipal {
 	 * @param maxTiempo Maximo del tiempo que puede estar el topo en la pantalla
 	 * @return
 	 */
-	public static boolean quitaAnimal(long maxTiempo){
+	public boolean quitaAnimal(long maxTiempo){
 		boolean acaba = false;
 		for (int i = 0; i < arrayAnimales.length; i++) {
 			for (int j = 0; j < arrayAnimales[i].length; j++) {
@@ -191,7 +231,7 @@ public class VentanaPrincipal {
 						arrayPaneles[i][j].remove(arrayPaneles[i][j].getComponent(0));
 						arrayAnimales[i][j] = null;
 						arrayPaneles[i][j].repaint();
-						if (VentanaPrincipal.eliminados>2) 
+						if (getVentana().eliminados>2) 
 							acaba = true;
 					}
 				}
@@ -200,20 +240,25 @@ public class VentanaPrincipal {
 		return acaba;
 	}
 
-	public static  void borraVentana() {
+	public  void borraVentana() {
 		ventana.dispose();
 	}
 
 	public static void main(String[] args) {
-		VentanaPrincipal ventana = new VentanaPrincipal();
+	
+		getVentana().creaTodo();
+		
 		ventana.miHilo = new MiRunnable();  // Sintaxis de new para clase interna
 		Thread nuevoHilo = new Thread( ventana.miHilo );
 		nuevoHilo.start();
 
 	}
 
-	public static JFrame getVentana() {
-		return ventana;
+	public static VentanaPrincipal getVentana() {
+		if(ventana == null) {
+	         ventana = new VentanaPrincipal();
+	      }
+	      return ventana;
 	}
 }
 
@@ -224,22 +269,24 @@ public class VentanaPrincipal {
  */
 class MiRunnable implements Runnable {
 	boolean sigo = true;
+	
+//TODO: el hilo acaba el gatoMuerto. getLogicaFinNivel? private boolean gatoMuerto
 
 	@Override
 	public void run() {
 		while (sigo) {
-			if(!VentanaPrincipal.estamosLLenos()){
-				VentanaPrincipal.creaAnimal();}
+			if(!VentanaPrincipal.getVentana().estamosLLenos()){
+				VentanaPrincipal.getVentana().creaAnimal();}
 			try {
 				Thread.sleep( 1200 );
 			} catch (Exception e) {
 			}
 
-			if(VentanaPrincipal.quitaAnimal(4000))
+			if(VentanaPrincipal.getVentana().quitaAnimal(4000) || VentanaPrincipal.getVentana().isGatoMuerto()==true)
 				acaba();
 		}
-		String player = JOptionPane.showInputDialog(null,
-				"Fin del Juego. Fin del Juego. Tu puntuacion final ha sido de "+VentanaPrincipal.puntuacion+". Introduce el nombre del jugador:", 
+				JOptionPane.showInputDialog(null,
+				"Fin del Juego. Tu puntuacion final ha sido de "+VentanaPrincipal.getVentana().puntuacion+". Introduce el nombre del jugador:", 
 				"Game Over",
 				JOptionPane.INFORMATION_MESSAGE);
 		if(JOptionPane.showConfirmDialog(null, 
@@ -248,9 +295,9 @@ class MiRunnable implements Runnable {
 				JOptionPane.YES_NO_OPTION) == 1){
 			System.exit(0);			
 		} else {
-			VentanaPrincipal.borraVentana();
-			VentanaPrincipal.puntuacion = 0;
-			VentanaPrincipal.main(null);
+			VentanaPrincipal.getVentana().borraVentana();
+			VentanaPrincipal.getVentana().puntuacion = 0;
+			
 		}
 	}
 
