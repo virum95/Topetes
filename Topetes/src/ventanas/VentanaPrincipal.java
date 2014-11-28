@@ -9,6 +9,11 @@ import animales.topos.Topete;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.Writer;
 import java.util.Random;
 
 
@@ -57,7 +62,7 @@ public class VentanaPrincipal extends JFrame{
 //		mazo = true;
 		ventana = getVentana();
 		ventana.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
-		// Inicialización del panel
+			// Inicialización del panel
 		for (int i2 = 0; i2 < arrayAnimales.length; i2++) {
 			for (int j2 = 0; j2 < arrayAnimales[i2].length; j2++) {
 				arrayAnimales[i2][j2] = null;
@@ -89,6 +94,7 @@ public class VentanaPrincipal extends JFrame{
 
 
 		ventana.setSize(new Dimension(700,715));
+
 		panelMain.validate();
 		panelMain.repaint();
 
@@ -244,6 +250,20 @@ public class VentanaPrincipal extends JFrame{
 		ventana.dispose();
 	}
 
+	public static void escribeScore(int puntos){
+		try {
+			String score = Integer.toString(puntos);
+			Writer output = null;
+			File file = new File("score.txt");
+			output = new BufferedWriter(new FileWriter(file));
+			output.write(score);
+			output.close(); 
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+
 	public static void main(String[] args) {
 	
 		getVentana().creaTodo();
@@ -312,6 +332,7 @@ class MiRunnable implements Runnable {
 	 */
 	public void acaba() {
 		sigo = false;
+		
 
 	}
 
