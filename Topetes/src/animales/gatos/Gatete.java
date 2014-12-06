@@ -1,7 +1,7 @@
 package animales.gatos;
 
 import animales.Animal;
-import animales.jlabels.JLabelGatete;
+//import animales.jlabels.*;
 
 public class Gatete extends Animal{
 
@@ -16,7 +16,7 @@ public class Gatete extends Animal{
 	 */
 	public Gatete() {
 		super();
-		img = new JLabelGatete();
+//		img = new JLabelGatete();
 		fechaCreacion = System.currentTimeMillis();
 	}
 	
