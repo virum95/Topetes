@@ -24,7 +24,7 @@ public class JLabelTopete extends JLabel {
 		try {
 			switch (t) {
 			case NORMAL:
-				this.setIcon(new ImageIcon("src/img/topeteNormalRN.png"));
+				this.setIcon(new ImageIcon("src/img/topeteNormal.png"));
 				break;
 			case PINCHO:
 				this.setIcon(new ImageIcon("src/img/topeteMasao.png"));
