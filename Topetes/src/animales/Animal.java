@@ -4,8 +4,6 @@ import java.util.Random;
 
 import javax.swing.JLabel;
 
-import animales.jlabels.JLabelGatete;
-import animales.jlabels.JLabelTopete;
 import excepciones.FueraDeCuadricula;
 
 /** Clase padre de todos los animales del juego

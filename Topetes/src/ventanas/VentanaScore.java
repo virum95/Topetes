@@ -36,6 +36,7 @@ public class VentanaScore extends JFrame{
 
 	}
 
+	//Jtable
 	public static void obtenerPuntuacion(Statement stmt) throws SQLException{
 		ResultSet rs = stmt.executeQuery("SELECT * FROM TABLA ORDER BY PUNTUACION DESC");
 		while(rs.next()){
