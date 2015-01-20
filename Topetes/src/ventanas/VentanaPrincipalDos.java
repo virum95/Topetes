@@ -41,10 +41,11 @@ public class VentanaPrincipalDos {
 
 	private Topete[][] arrayTopos = new Topete[12][3];
 	private static JPanel[][] arrayPaneles = new JPanel[12][3];
+	private MundoJuego miMundo;
 
 	public VentanaPrincipalDos () {
 
-		MundoJuego m = new MundoJuego(arrayTopos, arrayPaneles);
+		miMundo = new MundoJuego(arrayTopos, arrayPaneles);
 
 		// Crear ventana inicial
 		miVentana = new JFrame("Prueba de paneles de Swing");        
@@ -139,15 +140,40 @@ public class VentanaPrincipalDos {
 		miVentana.setLocationRelativeTo(null);  // Centrar en pantalla
 		miVentana.setVisible(true);
 
-
+		saleTopo(arrayPaneles[0][1]);
+		saleTopo(arrayPaneles[2][1]);
+		saleTopo(arrayPaneles[3][1]);
+		saleTopo(arrayPaneles[7][1]);
 	}
 
 	public Topete[][] getArrayTopos() {
 		return arrayTopos;
 	}
+	
+	public void saleTopo( JPanel j ){
+		int posInicial = (int)j.getLocation().getY();
+		saleTopoRec(j, posInicial);
+	}
+
+	private void saleTopoRec( JPanel j, int posInicial ){
+		int posActual = (int)j.getLocation().getY();
+		if(  posInicial - posActual >= 110 ){
+		}else {
+			j.setLocation((int)j.getLocation().getX(), posActual-1);
+			try {
+				Thread.sleep(3);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			saleTopoRec(j, posInicial);
+		}
+	}
+
+
 
 	public static void main(String[] args) {
 		new VentanaPrincipalDos();
+		
 	}
 
 	class MiRunnable implements Runnable {
@@ -217,6 +243,16 @@ public class VentanaPrincipalDos {
 				}
 			}
 		}
+		class MiRunnable2 implements Runnable {
+
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		}
 	}
+
 }
 
