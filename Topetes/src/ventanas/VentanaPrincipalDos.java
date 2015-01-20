@@ -144,6 +144,11 @@ public class VentanaPrincipalDos {
 		saleTopo(arrayPaneles[2][1]);
 		saleTopo(arrayPaneles[3][1]);
 		saleTopo(arrayPaneles[7][1]);
+		
+		entraTopo(arrayPaneles[0][1]);
+		entraTopo(arrayPaneles[2][1]);
+		entraTopo(arrayPaneles[3][1]);
+		entraTopo(arrayPaneles[7][1]);
 	}
 
 	public Topete[][] getArrayTopos() {
@@ -166,6 +171,25 @@ public class VentanaPrincipalDos {
 				e.printStackTrace();
 			}
 			saleTopoRec(j, posInicial);
+		}
+	}
+	
+	public void entraTopo( JPanel j ){
+		int posInicial = (int)j.getLocation().getY();
+		entraTopoRec(j, posInicial);
+	}
+
+	private void entraTopoRec( JPanel j, int posInicial ){
+		int posActual = (int)j.getLocation().getY();
+		if(  posActual - posInicial >= 110 ){
+		}else {
+			j.setLocation((int)j.getLocation().getX(), posActual+1);
+			try {
+				Thread.sleep(3);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			entraTopoRec(j, posInicial);
 		}
 	}
 
