@@ -148,9 +148,9 @@ public class VentanaScore {
 		panel.add(lblNewLabel);
 
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
-		Image imagen = toolkit.getImage("src/img/mazo.png");
-		Cursor c = toolkit.createCustomCursor(imagen , new Point(frame.getX(), frame.getY()), "img");
-		frame.setCursor (c);
+		Image imagen = toolkit.getImage("src/img/macete.png");
+		Cursor c = toolkit.createCustomCursor(imagen , new Point(0,0), "img");
+		frame.setCursor(c);
 
 		listaNombre = new ArrayList<String>();
 		listaScore = new ArrayList<Integer>();
