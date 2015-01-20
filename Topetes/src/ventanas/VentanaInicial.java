@@ -1,10 +1,14 @@
 package ventanas;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.Cursor;
+import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.Insets;
 import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -16,9 +20,10 @@ public class VentanaInicial extends JFrame{
 	private static final long serialVersionUID = -1666529138806121763L;
 
 	public VentanaInicial() {
+		setLocationRelativeTo(null);
 		getContentPane().setLayout(null);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		setSize(262,343);
+		setSize(259,343);
 		setResizable(false);
 
 		JButton btnNewButton = new JButton();
@@ -87,31 +92,37 @@ public class VentanaInicial extends JFrame{
 
 			}
 		});
+		JLabel label = new JLabel();
+		label.setIcon(new ImageIcon("src/img/cartel.png"));
+		label.setBounds(0,-50,500,350);
+		getContentPane().add(label);
+		
+//		JButton btnNewButton_1 = new JButton();
+//		btnNewButton_1.setIcon(new ImageIcon("src/img/botonSCORE.png"));
+//		btnNewButton_1.setBounds(64, 78, 121, 33);
+//		getContentPane().add(btnNewButton_1);
+//		btnNewButton_1.addActionListener(new ActionListener() {
+//
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//				VentanaScore score = new VentanaScore();		
+//				score.main(null);
+//				
+//			}
+//		});
 
-		JButton btnNewButton_1 = new JButton();
-		btnNewButton_1.setIcon(new ImageIcon("src/img/botonSCORE.png"));
-		btnNewButton_1.setBounds(64, 78, 121, 33);
-		getContentPane().add(btnNewButton_1);
-		btnNewButton_1.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				VentanaScore score = new VentanaScore();		
-				
-			}
-		});
-
-		JButton btnNewButton_2 = new JButton();
-		btnNewButton_2.setIcon(new ImageIcon("src/img/botonPLAY.png"));
-		btnNewButton_2.setBounds(64, 38, 121, 29);
-		btnNewButton_2.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				new VentanaSeleccionTipo();
-			}
-		});
-		getContentPane().add(btnNewButton_2);
+//		JButton btnNewButton_2 = new JButton();
+//		btnNewButton_2.setIcon(new ImageIcon("src/img/peque.png"));
+//		btnNewButton_2.setBounds(64, 38, 121, 29);
+//		btnNewButton_2.setBorder(null);
+//		btnNewButton_2.addActionListener(new ActionListener() {
+//
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//				new VentanaSeleccionTipo();
+//			}
+//		});
+//		getContentPane().add(btnNewButton_2);
 
 		JLabel lblNewLabel = new JLabel("New label");
 		lblNewLabel.setIcon(new ImageIcon("src/img/fondoventanainicial.png"));
