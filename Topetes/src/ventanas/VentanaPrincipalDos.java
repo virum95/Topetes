@@ -4,10 +4,12 @@ import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.lang.reflect.InvocationTargetException;
+import java.util.Random;
 
 import javax.swing.*;
 
-import ops.MundoJuego;
+import animales.Animal;
+import animales.gatos.Gatete;
 import animales.topos.Topete;
 import animales.topos.TipoTopo;
 
@@ -41,11 +43,9 @@ public class VentanaPrincipalDos {
 
 	private Topete[][] arrayTopos = new Topete[12][3];
 	private static JPanel[][] arrayPaneles = new JPanel[12][3];
-	private MundoJuego miMundo;
+	private boolean[] ocupado = new boolean[12];
 
 	public VentanaPrincipalDos () {
-
-		miMundo = new MundoJuego(arrayTopos, arrayPaneles);
 
 		// Crear ventana inicial
 		miVentana = new JFrame("Prueba de paneles de Swing");        
@@ -65,6 +65,10 @@ public class VentanaPrincipalDos {
 					arrayTopos[i][j] = new Topete(TipoTopo.JUGGERNAUT);
 
 			}
+		}
+
+		for (int i = 0; i < ocupado.length; i++) {
+			ocupado[i]=false;
 		}
 
 		lp.addMouseListener( new MouseAdapter() {
@@ -135,26 +139,38 @@ public class VentanaPrincipalDos {
 		lp.add( p1, new Integer(0) );
 
 		//		miVentana.setLocation(2000, 100);
-	
-//		miVentana.setLocation(2000, 100);
+
+		//		miVentana.setLocation(2000, 100);
 		miVentana.setLocationRelativeTo(null);  // Centrar en pantalla
 		miVentana.setVisible(true);
 
-		saleTopo(arrayPaneles[0][1]);
-		saleTopo(arrayPaneles[2][1]);
-		saleTopo(arrayPaneles[3][1]);
-		saleTopo(arrayPaneles[7][1]);
-		
-		entraTopo(arrayPaneles[0][1]);
-		entraTopo(arrayPaneles[2][1]);
-		entraTopo(arrayPaneles[3][1]);
-		entraTopo(arrayPaneles[7][1]);
+		MiRunnable2 miHilo2 = new VentanaPrincipalDos.MiRunnable2();
+		Thread elHilo2 = new Thread( miHilo2 );
+		elHilo2.start();
+
+		//		saleTopo(arrayPaneles[0][1]);
+		//		saleTopo(arrayPaneles[2][1]);
+		//		saleTopo(arrayPaneles[3][1]);
+		//		saleTopo(arrayPaneles[7][1]);
+		//		
+		//		entraTopo(arrayPaneles[0][1]);
+		//		entraTopo(arrayPaneles[2][1]);
+		//		entraTopo(arrayPaneles[3][1]);
+		//		entraTopo(arrayPaneles[7][1]);
 	}
 
 	public Topete[][] getArrayTopos() {
 		return arrayTopos;
 	}
-	
+
+	public static JPanel[][] getArrayPaneles() {
+		return arrayPaneles;
+	}
+
+	public boolean[] getOcupado() {
+		return ocupado;
+	}
+
 	public void saleTopo( JPanel j ){
 		int posInicial = (int)j.getLocation().getY();
 		saleTopoRec(j, posInicial);
@@ -173,7 +189,7 @@ public class VentanaPrincipalDos {
 			saleTopoRec(j, posInicial);
 		}
 	}
-	
+
 	public void entraTopo( JPanel j ){
 		int posInicial = (int)j.getLocation().getY();
 		entraTopoRec(j, posInicial);
@@ -193,11 +209,41 @@ public class VentanaPrincipalDos {
 		}
 	}
 
+	public void creaAnimal () {
+		int j = 0;
+		int i;
+		do{
+			System.out.println(2);
+			Random r = new Random();
+			i = r.nextInt(100);
+			if(i<71){
+				j = 0; //40
+			}else if (i>70 && i <91) {
+				j = 1;//15
+			}else if (i>90) {
+				j = 2;//15
+			}
+			i = r.nextInt(12);
+			System.out.println(i);
+		}while(getOcupado()[i]);  //Evita que si ya hay un topo en el espacio seleccionado, se cree otro 
+		saleTopo(getArrayPaneles()[i][j]);
+		ocupado[i] = true;
+	}
+
+	public boolean estamosLlenos(){
+		for (int i = 0; i < ocupado.length; i++) {
+			if(!ocupado[i])
+				return false;
+		}
+		return true;
+	}
+
+
 
 
 	public static void main(String[] args) {
 		new VentanaPrincipalDos();
-		
+
 	}
 
 	class MiRunnable implements Runnable {
@@ -267,16 +313,27 @@ public class VentanaPrincipalDos {
 				}
 			}
 		}
-		class MiRunnable2 implements Runnable {
+	}
+	class MiRunnable2 implements Runnable {
 
-			@Override
-			public void run() {
-				// TODO Auto-generated method stub
-				
+		@Override
+		public void run() {
+			while(true){
+				if(!estamosLlenos()){
+					creaAnimal();
+					System.out.println(2);
+					try {
+						Thread.sleep( 1200 );
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
 			}
-			
 		}
 	}
 
 }
+
+
 
