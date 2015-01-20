@@ -142,8 +142,8 @@ public class VentanaPrincipalDos {
 		lp.add( p2, new Integer(10) );
 		lp.add( p1, new Integer(0) );
 	
-		miVentana.setLocation(2000, 100);
-//		miVentana.setLocationRelativeTo(null);  // Centrar en pantalla
+//		miVentana.setLocation(2000, 100);
+		miVentana.setLocationRelativeTo(null);  // Centrar en pantalla
 		miVentana.setVisible(true);
 
 

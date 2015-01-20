@@ -1,6 +1,9 @@
 package ventanas;
 
 import java.awt.EventQueue;
+import java.awt.Image;
+import java.awt.Point;
+import java.awt.Toolkit;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -17,6 +20,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.awt.Cursor;
 
 public class VentanaScore {
 
@@ -33,7 +37,7 @@ public class VentanaScore {
 	public static JLabel label_7;
 	public static JLabel label_8;
 	public static JLabel label_9;
-	
+
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -44,9 +48,9 @@ public class VentanaScore {
 					Class.forName("org.sqlite.JDBC");
 					Connection con = null;
 					try {
-					con = DriverManager.getConnection("jdbc:sqlite:bin/Score");
+						con = DriverManager.getConnection("jdbc:sqlite:bin/Score");
 					}finally{
-						
+
 					}
 					Statement stmt = con.createStatement();
 					obtenerPuntuacion(stmt);
@@ -72,7 +76,7 @@ public class VentanaScore {
 	public VentanaScore() {
 		initialize();
 	}
-	
+
 
 	public static void obtenerPuntuacion(Statement stmt) throws SQLException{
 		ResultSet rs = stmt.executeQuery("SELECT * FROM TABLA ORDER BY PUNTUACION DESC");
@@ -82,65 +86,72 @@ public class VentanaScore {
 		}
 		rs.close();
 	}
-	
+
 	private void initialize() {
 		frame = new JFrame();
+		frame.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
 		frame.setBounds(100, 100, 275, 380);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
+
 		JPanel panel = new JPanel();
 		frame.getContentPane().add(panel, BorderLayout.CENTER);
 		panel.setLayout(null);
-		
+
 		JLabel lblScore = new JLabel("SCORE");
 		lblScore.setFont(new Font("Stencil", Font.ITALIC, 16));
 		lblScore.setBounds(95, 11, 92, 33);
 		panel.add(lblScore);
-		
+
 		label = new JLabel();
 		label.setBounds(27, 50, 64, 14);
 		panel.add(label);
-		
+
 		label_1 = new JLabel();
 		label_1.setBounds(27, 80, 64, 14);
 		panel.add(label_1);
-		
+
 		label_2 = new JLabel();
 		label_2.setBounds(27, 110, 63, 14);
 		panel.add(label_2);
-		
+
 		label_3 = new JLabel();
 		label_3.setBounds(27, 140, 63, 14);
 		panel.add(label_3);
-		
+
 		label_4 = new JLabel();
 		label_4.setBounds(27, 170, 63, 14);
 		panel.add(label_4);
-		
+
 		label_5 = new JLabel();
 		label_5.setBounds(147, 50, 91, 14);
 		panel.add(label_5);
-		
+
 		label_6 = new JLabel();
 		label_6.setBounds(147, 80, 91, 14);
 		panel.add(label_6);
-		
+
 		label_7 = new JLabel();
 		label_7.setBounds(147, 110, 91, 14);
 		panel.add(label_7);
-		
+
 		label_8 = new JLabel();
 		label_8.setBounds(147, 140, 91, 14);
 		panel.add(label_8);
-		
+
 		label_9 = new JLabel();
 		label_9.setBounds(147, 170, 91, 14);
 		panel.add(label_9);
-		
+
 		JLabel lblNewLabel = new JLabel("");
 		lblNewLabel.setBounds(0, 0, 262, 343);
 		lblNewLabel.setIcon(new ImageIcon(VentanaScore.class.getResource("/img/fondoventanainicial.png")));
 		panel.add(lblNewLabel);
+
+		Toolkit toolkit = Toolkit.getDefaultToolkit();
+		Image imagen = toolkit.getImage("src/img/mazo.png");
+		Cursor c = toolkit.createCustomCursor(imagen , new Point(frame.getX(), frame.getY()), "img");
+		frame.setCursor (c);
+
 		listaNombre = new ArrayList<String>();
 		listaScore = new ArrayList<Integer>();
 	}
