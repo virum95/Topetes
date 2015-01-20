@@ -21,6 +21,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.awt.Cursor;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 public class VentanaScore {
 
@@ -148,9 +150,40 @@ public class VentanaScore {
 		panel.add(lblNewLabel);
 
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
-		Image imagen = toolkit.getImage("src/img/macete.png");
-		Cursor c = toolkit.createCustomCursor(imagen , new Point(0,0), "img");
+		Image imagen = toolkit.getImage("src/img/Maso.png");
+		final Cursor c = toolkit.createCustomCursor(imagen , new Point(0,0), "img");
 		frame.setCursor(c);
+		
+		Image imagen1 = toolkit.getImage("src/img/Masogolpe.png");
+		final Cursor c1 = toolkit.createCustomCursor(imagen1, new Point(0,0), "img");
+
+		frame.addMouseListener(new MouseListener() {
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				frame.setCursor(c);
+
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				frame.setCursor(c1);				
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+			}
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+			}
+		});
 
 		listaNombre = new ArrayList<String>();
 		listaScore = new ArrayList<Integer>();
