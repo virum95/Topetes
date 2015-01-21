@@ -5,6 +5,7 @@ import java.awt.Cursor;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.Toolkit;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.lang.reflect.InvocationTargetException;
@@ -71,6 +72,7 @@ public class VentanaPrincipalDos {
 		miVentana.setResizable(false);
 		lp = new JLayeredPane();
 		
+		//Imagen del cursor cambiar lo de dentro del getImage para que cambie 
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
 		Image imagen = toolkit.getImage("src/img/Maso.png");
 		final Cursor c = toolkit.createCustomCursor(imagen , new Point(7,25), "img");
@@ -99,25 +101,11 @@ public class VentanaPrincipalDos {
 					final int a = i;
 					final int b = j;
 					
-					arrayAnimales[i][j].getImg().addMouseListener(new MouseListener()
+					arrayAnimales[i][j].getImg().addMouseListener(new MouseAdapter()
 					{
-
-						@Override
-						public void mouseClicked(MouseEvent arg0) {
-							
-						}
-
-						@Override
-						public void mouseEntered(MouseEvent arg0) {
-						}
-
-						@Override
-						public void mouseExited(MouseEvent arg0) {
-						}
-
 						@Override
 						public void mousePressed(MouseEvent arg0) {
-							miVentana.setCursor(c);
+							miVentana.setCursor(c1);
 							((Topete)arrayAnimales[a][b]).pegaTopo();
 							
 							if(((Topete)arrayAnimales[a][b]).getVidas() == 0){
@@ -136,7 +124,7 @@ public class VentanaPrincipalDos {
 
 						@Override
 						public void mouseReleased(MouseEvent arg0) {
-							miVentana.setCursor(c1);
+							miVentana.setCursor(c);
 						}
 						
 					});
@@ -147,31 +135,17 @@ public class VentanaPrincipalDos {
 					final int a = i;
 					final int b = j;
 					
-					arrayAnimales[i][j].getImg().addMouseListener(new MouseListener()
+					arrayAnimales[i][j].getImg().addMouseListener(new MouseAdapter()
 					{
-
-						@Override
-						public void mouseClicked(MouseEvent arg0) {
-							
-						}
-
-						@Override
-						public void mouseEntered(MouseEvent arg0) {
-						}
-
-						@Override
-						public void mouseExited(MouseEvent arg0) {
-						}
-
 						@Override
 						public void mousePressed(MouseEvent arg0) {
 							sigue = false;
-							miVentana.setCursor(c);
+							miVentana.setCursor(c1);
 						}
 
 						@Override
 						public void mouseReleased(MouseEvent arg0) {
-							miVentana.setCursor(c1);
+							miVentana.setCursor(c);
 						}
 						
 					});
@@ -564,12 +538,12 @@ public class VentanaPrincipalDos {
 											acaba();}
 										if((getArrayAnimales()[i][j] instanceof Gatete)){
 											acaba();
-											VentanaInicial2.t.interrupt();}
 										
 									}
 								}
 							}
 					}
+				}
 				}
 			
 			}
@@ -579,8 +553,9 @@ public class VentanaPrincipalDos {
 							"Game Over",
 							JOptionPane.INFORMATION_MESSAGE);
 			cargaEnBD();
-			miVentana.dispose();		
+			System.exit(0);
 		}
+			
 		public void acaba(){
 			sigue = false;
 		}

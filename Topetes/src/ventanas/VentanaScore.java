@@ -21,6 +21,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.awt.Cursor;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
@@ -106,6 +107,7 @@ public class VentanaScore {
 		frame.setBounds(100, 100, 275, 380);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		
+		//Imagen del cursor cambiar lo de dentro del getImage para que cambie 
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
 		Image imagen = toolkit.getImage("src/img/Maso.png");
 		final Cursor c = toolkit.createCustomCursor(imagen , new Point(7,25), "img");
@@ -114,15 +116,18 @@ public class VentanaScore {
 		Image imagen1 = toolkit.getImage("src/img/Masogolpe.png");
 		final Cursor c1 = toolkit.createCustomCursor(imagen1, new Point(7,25), "img");
 
+		//Panel principal
 		JPanel panel = new JPanel();
 		frame.getContentPane().add(panel, BorderLayout.CENTER);
 		panel.setLayout(null);
 
+		//Label SCORE de arriba
 		JLabel lblScore = new JLabel("SCORE");
 		lblScore.setFont(new Font("Stencil", Font.ITALIC, 26));
 		lblScore.setBounds(73, 11, 113, 33);
 		panel.add(lblScore);
 
+		//Labels de carga de las puntuaciones
 		label = new JLabel();
 		label.setBounds(27, 50, 64, 14);
 		panel.add(label);
@@ -168,12 +173,13 @@ public class VentanaScore {
 		label_10.setBounds(157, 195, 102, 74);
 		panel.add(label_10);
 		
+		//Boton invisible del cartel de BACK
 		btnNewButton = new JButton("");
 		btnNewButton.setOpaque(false);
 		btnNewButton.setContentAreaFilled(false);
 		btnNewButton.setBorderPainted(false);
 		btnNewButton.setBounds(179, 195, 57, 59);
-		btnNewButton.addMouseListener(new MouseListener() {
+		btnNewButton.addMouseListener(new MouseAdapter() {
 			
 			@Override
 			public void mouseReleased(MouseEvent e) {
@@ -187,59 +193,25 @@ public class VentanaScore {
 			public void mousePressed(MouseEvent e) {
 				frame.setCursor(c1);
 			}
-			
-			@Override
-			public void mouseExited(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
 		});
 		panel.add(btnNewButton);
 
+		//Jlabel con la imagen de fondo
 		JLabel lblNewLabel = new JLabel("");
 		lblNewLabel.setBounds(0, 0, 262, 343);
 		lblNewLabel.setIcon(new ImageIcon(VentanaScore.class.getResource("/img/fondoventanainicial.png")));
 		panel.add(lblNewLabel);
 
-		
-
-		frame.addMouseListener(new MouseListener() {
-
+		//Cambia el cursor cada vez que se clica
+		frame.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				frame.setCursor(c);
 
 			}
-
 			@Override
 			public void mousePressed(MouseEvent e) {
 				frame.setCursor(c1);				
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void mouseEntered(MouseEvent e) {
-			}
-
-			@Override
-			public void mouseClicked(MouseEvent e) {
 			}
 		});
 

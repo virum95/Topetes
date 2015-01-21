@@ -144,6 +144,7 @@ public class VentanaInicial2 {
 				   });
 				t.start();
 				frame.setCursor(c);
+				frame.dispose();
 			}
 
 			@Override
