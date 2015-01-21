@@ -7,9 +7,7 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.Toolkit;
-import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.lang.reflect.InvocationTargetException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -73,6 +71,7 @@ public class VentanaPrincipalDos{
 	protected static JFrame ventanaInicial;
 
 
+	/* Constructor principal de la casa*/
 	public VentanaPrincipalDos (JFrame frame) {
 
 		ventanaInicial = frame;
@@ -154,9 +153,6 @@ public class VentanaPrincipalDos{
 				}
 				if(arrayAnimales[i][j] instanceof Gatete)
 				{
-
-					final int a = i;
-					final int b = j;
 
 					arrayAnimales[i][j].getImg().addMouseListener(new MouseAdapter()
 					{
@@ -378,6 +374,8 @@ public class VentanaPrincipalDos{
 		}
 	}
 
+	/* Hilo que se ocupa de mover los tops/gatos 
+	 * de la posición inicial hasta arriba*/
 	class MiRunnable2 implements Runnable {
 
 		@Override
@@ -459,6 +457,7 @@ public class VentanaPrincipalDos{
 			saleTopoRec(j, posInicial, a);
 		}
 
+		/* Método recursivo que es llamado desde saleTopo para que la salida sea más suave*/
 		public void saleTopoRec( JPanel j, int posInicial, Animal a){
 			int posActual = (int)j.getLocation().getY();
 			if(  posInicial - posActual >= 135 ){
@@ -475,6 +474,8 @@ public class VentanaPrincipalDos{
 
 	}
 
+	/* Hilo que se encarga de meter los topos cuando se clican
+	 *  o cuando pasa un tiempo determinado*/
 	class MiRunnable3 implements Runnable {
 
 		/**	Método que quita un animal de pantalla	
@@ -487,6 +488,8 @@ public class VentanaPrincipalDos{
 			ocupado[panel] = false;
 		}
 
+		/* Método que llama a un método recursivo que se encarga de meter el topo o el gato
+		 */
 		public void entraTopo( int panel, int animal ){
 			JPanel j = getArrayPaneles()[panel][animal];
 			Animal a = getArrayAnimales()[panel][animal];
@@ -512,7 +515,8 @@ public class VentanaPrincipalDos{
 				entraTopoRec(j, posInicial, a);
 			}
 		}
-
+		/* Método que carga el resultado(puntuación) en la base de datos
+		 * con un nombre*/
 		public void cargaEnBD()
 		{
 			try {

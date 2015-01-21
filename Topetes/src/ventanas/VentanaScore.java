@@ -23,12 +23,9 @@ import java.util.ArrayList;
 import java.awt.Cursor;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 
 import javax.swing.JButton;
-import javax.swing.border.BevelBorder;
 
-import java.awt.Color;
 
 public class VentanaScore {
 
@@ -185,8 +182,6 @@ public class VentanaScore {
 			public void mouseReleased(MouseEvent e) {
 				frame.setCursor(c);
 				frame.dispose();
-				VentanaInicial ventana = new VentanaInicial();
-				ventana.main(null);
 			}
 			
 			@Override
