@@ -559,7 +559,7 @@ public class VentanaPrincipalDos {
 
 				}
 				Statement stmt = con.createStatement();
-				if (nombreJugador == null) {
+				if (nombreJugador == null | nombreJugador.equals("")) {
 					nombreJugador = "Player";
 				}
 				String string = "INSERT INTO TABLA VALUES ('" + nombreJugador
