@@ -6,6 +6,7 @@ import java.awt.Point;
 import java.awt.Toolkit;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import java.awt.BorderLayout;
@@ -23,7 +24,6 @@ import java.util.ArrayList;
 import java.awt.Cursor;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 
 import javax.swing.JButton;
 
@@ -211,6 +211,8 @@ public class VentanaScore {
 			
 			@Override
 			public void mouseReleased(MouseEvent e) {
+				int n=JOptionPane.showConfirmDialog(null, "¿Va a proceder a borrar la base de datos?");
+				if(n==JOptionPane.YES_OPTION){
 				frame.setCursor(c);
 				try {
 					Class.forName("org.sqlite.JDBC");
@@ -226,9 +228,12 @@ public class VentanaScore {
 					stmt.executeUpdate(s1);
 					stmt.close();
 					con.close();
-					
+					frame.dispose();
+					VentanaScore score = new VentanaScore();
+					score.main(null);
 				} catch (Exception a) {
 				}
+			}
 			}
 			
 			@Override
