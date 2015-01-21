@@ -48,7 +48,16 @@ public class VentanaPrincipalDos {
 	protected static JPanel panelImagen1;
 	protected static JPanel panelImagen2;
 	protected static JPanel panelImagen3;
-	protected static JPanel panelImagen4;
+
+	protected static JLabel x1 = new JLabel( new ImageIcon("src/img/x.png"));
+	protected static JLabel x2 = new JLabel( new ImageIcon("src/img/x.png"));
+	protected static JLabel x3 = new JLabel( new ImageIcon("src/img/x.png"));
+	protected static JPanel px1;
+	protected static JPanel px2;
+	protected static JPanel px3;
+	protected static JPanel pPuntuacion;
+	protected static JLabel lPuntuacion;
+	
 
 	static String nombreJugador;
 
@@ -64,13 +73,20 @@ public class VentanaPrincipalDos {
 
 		puntuacion = 0;
 		eliminados = 0;
+		lPuntuacion = new JLabel("Puntuación: "+puntuacion);
+		pPuntuacion = new JPanel();
+		pPuntuacion.setBounds(5, 5, 100, 100);
+		pPuntuacion.add(lPuntuacion);
+		pPuntuacion.setOpaque(false);
+
 		// Crear ventana inicial
-		miVentana = new JFrame("Prueba de paneles de Swing");        
+		miVentana = new JFrame("Topetes");        
 		// Acabar de crear y hacer visible ventana
 		miVentana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
 		miVentana.setSize( 700, 755);
 		miVentana.setResizable(false);
 		lp = new JLayeredPane();
+		miVentana.setLayeredPane( lp );
 
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
 		Image imagen = toolkit.getImage("src/img/Maso.png");
@@ -109,20 +125,21 @@ public class VentanaPrincipalDos {
 						}
 						@Override
 						public void mousePressed(MouseEvent arg0) {
-							miVentana.setCursor(c);
+							miVentana.setCursor(c1);
 							((Topete)arrayAnimales[a][b]).pegaTopo();
-							
+
 							if(((Topete)arrayAnimales[a][b]).getVidas() == 0){
 								miHilo3.quitaAnimal(a,b);
 								getArrayAnimales()[a][b].setFechaCreacion(0); // Ponemos la fecha de creacion a 0
 								puntuacion+=((Topete)arrayAnimales[a][b]).getPuntos();
+								lPuntuacion.setText("Puntuación: "+puntuacion);
 								if(((Topete)arrayAnimales[a][b]).getTipo() == TipoTopo.NORMAL)
 									((Topete)arrayAnimales[a][b]).setVidas(1);
 								if(((Topete)arrayAnimales[a][b]).getTipo() == TipoTopo.CASCO)
 									((Topete)arrayAnimales[a][b]).setVidas(2);
 								if(((Topete)arrayAnimales[a][b]).getTipo() == TipoTopo.JUGGERNAUT)
 									((Topete)arrayAnimales[a][b]).setVidas(3);
-								
+
 							}
 						}
 
@@ -151,10 +168,13 @@ public class VentanaPrincipalDos {
 
 						@Override
 						public void mousePressed(MouseEvent arg0) {
+							sigue = false;
+							miVentana.setCursor(c);
 						}
 
 						@Override
 						public void mouseReleased(MouseEvent arg0) {
+							miVentana.setCursor(c1);
 						}
 
 					});
@@ -171,7 +191,7 @@ public class VentanaPrincipalDos {
 
 			@Override
 			public void mousePressed(MouseEvent e) {
-				miVentana.setCursor(c1);
+				System.out.println(e.getX()+", "+e.getY());
 			}
 
 			@Override
@@ -180,7 +200,18 @@ public class VentanaPrincipalDos {
 			}
 		});
 
-
+		px1 = new JPanel();
+		px1.setBounds(560, 10, 70, 70);
+		px1.add(x1);
+		px1.setOpaque(false);
+		px2 = new JPanel();
+		px2.setBounds(580, 12, 70, 70);
+		px2.add(x2);
+		px2.setOpaque(false);
+		px3 = new JPanel();
+		px3.setBounds(600, 14, 70, 70);
+		px3.add(x3);
+		px3.setOpaque(false);
 		// Creación de los fondos 
 		p1 = new JPanel();
 		JLabel imagen1 = new JLabel( new ImageIcon("src/img/panel0.png"));
@@ -230,7 +261,7 @@ public class VentanaPrincipalDos {
 		}
 
 
-		miVentana.setLayeredPane( lp );
+		lp.add( pPuntuacion, new Integer(60) );
 		lp.add( p5, new Integer(40) );
 		lp.add( p4, new Integer(30) );
 		lp.add( p3, new Integer(20) );
@@ -369,7 +400,7 @@ public class VentanaPrincipalDos {
 				if(!estamosLlenos()){
 					creaAnimal();
 					try {
-						Thread.sleep( 1200 );
+						Thread.sleep( 1200 - puntuacion*2);
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
@@ -505,25 +536,28 @@ public class VentanaPrincipalDos {
 		@Override
 		public void run() {
 			while(sigue){
-				try {
-					Thread.sleep(1500);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-				for (int i = 0; i < arrayAnimales.length; i++) {
-					for (int j = 0; j < arrayAnimales[i].length; j++) {
-						// Si el topo está más tiempo del que puede estar fuera
-						if( getArrayAnimales()[i][j].getFechaCreacion() != 0 ){
-							if( System.currentTimeMillis() - getArrayAnimales()[i][j].getFechaCreacion() >= TIEMPO_FUERA_TOPO*1000 - puntuacion/4){
-								quitaAnimal( i, j ); // Quitamos el topo
-								getArrayAnimales()[i][j].setFechaCreacion(0); // Ponemos la fecha de creacion a 0
-								// Sumamos uno a los eliminados si son menos de dos
-								if(!(getArrayAnimales()[i][j] instanceof Gatete)){
-									if (eliminados < MAX_TOPOS_PERDIDOS ) {
-										eliminados++;
-										System.out.println(eliminados);}
-									else 
-										acaba();
+				if(!estamosLlenos()){
+					for (int i = 0; i < arrayAnimales.length; i++) {
+						for (int j = 0; j < arrayAnimales[i].length; j++) {
+							// Si el topo está más tiempo del que puede estar fuera
+							if( getArrayAnimales()[i][j].getFechaCreacion() != 0 ){
+								if( System.currentTimeMillis() - getArrayAnimales()[i][j].getFechaCreacion() >= TIEMPO_FUERA_TOPO*1000 - puntuacion){
+									quitaAnimal( i, j ); // Quitamos el topo
+									getArrayAnimales()[i][j].setFechaCreacion(0); // Ponemos la fecha de creacion a 0
+									// Sumamos uno a los eliminados si son menos de dos
+									if(!(getArrayAnimales()[i][j] instanceof Gatete)){
+										if (eliminados < MAX_TOPOS_PERDIDOS ) {
+											eliminados++;
+											if(eliminados == 1)
+												lp.add( px1, new Integer(60) );
+											if(eliminados == 2)
+												lp.add( px2, new Integer(61) );
+											if(eliminados == 3)
+												lp.add( px3, new Integer(62) );
+											}
+										if((getArrayAnimales()[i][j] instanceof Gatete) || eliminados >= MAX_TOPOS_PERDIDOS)
+											acaba();
+									}
 								}
 							}
 						}
