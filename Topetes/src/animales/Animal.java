@@ -80,10 +80,16 @@ public abstract class Animal {
 		return fechaCreacion;
 	}
 	
+	/**	Método que permite la modificación de la fecha de creacion
+	 * @param fechaCreacion nueva fecha de creación
+	 */
 	public void setFechaCreacion(long fechaCreacion) {
 		this.fechaCreacion = fechaCreacion;
 	}
 	
+	/** Método que permite modificar si el topo esta fuera
+	 * @param fuera true si el topo esta fuera
+	 */
 	public void setFuera(boolean fuera) {
 		this.fuera = fuera;
 	}

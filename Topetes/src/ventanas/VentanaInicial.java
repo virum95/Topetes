@@ -23,7 +23,7 @@ import java.awt.event.ActionEvent;
 import java.awt.Font;
 import java.awt.Color;
 
-public class VentanaInicial2 {
+public class VentanaInicial {
 
 	private JFrame frame;
 	static Thread t;
@@ -34,7 +34,7 @@ public class VentanaInicial2 {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					VentanaInicial2 window = new VentanaInicial2();
+					VentanaInicial window = new VentanaInicial();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -46,7 +46,7 @@ public class VentanaInicial2 {
 	/**
 	 * Create the application.
 	 */
-	public VentanaInicial2() {
+	public VentanaInicial() {
 		initialize();
 	}
 
@@ -112,13 +112,13 @@ public class VentanaInicial2 {
 
 		//Label con el cartel
 		JLabel label_1 = new JLabel("");
-		label_1.setIcon(new ImageIcon(VentanaInicial2.class.getResource("/img/carte1l.png")));
+		label_1.setIcon(new ImageIcon(VentanaInicial.class.getResource("/img/carte1l.png")));
 		label_1.setBounds(10, 21, 238, 254);
 		panel.add(label_1);
 
 		//Label con el fondo de la ventana
 		JLabel label = new JLabel("");
-		label.setIcon(new ImageIcon(VentanaInicial2.class.getResource("/img/fondoventanainicial.png")));
+		label.setIcon(new ImageIcon(VentanaInicial.class.getResource("/img/fondoventanainicial.png")));
 		label.setBounds(0, 0, 262, 329);
 		panel.add(label);
 
@@ -136,15 +136,15 @@ public class VentanaInicial2 {
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				t = new Thread(new Runnable() {
-				    @Override
-				    public void run() {
-				    }
+					@Override
+					public void run() {
+						new VentanaPrincipalDos(frame);   
+					}
 
-				    
-				   });
+				});
 				t.start();
 				frame.setCursor(c);
-				frame.dispose();
+				frame.setVisible(false);
 			}
 
 			@Override

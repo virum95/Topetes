@@ -185,7 +185,7 @@ public class VentanaScore {
 			public void mouseReleased(MouseEvent e) {
 				frame.setCursor(c);
 				frame.dispose();
-				VentanaInicial2 ventana = new VentanaInicial2();
+				VentanaInicial ventana = new VentanaInicial();
 				ventana.main(null);
 			}
 			
