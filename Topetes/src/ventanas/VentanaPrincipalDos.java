@@ -1,6 +1,12 @@
 package ventanas;
 
 import java.awt.Color;
+import java.awt.Cursor;
+import java.awt.Image;
+import java.awt.Point;
+import java.awt.Toolkit;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.lang.reflect.InvocationTargetException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -127,6 +133,29 @@ public class VentanaPrincipalDos {
 		} catch (InterruptedException e1) {
 			e1.printStackTrace();
 		}
+
+		//Imagen del cursor cambiar lo de dentro del getImage para que cambie 
+		Toolkit toolkit = Toolkit.getDefaultToolkit();
+		Image imagen = toolkit.getImage("src/img/Maso.png");
+		final Cursor c = toolkit.createCustomCursor(imagen , new Point(7,25), "img");
+		miVentana.setCursor (c);
+
+		Image masoGolpe = toolkit.getImage("src/img/Masogolpe.png");
+		final Cursor c1 = toolkit.createCustomCursor(masoGolpe, new Point(7,25), "img");
+
+
+		miVentana.addMouseListener(new MouseAdapter() {
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				miVentana.setCursor(c);
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				miVentana.setCursor(c1);				
+			}
+		});
 
 
 		miVentana.setLayeredPane( lp );
