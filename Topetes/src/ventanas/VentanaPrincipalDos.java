@@ -2,6 +2,10 @@ package ventanas;
 
 import java.awt.Color;
 import java.awt.event.MouseAdapter;
+import java.awt.Cursor;
+import java.awt.Image;
+import java.awt.Point;
+import java.awt.Toolkit;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.lang.reflect.InvocationTargetException;
@@ -19,40 +23,42 @@ import animales.topos.TipoTopo;
 
 public class VentanaPrincipalDos {
 
-	final int X_EJE_UNO = 47;
-	final int X_EJE_DOS = 280;
-	final int X_EJE_TRES = 522;
+	protected final int X_EJE_UNO = 47;
+	protected final int X_EJE_DOS = 280;
+	protected final int X_EJE_TRES = 522;
 
-	final int Y_EJE_UNO = 160;
-	final int Y_EJE_DOS = 336;
-	final int Y_EJE_TRES = 530;
-	final int Y_EJE_CUATRO = 710;
-	
-	final int MAX_TOPOS_PERDIDOS = 300;
-	final int TIEMPO_FUERA_TOPO = 3; //Tiempo en segundos
+	protected final int Y_EJE_UNO = 160;
+	protected final int Y_EJE_DOS = 336;
+	protected final int Y_EJE_TRES = 530;
+	protected final int Y_EJE_CUATRO = 710;
+
+	protected final int MAX_TOPOS_PERDIDOS = 3;
+	protected final int TIEMPO_FUERA_TOPO = 3; //Tiempo en segundos
 
 
-	static JFrame miVentana;
-	static JPanel p1;
-	static JPanel p2;
-	static JPanel p3;
-	static JPanel p4;
-	static JPanel p5;
-	static JLayeredPane lp;
+	protected static JFrame miVentana;
+	protected static JPanel p1;
+	protected static JPanel p2;
+	protected static JPanel p3;
+	protected static JPanel p4;
+	protected static JPanel p5;
+	protected static JLayeredPane lp;
 
-	static JPanel panelImagen0;
-	static JPanel panelImagen1;
-	static JPanel panelImagen2;
-	static JPanel panelImagen3;
-	static JPanel panelImagen4;
+	protected static JPanel panelImagen0;
+	protected static JPanel panelImagen1;
+	protected static JPanel panelImagen2;
+	protected static JPanel panelImagen3;
+	protected static JPanel panelImagen4;
 
 	static String nombreJugador;
 
-	private Animal[][] arrayAnimales = new Animal[12][4];
-	private static JPanel[][] arrayPaneles = new JPanel[12][4];
-	private boolean[] ocupado = new boolean[12];
+	protected Animal[][] arrayAnimales = new Animal[12][4];
+	protected static JPanel[][] arrayPaneles = new JPanel[12][4];
+	protected boolean[] ocupado = new boolean[12];
+
 	protected static int eliminados;
 	protected static int puntuacion;
+	protected static boolean sigue= true;
 
 	public VentanaPrincipalDos () {
 
@@ -61,11 +67,22 @@ public class VentanaPrincipalDos {
 		// Crear ventana inicial
 		miVentana = new JFrame("Prueba de paneles de Swing");        
 		// Acabar de crear y hacer visible ventana
-		miVentana.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); 
+		miVentana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
 		miVentana.setSize( 700, 755);
 		miVentana.setResizable(false);
 		lp = new JLayeredPane();
+
+		Toolkit toolkit = Toolkit.getDefaultToolkit();
+		Image imagen = toolkit.getImage("src/img/Maso.png");
+		final Cursor c = toolkit.createCustomCursor(imagen , new Point(7,25), "img");
+		miVentana.setCursor (c);
+
+		Image cursor = toolkit.getImage("src/img/Masogolpe.png");
+		final Cursor c1 = toolkit.createCustomCursor(cursor, new Point(7,25), "img");
+
+
 		final MiRunnable2 miHilo2 = new VentanaPrincipalDos.MiRunnable2();
+		final MiRunnable3 miHilo3 = new VentanaPrincipalDos.MiRunnable3();
 
 		for (int i = 0; i < arrayAnimales.length; i++) {
 			for (int j = 0; j < arrayAnimales[i].length; j++) {
@@ -77,21 +94,63 @@ public class VentanaPrincipalDos {
 					arrayAnimales[i][j] = new Topete(TipoTopo.JUGGERNAUT);
 				if(j==3)
 					arrayAnimales[i][j] = new Gatete();
-				
+
 				if(arrayAnimales[i][j] instanceof Topete)
 				{
 					final int a = i;
 					final int b = j;
-					
+
 					arrayAnimales[i][j].getImg().addMouseListener(new MouseAdapter()
 					{
 						@Override
-						public void mouseClicked(MouseEvent arg0) {
+						public void mousePressed(MouseEvent arg0) {
 							((Topete)arrayAnimales[a][b]).pegaTopo();
+
+							miVentana.setCursor(c1);
 							if(((Topete)arrayAnimales[a][b]).getVidas() == 0){
-								miHilo2.quitaAnimal(a,b);
+								miHilo3.quitaAnimal(a,b);
+								getArrayAnimales()[a][b].setFechaCreacion(0); // Ponemos la fecha de creacion a 0
+								puntuacion+=((Topete)arrayAnimales[a][b]).getPuntos();
 							}
-						}						
+						}
+
+						@Override
+						public void mouseReleased(MouseEvent arg0) {
+							miVentana.setCursor(c);
+						}
+
+					});
+				}
+				if(arrayAnimales[i][j] instanceof Gatete)
+				{
+
+					final int a = i;
+					final int b = j;
+
+					arrayAnimales[i][j].getImg().addMouseListener(new MouseListener()
+					{
+
+						@Override
+						public void mouseClicked(MouseEvent arg0) {
+
+						}
+
+						@Override
+						public void mouseEntered(MouseEvent arg0) {
+						}
+
+						@Override
+						public void mouseExited(MouseEvent arg0) {
+						}
+
+						@Override
+						public void mousePressed(MouseEvent arg0) {
+						}
+
+						@Override
+						public void mouseReleased(MouseEvent arg0) {
+						}
+
 					});
 				}
 			}
@@ -101,17 +160,20 @@ public class VentanaPrincipalDos {
 			ocupado[i]=false;
 		}
 
-		//		Click de raton muestra coordenadas
-		//		lp.addMouseListener( new MouseAdapter() {
-		//
-		//			@Override
-		//			public void mousePressed(MouseEvent e) {
-		//				System.out.println(e.getX()+" ,"+e.getY());
-		//
-		//			}
-		//		});
+		//				Click de raton muestra coordenadas
+		miVentana.addMouseListener( new MouseAdapter() {
 
-		//        Redimensionar paneles
+			@Override
+			public void mousePressed(MouseEvent e) {
+				miVentana.setCursor(c1);
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent arg0) {
+				miVentana.setCursor(c);
+			}
+		});
+
 
 		// Creación de los fondos 
 		p1 = new JPanel();
@@ -176,19 +238,8 @@ public class VentanaPrincipalDos {
 		Thread elHilo2 = new Thread( miHilo2 );
 		elHilo2.start();
 
-//								miHilo2.saleTopo(arrayPaneles[0][0]);
-//								miHilo2.saleTopo(arrayPaneles[2][1]);
-//								miHilo2.saleTopo(arrayPaneles[3][2]);
-//								miHilo2.saleTopo(arrayPaneles[7][3]);
-//								try {
-//									Thread.sleep(7000);
-//								} catch (InterruptedException e) {
-//									e.printStackTrace();
-//								}
-//								miHilo2.entraTopo(arrayPaneles[0][0]);
-//								miHilo2.entraTopo(arrayPaneles[2][1]);
-//								miHilo2.entraTopo(arrayPaneles[3][2]);
-//								miHilo2.entraTopo(arrayPaneles[7][3]);
+		Thread elHilo3 = new Thread( miHilo3 );
+		elHilo3.start();
 	}
 
 	/** Método que devuelve el array de Animales
@@ -303,10 +354,8 @@ public class VentanaPrincipalDos {
 			}
 		}
 	}
-	
-	class MiRunnable2 implements Runnable {
 
-		private boolean sigue = true;
+	class MiRunnable2 implements Runnable {
 
 		@Override
 		public void run() {
@@ -319,34 +368,8 @@ public class VentanaPrincipalDos {
 						e.printStackTrace();
 					}
 				}
-
-				for (int i = 0; i < arrayAnimales.length; i++) {
-					for (int j = 0; j < arrayAnimales[i].length; j++) {
-						// Si el topo está más tiempo del que puede estar fuera
-						if( getArrayAnimales()[i][j].getFechaCreacion() != 0 ){
-							if( System.currentTimeMillis() - getArrayAnimales()[i][j].getFechaCreacion() >= TIEMPO_FUERA_TOPO*1000){
-								quitaAnimal( i, j ); // Quitamos el topo
-								getArrayAnimales()[i][j].setFechaCreacion(0); // Ponemos la fecha de creacion a 0
-								// Sumamos uno a los eliminados si son menos de dos
-								if(!(getArrayAnimales()[i][j] instanceof Gatete)){
-									if (eliminados < MAX_TOPOS_PERDIDOS ) 
-										eliminados++;
-									else 
-										acaba();
-								}
-							}
-						}
-					}
-					//TODO: Golpe de maso quita topo y suma puntuacion
-				}
-
 			}
-				nombreJugador = 
-						JOptionPane.showInputDialog(null,
-								"Fin del Juego. Tu puntuacion final ha sido de "+puntuacion+". Introduce el nombre del jugador:",
-								"Game Over",
-								JOptionPane.INFORMATION_MESSAGE);
-				System.exit(0);			
+			acaba();
 		}
 
 		public void cargaEnBD()
@@ -370,45 +393,41 @@ public class VentanaPrincipalDos {
 
 		}
 
+		public void acaba(){
+			sigue = false;
+		}
+
+
 		/**	Método que hace que salga un animal. Elige aleatoriamente uno de los topos
 		 * 	Las posibilidades son:
 		 * 		60% para el topo normal
 		 * 		20% para el topo con casco
 		 * 		10% para el gato y para el topo negro
 		 */
-		public void creaAnimal () {
-			int j = 0;
-			int i;
-			do{
-				Random r = new Random();
-				i = r.nextInt(100);
-				if(i<61){
-					j = 0; //60
-				} else if (i>60 && i<71){
-					j = 3; //10
-				}else if (i>70 && i <91) {
-					j = 1;//20
-				}else if (i>90) {
-					j = 2;//10
-				}
-				i = r.nextInt(12);
-			}while(getOcupado()[i]);  //Evita que si ya hay un topo en el espacio seleccionado, se cree otro 
-			saleTopo(i, j);
-			ocupado[i] = true;
-			getArrayAnimales()[i][j].setFechaCreacion(System.currentTimeMillis());
-			getArrayAnimales()[i][j].setFuera(true);
-		}
+		public void creaAnimal() {
 
-		/**	Método que quita un animal de pantalla	
-		 * @param panel		El panel en el que se encuentra el animal a quitar
-		 * @param animal	El animal que se quiere quitar
-		 */
-		public void quitaAnimal( int panel, int animal){
-			entraTopo(panel, animal);
-			getArrayAnimales()[panel][animal].setFuera(false);
-			ocupado[panel] = false;
+				int j = 0;
+				int i;
+				do{
+					Random r = new Random();
+					i = r.nextInt(100);
+					if(i<61){
+						j = 0; //60
+					} else if (i>60 && i<71){
+						j = 3; //10
+					}else if (i>70 && i <91) {
+						j = 1;//20
+					}else if (i>90) {
+						j = 2;//10
+					}
+					i = r.nextInt(12);
+				}while(getOcupado()[i]);  //Evita que si ya hay un topo en el espacio seleccionado, se cree otro 
+				saleTopo(i, j);
+				ocupado[i] = true;
+				getArrayAnimales()[i][j].setFechaCreacion(System.currentTimeMillis());
+				getArrayAnimales()[i][j].setFuera(true);
 		}
-
+		
 		/**	Método que hace que los topos se muevan hacia arriba. LLama a un metodo
 		 * @param j
 		 */
@@ -419,7 +438,7 @@ public class VentanaPrincipalDos {
 			saleTopoRec(j, posInicial, a);
 		}
 
-		private void saleTopoRec( JPanel j, int posInicial, Animal a){
+		public void saleTopoRec( JPanel j, int posInicial, Animal a){
 			int posActual = (int)j.getLocation().getY();
 			if(  posInicial - posActual >= 135 && !a.isGolpeado()){
 			}else {
@@ -431,6 +450,20 @@ public class VentanaPrincipalDos {
 				}
 				saleTopoRec(j, posInicial, a);
 			}
+		}
+		
+	}
+
+	class MiRunnable3 implements Runnable {
+
+		/**	Método que quita un animal de pantalla	
+		 * @param panel		El panel en el que se encuentra el animal a quitar
+		 * @param animal	El animal que se quiere quitar
+		 */
+		public void quitaAnimal( int panel, int animal){
+			entraTopo(panel, animal);
+			getArrayAnimales()[panel][animal].setFuera(false);
+			ocupado[panel] = false;
 		}
 
 		public void entraTopo( int panel, int animal ){
@@ -445,7 +478,7 @@ public class VentanaPrincipalDos {
 		 * @param j
 		 * @param posInicial
 		 */
-		private void entraTopoRec( JPanel j, int posInicial, Animal a ){
+		public void entraTopoRec( JPanel j, int posInicial, Animal a ){
 			int posActual = (int)j.getLocation().getY();
 			if(  posActual - posInicial >= 135 ){
 				a.setGolpeado(false);
@@ -459,12 +492,49 @@ public class VentanaPrincipalDos {
 				entraTopoRec(j, posInicial, a);
 			}
 		}
+
+		@Override
+		public void run() {
+			while(sigue){
+				try {
+					Thread.sleep(1500);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				for (int i = 0; i < arrayAnimales.length; i++) {
+					for (int j = 0; j < arrayAnimales[i].length; j++) {
+						// Si el topo está más tiempo del que puede estar fuera
+						if( getArrayAnimales()[i][j].getFechaCreacion() != 0 ){
+							if( System.currentTimeMillis() - getArrayAnimales()[i][j].getFechaCreacion() >= TIEMPO_FUERA_TOPO*1000){
+								quitaAnimal( i, j ); // Quitamos el topo
+								getArrayAnimales()[i][j].setFechaCreacion(0); // Ponemos la fecha de creacion a 0
+								// Sumamos uno a los eliminados si son menos de dos
+								if(!(getArrayAnimales()[i][j] instanceof Gatete)){
+									if (eliminados < MAX_TOPOS_PERDIDOS ) {
+										eliminados++;
+										System.out.println(eliminados);}
+									else 
+										acaba();
+								}
+							}
+						}
+					}
+				}
+
+			}
+			nombreJugador = 
+					JOptionPane.showInputDialog(null,
+							"Fin del Juego. Tu puntuacion final ha sido de "+puntuacion+". Introduce el nombre del jugador:",
+							"Game Over",
+							JOptionPane.INFORMATION_MESSAGE);
+			System.exit(0);		
+		}
 		public void acaba(){
 			sigue = false;
 		}
 
-	}
 
+	}
 }
 
 

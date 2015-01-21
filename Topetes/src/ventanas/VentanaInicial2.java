@@ -102,7 +102,6 @@ public class VentanaInicial2 {
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				frame.setCursor(c);
-//				new VentanaInicial2();
 			}
 			
 			@Override
