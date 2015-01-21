@@ -394,14 +394,28 @@ public class VentanaPrincipalDos {
 		@Override
 		public void run() {
 			while(sigue){
+				
+				if(1200-puntuacion>=100)
+				{
+					if(!estamosLlenos()){
+						creaAnimal();
+						try {
+							Thread.sleep( 200 );
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
+					}
+				}
+				else{
 				if(!estamosLlenos()){
 					creaAnimal();
 					try {
-						Thread.sleep( 1200 );
+						Thread.sleep( 1 );
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
 				}
+			}
 			}
 			acaba();
 		}
@@ -538,7 +552,7 @@ public class VentanaPrincipalDos {
 						for (int j = 0; j < arrayAnimales[i].length; j++) {
 							// Si el topo está más tiempo del que puede estar fuera
 							if( getArrayAnimales()[i][j].getFechaCreacion() != 0 ){
-								if( System.currentTimeMillis() - getArrayAnimales()[i][j].getFechaCreacion() >= TIEMPO_FUERA_TOPO*1000){
+								if( System.currentTimeMillis() - getArrayAnimales()[i][j].getFechaCreacion() >= (TIEMPO_FUERA_TOPO*1000 -puntuacion*2)){
 									quitaAnimal( i, j ); // Quitamos el topo
 									getArrayAnimales()[i][j].setFechaCreacion(0); // Ponemos la fecha de creacion a 0
 									// Sumamos uno a los eliminados si son menos de dos
@@ -546,13 +560,15 @@ public class VentanaPrincipalDos {
 										if (eliminados < MAX_TOPOS_PERDIDOS ) {
 											eliminados++;
 											System.out.println(eliminados);}
-										if((getArrayAnimales()[i][j] instanceof Gatete))
+										else
+											acaba();}
+										if((getArrayAnimales()[i][j] instanceof Gatete)){
 											acaba();
+											VentanaInicial2.t.interrupt();}
+										
 									}
 								}
 							}
-						}
-						//TODO: Golpe de maso quita topo y suma puntuacion
 					}
 				}
 			
@@ -563,7 +579,7 @@ public class VentanaPrincipalDos {
 							"Game Over",
 							JOptionPane.INFORMATION_MESSAGE);
 			cargaEnBD();
-			System.exit(0);		
+			miVentana.dispose();		
 		}
 		public void acaba(){
 			sigue = false;
