@@ -64,7 +64,7 @@ public class VentanaPrincipalDos {
 		puntuacion = 0;
 		eliminados = 0;
 		// Crear ventana inicial
-		miVentana = new JFrame("Prueba de paneles de Swing");        
+		miVentana = new JFrame("Topetes");        
 		// Acabar de crear y hacer visible ventana
 		miVentana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
 		miVentana.setSize( 700, 755);
