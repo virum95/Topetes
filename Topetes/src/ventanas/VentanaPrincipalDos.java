@@ -41,8 +41,8 @@ public class VentanaPrincipalDos {
 	static JPanel panelImagen3;
 	static JPanel panelImagen4;
 
-	private Animal[][] arrayAnimales = new Animal[12][3];
-	private static JPanel[][] arrayPaneles = new JPanel[12][3];
+	private Animal[][] arrayAnimales = new Animal[12][4];
+	private static JPanel[][] arrayPaneles = new JPanel[12][4];
 	private boolean[] ocupado = new boolean[12];
 	protected static int eliminados;
 	protected static int puntuacion;
@@ -67,7 +67,8 @@ public class VentanaPrincipalDos {
 					arrayAnimales[i][j] = new Topete(TipoTopo.CASCO);
 				if(j==2)
 					arrayAnimales[i][j] = new Topete(TipoTopo.JUGGERNAUT);
-
+				if(j==3)
+					arrayAnimales[i][j] = new Gatete();
 			}
 		}
 
@@ -148,18 +149,23 @@ public class VentanaPrincipalDos {
 		miVentana.setVisible(true);
 
 		MiRunnable2 miHilo2 = new VentanaPrincipalDos.MiRunnable2();
-		Thread elHilo2 = new Thread( miHilo2 );
-		elHilo2.start();
+//		Thread elHilo2 = new Thread( miHilo2 );
+//		elHilo2.start();
 
-		//				miHilo2.saleTopo(arrayPaneles[0][1]);
-		//				miHilo2.saleTopo(arrayPaneles[2][1]);
-		//				miHilo2.saleTopo(arrayPaneles[3][1]);
-		//				miHilo2.saleTopo(arrayPaneles[7][1]);
-		//				
-		//				miHilo2.entraTopo(arrayPaneles[0][1]);
-		//				miHilo2.entraTopo(arrayPaneles[2][1]);
-		//				miHilo2.entraTopo(arrayPaneles[3][1]);
-		//				miHilo2.entraTopo(arrayPaneles[7][1]);
+						miHilo2.saleTopo(arrayPaneles[0][0]);
+						miHilo2.saleTopo(arrayPaneles[2][1]);
+						miHilo2.saleTopo(arrayPaneles[3][2]);
+						miHilo2.saleTopo(arrayPaneles[7][3]);
+						try {
+							Thread.sleep(7000);
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						miHilo2.entraTopo(arrayPaneles[0][0]);
+						miHilo2.entraTopo(arrayPaneles[2][1]);
+						miHilo2.entraTopo(arrayPaneles[3][2]);
+						miHilo2.entraTopo(arrayPaneles[7][3]);
 	}
 
 	public Animal[][] getArrayAnimales() {
@@ -279,7 +285,7 @@ public class VentanaPrincipalDos {
 								quitaAnimal( i, j ); // Quitamos el topo
 								getArrayAnimales()[i][j].setFechaCreacion(0); // Ponemos la fecha de creacion a 0
 								// Sumamos uno a los eliminados si son menos de dos
-								if( eliminados < 2 )
+								if( eliminados < 200 )
 									eliminados++;
 								else
 									acaba();
@@ -288,11 +294,11 @@ public class VentanaPrincipalDos {
 					}
 				}
 
-				//TODO: Golpe de maso quita 
+				//TODO: Golpe de maso quita topo y suma puntuacion
 
 			}
 			JOptionPane.showInputDialog(null,
-			"Fin del Juego. Tu puntuacion final ha sido de "+VentanaPrincipal.getVentana().puntuacion+". Introduce el nombre del jugador:", 
+			"Fin del Juego. Tu puntuacion final ha sido de "+puntuacion+". Introduce el nombre del jugador:", 
 			"Game Over",
 			JOptionPane.INFORMATION_MESSAGE);
 
@@ -333,7 +339,7 @@ public class VentanaPrincipalDos {
 
 		private void saleTopoRec( JPanel j, int posInicial ){
 			int posActual = (int)j.getLocation().getY();
-			if(  posInicial - posActual >= 110 ){
+			if(  posInicial - posActual >= 135 ){
 			}else {
 				j.setLocation((int)j.getLocation().getX(), posActual-1);
 				try {
@@ -357,7 +363,7 @@ public class VentanaPrincipalDos {
 		 */
 		private void entraTopoRec( JPanel j, int posInicial ){
 			int posActual = (int)j.getLocation().getY();
-			if(  posActual - posInicial >= 110 ){
+			if(  posActual - posInicial >= 135 ){
 			}else {
 				j.setLocation((int)j.getLocation().getX(), posActual+1);
 				try {

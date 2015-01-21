@@ -101,11 +101,11 @@ public class VentanaScore {
 		
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
 		Image imagen = toolkit.getImage("src/img/Maso.png");
-		final Cursor c = toolkit.createCustomCursor(imagen , new Point(0,0), "img");
+		final Cursor c = toolkit.createCustomCursor(imagen , new Point(7,25), "img");
 		frame.setCursor(c);
 		
 		Image imagen1 = toolkit.getImage("src/img/Masogolpe.png");
-		final Cursor c1 = toolkit.createCustomCursor(imagen1, new Point(0,0), "img");
+		final Cursor c1 = toolkit.createCustomCursor(imagen1, new Point(7,25), "img");
 
 		JPanel panel = new JPanel();
 		frame.getContentPane().add(panel, BorderLayout.CENTER);
