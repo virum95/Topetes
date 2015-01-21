@@ -1,8 +1,6 @@
 package ventanas;
 
 import java.awt.Color;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.lang.reflect.InvocationTargetException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -157,36 +155,46 @@ public class VentanaPrincipalDos {
 		Thread elHilo2 = new Thread( miHilo2 );
 		elHilo2.start();
 
-		//						miHilo2.saleTopo(arrayPaneles[0][0]);
-		//						miHilo2.saleTopo(arrayPaneles[2][1]);
-		//						miHilo2.saleTopo(arrayPaneles[3][2]);
-		//						miHilo2.saleTopo(arrayPaneles[7][3]);
-		//						try {
-		//							Thread.sleep(7000);
-		//						} catch (InterruptedException e) {
-		//							e.printStackTrace();
-		//						}
-		//						miHilo2.entraTopo(arrayPaneles[0][0]);
-		//						miHilo2.entraTopo(arrayPaneles[2][1]);
-		//						miHilo2.entraTopo(arrayPaneles[3][2]);
-		//						miHilo2.entraTopo(arrayPaneles[7][3]);
+//								miHilo2.saleTopo(arrayPaneles[0][0]);
+//								miHilo2.saleTopo(arrayPaneles[2][1]);
+//								miHilo2.saleTopo(arrayPaneles[3][2]);
+//								miHilo2.saleTopo(arrayPaneles[7][3]);
+//								try {
+//									Thread.sleep(7000);
+//								} catch (InterruptedException e) {
+//									e.printStackTrace();
+//								}
+//								miHilo2.entraTopo(arrayPaneles[0][0]);
+//								miHilo2.entraTopo(arrayPaneles[2][1]);
+//								miHilo2.entraTopo(arrayPaneles[3][2]);
+//								miHilo2.entraTopo(arrayPaneles[7][3]);
 	}
 
-	/** Método que devuelve el array de 
-	 * @return
+	/** Método que devuelve el array de Animales
+	 * @return array de animales
 	 */
 	public Animal[][] getArrayAnimales() {
 		return arrayAnimales;
 	}
 
+	/** Método que devuelve el array de los paneles
+	 * @return array que contiene los paneles
+	 */
 	public static JPanel[][] getArrayPaneles() {
 		return arrayPaneles;
 	}
 
+	/** Método que devuelve el array de las casillas ocupadas
+	 * @return array de las casillas ocupadas
+	 */
 	public boolean[] getOcupado() {
 		return ocupado;
 	}
 
+	/** Metodo que comprueba si todas las casillas estan llenas
+	 * @return true	 - Todas las casillas llenas
+	 * 		   false - Hay alguna casilla que no esta llena
+	 */
 	public boolean estamosLlenos(){
 		for (int i = 0; i < ocupado.length; i++) {
 			if(!ocupado[i])
@@ -200,6 +208,12 @@ public class VentanaPrincipalDos {
 
 	}
 
+	/** Clase que permite lanzar un hilo para introducir todos los animales en 
+	 * 	la ventana. Se hace en un hilo para que el hilo principal espere a que 
+	 * 	esten todos creados
+	 * @author Gaizka
+	 *
+	 */
 	class MiRunnable implements Runnable {
 
 		@Override
@@ -268,6 +282,7 @@ public class VentanaPrincipalDos {
 			}
 		}
 	}
+	
 	class MiRunnable2 implements Runnable {
 
 		private boolean sigue = true;
@@ -293,7 +308,7 @@ public class VentanaPrincipalDos {
 								getArrayAnimales()[i][j].setFechaCreacion(0); // Ponemos la fecha de creacion a 0
 								// Sumamos uno a los eliminados si son menos de dos
 								if(!(getArrayAnimales()[i][j] instanceof Gatete)){
-									if (eliminados < 2 ) 
+									if (eliminados < 200 ) 
 										eliminados++;
 									else 
 										acaba();
@@ -301,9 +316,7 @@ public class VentanaPrincipalDos {
 							}
 						}
 					}
-
 					//TODO: Golpe de maso quita topo y suma puntuacion
-
 				}
 
 			}
@@ -312,7 +325,7 @@ public class VentanaPrincipalDos {
 								"Fin del Juego. Tu puntuacion final ha sido de "+VentanaPrincipal.getVentana().puntuacion+". Introduce el nombre del jugador:",
 								"Game Over",
 								JOptionPane.INFORMATION_MESSAGE);
-
+				System.exit(0);			
 		}
 
 		public void cargaEnBD()
@@ -370,7 +383,7 @@ public class VentanaPrincipalDos {
 			saleTopoRec(j, posInicial);
 		}
 
-		private void saleTopoRec( JPanel j, int posInicial ){
+		private void saleTopoRec( JPanel j, int posInicial){
 			int posActual = (int)j.getLocation().getY();
 			if(  posInicial - posActual >= 135 ){
 			}else {
