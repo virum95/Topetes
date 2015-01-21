@@ -141,6 +141,7 @@ public class VentanaInicial2 {
 				       VentanaPrincipalDos ventana= new VentanaPrincipalDos();   
 				    }
 
+				    
 				   });
 				t.start();
 				frame.setCursor(c);
