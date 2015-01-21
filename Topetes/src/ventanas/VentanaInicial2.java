@@ -174,6 +174,7 @@ public class VentanaInicial2 {
 				frame.setCursor(c);
 				VentanaScore ventana = new VentanaScore();
 				ventana.main(null);
+				frame.dispose();
 			}
 			
 			@Override
