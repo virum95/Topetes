@@ -4,15 +4,12 @@ import java.awt.EventQueue;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.Toolkit;
-
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-
 import java.awt.BorderLayout;
-
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
-
 import java.awt.Font;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -40,7 +37,6 @@ public class VentanaScore {
 	public static JLabel label_7;
 	public static JLabel label_8;
 	public static JLabel label_9;
-	
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -192,52 +188,57 @@ public class VentanaScore {
 				frame.setCursor(c1);
 			}
 		});
-		
+
 		JLabel lblReset = new JLabel("");
-		lblReset.setIcon(new ImageIcon(VentanaScore.class.getResource("/img/reset.png")));
+		lblReset.setIcon(new ImageIcon(VentanaScore.class
+				.getResource("/img/reset.png")));
 		lblReset.setBounds(5, 195, 81, 80);
 		panel.add(lblReset);
-		
-		//Boton Reset
+
+		// Boton Reset
 		JButton btnReset = new JButton("");
 		btnReset.setBounds(5, 208, 74, 46);
 		btnReset.setOpaque(false);
 		btnReset.setContentAreaFilled(false);
 		btnReset.setBorderPainted(false);
 		panel.add(btnReset);
-		btnReset.addMouseListener(new MouseAdapter()  {
-			
+		btnReset.addMouseListener(new MouseAdapter() {
+
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				frame.setCursor(c);
-				try {
-					Class.forName("org.sqlite.JDBC");
-					Connection con = null;
+				int n = JOptionPane.showConfirmDialog(null,
+						"¿Va a proceder a borrar la base de datos?");
+				if (n == JOptionPane.YES_OPTION) {
+					frame.setCursor(c);
 					try {
-						con = DriverManager
-								.getConnection("jdbc:sqlite:bin/Score");
-					} finally {
+						Class.forName("org.sqlite.JDBC");
+						Connection con = null;
+						try {
+							con = DriverManager
+									.getConnection("jdbc:sqlite:bin/Score");
+						} finally {
 
+						}
+						Statement stmt = con.createStatement();
+						String s1 = "DELETE FROM TABLA";
+						stmt.executeUpdate(s1);
+						stmt.close();
+						con.close();
+						frame.dispose();
+						VentanaScore.main(null);
+					} catch (Exception a) {
 					}
-					Statement stmt = con.createStatement();
-					String s1 = "DELETE FROM TABLA";
-					stmt.executeUpdate(s1);
-					stmt.close();
-					con.close();
-					obtenerPuntuacion(stmt);				
-				} catch (Exception a) {
+					frame.repaint();
+					frame.revalidate();
 				}
-				frame.repaint();
-				frame.revalidate();
 			}
-			
+
 			@Override
 			public void mousePressed(MouseEvent e) {
 				frame.setCursor(c1);
-				
+
 			}
 		});
-		
 
 		// Jlabel con la imagen de fondo
 		JLabel lblNewLabel = new JLabel("");
