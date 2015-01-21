@@ -514,7 +514,7 @@ public class VentanaPrincipalDos {
 					for (int j = 0; j < arrayAnimales[i].length; j++) {
 						// Si el topo está más tiempo del que puede estar fuera
 						if( getArrayAnimales()[i][j].getFechaCreacion() != 0 ){
-							if( System.currentTimeMillis() - getArrayAnimales()[i][j].getFechaCreacion() >= TIEMPO_FUERA_TOPO*1000){
+							if( System.currentTimeMillis() - getArrayAnimales()[i][j].getFechaCreacion() >= TIEMPO_FUERA_TOPO*1000 - puntuacion/4){
 								quitaAnimal( i, j ); // Quitamos el topo
 								getArrayAnimales()[i][j].setFechaCreacion(0); // Ponemos la fecha de creacion a 0
 								// Sumamos uno a los eliminados si son menos de dos
