@@ -20,7 +20,7 @@ public class VentanaPrincipalDos {
 	final int X_EJE_TRES = 522;
 
 	final int Y_EJE_UNO = 160;
-	final int Y_EJE_DOS = 335;
+	final int Y_EJE_DOS = 336;
 	final int Y_EJE_TRES = 530;
 	final int Y_EJE_CUATRO = 710;
 
