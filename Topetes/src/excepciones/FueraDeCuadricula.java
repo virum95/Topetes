@@ -26,5 +26,4 @@ public class FueraDeCuadricula extends Exception {
 			boolean arg3) {
 		super(arg0, arg1, arg2, arg3);
 	}
-
 }

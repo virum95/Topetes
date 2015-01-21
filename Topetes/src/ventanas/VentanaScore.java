@@ -42,7 +42,6 @@ public class VentanaScore {
 	public static JLabel label_9;
 	private JButton btnNewButton;
 
-
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -52,8 +51,9 @@ public class VentanaScore {
 					Class.forName("org.sqlite.JDBC");
 					Connection con = null;
 					try {
-						con = DriverManager.getConnection("jdbc:sqlite:bin/Score");
-					}finally{
+						con = DriverManager
+								.getConnection("jdbc:sqlite:bin/Score");
+					} finally {
 
 					}
 					Statement stmt = con.createStatement();
@@ -72,7 +72,7 @@ public class VentanaScore {
 					} catch (Exception e) {
 						System.out.println("No hay tantas puntuaciones.");
 					}
-					
+
 					stmt.close();
 					con.close();
 				} catch (Exception e) {
@@ -86,10 +86,10 @@ public class VentanaScore {
 		initialize();
 	}
 
-
-	public static void obtenerPuntuacion(Statement stmt) throws SQLException{
-		ResultSet rs = stmt.executeQuery("SELECT * FROM TABLA ORDER BY PUNTUACION DESC");
-		while(rs.next()){
+	public static void obtenerPuntuacion(Statement stmt) throws SQLException {
+		ResultSet rs = stmt
+				.executeQuery("SELECT * FROM TABLA ORDER BY PUNTUACION DESC");
+		while (rs.next()) {
 			listaNombre.add(rs.getString(1));
 			listaScore.add(Integer.parseInt(rs.getString(2)));
 		}
@@ -101,28 +101,30 @@ public class VentanaScore {
 		frame.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
 		frame.setBounds(100, 100, 275, 380);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		
-		//Imagen del cursor cambiar lo de dentro del getImage para que cambie 
+
+		// Imagen del cursor cambiar lo de dentro del getImage para que cambie
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
 		Image imagen = toolkit.getImage("src/img/Maso.png");
-		final Cursor c = toolkit.createCustomCursor(imagen , new Point(7,25), "img");
+		final Cursor c = toolkit.createCustomCursor(imagen, new Point(7, 25),
+				"img");
 		frame.setCursor(c);
-		
-		Image imagen1 = toolkit.getImage("src/img/Masogolpe.png");
-		final Cursor c1 = toolkit.createCustomCursor(imagen1, new Point(7,25), "img");
 
-		//Panel principal
+		Image imagen1 = toolkit.getImage("src/img/Masogolpe.png");
+		final Cursor c1 = toolkit.createCustomCursor(imagen1, new Point(7, 25),
+				"img");
+
+		// Panel principal
 		JPanel panel = new JPanel();
 		frame.getContentPane().add(panel, BorderLayout.CENTER);
 		panel.setLayout(null);
 
-		//Label SCORE de arriba
+		// Label SCORE de arriba
 		JLabel lblScore = new JLabel("SCORE");
 		lblScore.setFont(new Font("Stencil", Font.ITALIC, 26));
 		lblScore.setBounds(73, 11, 113, 33);
 		panel.add(lblScore);
 
-		//Labels de carga de las puntuaciones
+		// Labels de carga de las puntuaciones
 		label = new JLabel();
 		label.setBounds(27, 50, 64, 14);
 		panel.add(label);
@@ -162,27 +164,28 @@ public class VentanaScore {
 		label_9 = new JLabel();
 		label_9.setBounds(147, 170, 91, 14);
 		panel.add(label_9);
-		
+
 		JLabel label_10 = new JLabel("");
-		label_10.setIcon(new ImageIcon(VentanaScore.class.getResource("/img/cartelbueno.png")));
+		label_10.setIcon(new ImageIcon(VentanaScore.class
+				.getResource("/img/cartelbueno.png")));
 		label_10.setBounds(157, 195, 102, 74);
 		panel.add(label_10);
-		
-		//Boton invisible del cartel de BACK
+
+		// Boton invisible del cartel de BACK
 		btnNewButton = new JButton("");
 		btnNewButton.setOpaque(false);
 		btnNewButton.setContentAreaFilled(false);
 		btnNewButton.setBorderPainted(false);
 		btnNewButton.setBounds(179, 195, 57, 59);
 		btnNewButton.addMouseListener(new MouseAdapter() {
-			
+
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				frame.setCursor(c);
 				frame.dispose();
 				VentanaInicial.main(null);
 			}
-			
+
 			@Override
 			public void mousePressed(MouseEvent e) {
 				frame.setCursor(c1);
@@ -190,22 +193,24 @@ public class VentanaScore {
 		});
 		panel.add(btnNewButton);
 
-		//Jlabel con la imagen de fondo
+		// Jlabel con la imagen de fondo
 		JLabel lblNewLabel = new JLabel("");
 		lblNewLabel.setBounds(0, 0, 262, 343);
-		lblNewLabel.setIcon(new ImageIcon(VentanaScore.class.getResource("/img/fondoventanainicial.png")));
+		lblNewLabel.setIcon(new ImageIcon(VentanaScore.class
+				.getResource("/img/fondoventanainicial.png")));
 		panel.add(lblNewLabel);
 
-		//Cambia el cursor cada vez que se clica
+		// Cambia el cursor cada vez que se clica
 		frame.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				frame.setCursor(c);
 
 			}
+
 			@Override
 			public void mousePressed(MouseEvent e) {
-				frame.setCursor(c1);				
+				frame.setCursor(c1);
 			}
 		});
 

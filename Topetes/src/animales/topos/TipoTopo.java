@@ -1,5 +1,3 @@
 package animales.topos;
 
-public enum TipoTopo { NORMAL, CASCO, JUGGERNAUT
-
-}
+public enum TipoTopo { NORMAL, CASCO, JUGGERNAUT}

@@ -23,6 +23,7 @@ public class VentanaInicial {
 
 	private JFrame frame;
 	static Thread t;
+
 	/**
 	 * Launch the application.
 	 */
@@ -51,21 +52,23 @@ public class VentanaInicial {
 		frame.setBounds(100, 100, 278, 368);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		//Panel principal
+		// Panel principal
 		JPanel panel = new JPanel();
 		frame.getContentPane().add(panel, BorderLayout.CENTER);
 		panel.setLayout(null);
 
-		//Imagen del cursor cambiar lo de dentro del getImage para que cambie 
+		// Imagen del cursor cambiar lo de dentro del getImage para que cambie
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
 		Image imagen = toolkit.getImage("src/img/Maso.png");
-		final Cursor c = toolkit.createCustomCursor(imagen , new Point(7,25), "img");
-		frame.setCursor (c);
+		final Cursor c = toolkit.createCustomCursor(imagen, new Point(7, 25),
+				"img");
+		frame.setCursor(c);
 
 		Image imagen1 = toolkit.getImage("src/img/Masogolpe.png");
-		final Cursor c1 = toolkit.createCustomCursor(imagen1, new Point(7,25), "img");
+		final Cursor c1 = toolkit.createCustomCursor(imagen1, new Point(7, 25),
+				"img");
 
-		//Cambia el cursor cada vez que se clica
+		// Cambia el cursor cada vez que se clica
 		frame.addMouseListener(new MouseAdapter() {
 
 			@Override
@@ -75,51 +78,54 @@ public class VentanaInicial {
 
 			@Override
 			public void mousePressed(MouseEvent e) {
-				frame.setCursor(c1);				
+				frame.setCursor(c1);
 			}
 		});
 
-		//Label de TOPETES (arriba del todo)
+		// Label de TOPETES (arriba del todo)
 		JLabel lblTopetes = new JLabel("TOPETES");
 		lblTopetes.setFont(new Font("Stencil", Font.PLAIN, 37));
 		lblTopetes.setBounds(46, 0, 202, 49);
 		panel.add(lblTopetes);
 
-		//Label de PLAY
+		// Label de PLAY
 		JLabel lblPlay = new JLabel("PLAY");
 		lblPlay.setForeground(new Color(0, 0, 0));
 		lblPlay.setFont(new Font("Stencil", Font.PLAIN, 17));
 		lblPlay.setBounds(126, 78, 64, 32);
 		panel.add(lblPlay);
 
-		//Label de SCORE
+		// Label de SCORE
 		JLabel lblScoreboard = new JLabel("SCORE");
 		lblScoreboard.setForeground(Color.BLACK);
 		lblScoreboard.setFont(new Font("Stencil", Font.PLAIN, 17));
 		lblScoreboard.setBounds(119, 104, 74, 32);
 		panel.add(lblScoreboard);
 
-		//Label de EXIT
+		// Label de EXIT
 		JLabel lblExit = new JLabel("EXIT");
 		lblExit.setForeground(Color.BLACK);
 		lblExit.setFont(new Font("Stencil", Font.PLAIN, 17));
 		lblExit.setBounds(126, 127, 64, 32);
 		panel.add(lblExit);
 
-		//Label con el cartel
+		// Label con el cartel
 		JLabel label_1 = new JLabel("");
-		label_1.setIcon(new ImageIcon(VentanaInicial.class.getResource("/img/carte1l.png")));
+		label_1.setIcon(new ImageIcon(VentanaInicial.class
+				.getResource("/img/carte1l.png")));
 		label_1.setBounds(10, 21, 238, 254);
 		panel.add(label_1);
 
-		//Label con el fondo de la ventana
+		// Label con el fondo de la ventana
 		JLabel label = new JLabel("");
-		label.setIcon(new ImageIcon(VentanaInicial.class.getResource("/img/fondoventanainicial.png")));
+		label.setIcon(new ImageIcon(VentanaInicial.class
+				.getResource("/img/fondoventanainicial.png")));
 		label.setBounds(0, 0, 262, 329);
 		panel.add(label);
 
-		//Los botones estan invisibles detras de los dibujos y los de arriba son jlabels
-		//Boton de play
+		// Los botones estan invisibles detras de los dibujos y los de arriba
+		// son jlabels
+		// Boton de play
 		JButton btnPlay = new JButton("");
 		btnPlay.setBounds(104, 78, 89, 23);
 		btnPlay.setOpaque(false);
@@ -127,14 +133,13 @@ public class VentanaInicial {
 		btnPlay.setBorderPainted(false);
 		panel.add(btnPlay);
 
-
-		btnPlay.addMouseListener(new MouseAdapter() { 
+		btnPlay.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				t = new Thread(new Runnable() {
 					@Override
 					public void run() {
-						new VentanaPrincipalDos(frame);   
+						new VentanaPrincipalDos(frame);
 					}
 
 				});
@@ -149,7 +154,7 @@ public class VentanaInicial {
 			}
 		});
 
-		//Boton de scoreboard
+		// Boton de scoreboard
 		JButton button = new JButton("");
 		button.setBounds(104, 104, 89, 32);
 		button.setOpaque(false);
@@ -171,7 +176,7 @@ public class VentanaInicial {
 			}
 		});
 
-		//Boton de Exit
+		// Boton de Exit
 		JButton button_1 = new JButton("");
 		button_1.setBounds(104, 136, 89, 23);
 		button_1.setOpaque(false);

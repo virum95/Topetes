@@ -92,5 +92,4 @@ public class Topete extends Animal{
 	
 	public static void main(String[] args) {	
 	}
-
 }
