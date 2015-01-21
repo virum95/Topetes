@@ -130,6 +130,7 @@ public class VentanaPrincipalDos {
 									((Topete)arrayAnimales[a][b]).setVidas(2);
 								if(((Topete)arrayAnimales[a][b]).getTipo() == TipoTopo.JUGGERNAUT)
 									((Topete)arrayAnimales[a][b]).setVidas(3);
+								
 							}
 						}
 
