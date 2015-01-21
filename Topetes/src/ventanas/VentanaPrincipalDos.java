@@ -4,6 +4,9 @@ import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.lang.reflect.InvocationTargetException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.Statement;
 import java.util.Random;
 
 import javax.swing.*;
@@ -40,6 +43,8 @@ public class VentanaPrincipalDos {
 	static JPanel panelImagen2;
 	static JPanel panelImagen3;
 	static JPanel panelImagen4;
+	
+	static String nombreJugador;
 
 	private Animal[][] arrayAnimales = new Animal[12][3];
 	private static JPanel[][] arrayPaneles = new JPanel[12][3];
@@ -291,12 +296,34 @@ public class VentanaPrincipalDos {
 				//TODO: Golpe de maso quita 
 
 			}
-			JOptionPane.showInputDialog(null,
+			nombreJugador = 
+					JOptionPane.showInputDialog(null,
 			"Fin del Juego. Tu puntuacion final ha sido de "+VentanaPrincipal.getVentana().puntuacion+". Introduce el nombre del jugador:", 
 			"Game Over",
 			JOptionPane.INFORMATION_MESSAGE);
 
 
+		}
+		
+		public void cargaEnBD()
+		{
+			try {
+				Class.forName("org.sqlite.JDBC");
+				Connection con = null;
+				try {
+					con = DriverManager.getConnection("jdbc:sqlite:bin/Score");
+				}finally{
+
+				}
+				Statement stmt = con.createStatement();
+				String string = "INSERT INTO TABLA VALUES ('"+nombreJugador+"', "+VentanaPrincipal.getVentana().puntuacion+")";
+				stmt.executeUpdate(string);
+				stmt.close();
+				con.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
 		}
 
 		public void creaAnimal () {

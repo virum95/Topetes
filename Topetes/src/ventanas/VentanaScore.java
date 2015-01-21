@@ -23,8 +23,10 @@ import java.util.ArrayList;
 import java.awt.Cursor;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+
 import javax.swing.JButton;
 import javax.swing.border.BevelBorder;
+
 import java.awt.Color;
 
 public class VentanaScore {
@@ -60,16 +62,21 @@ public class VentanaScore {
 					}
 					Statement stmt = con.createStatement();
 					obtenerPuntuacion(stmt);
-					label.setText(listaNombre.get(0));
-					label_5.setText(listaScore.get(0).toString());
-					label_1.setText(listaNombre.get(1));
-					label_6.setText(listaScore.get(1).toString());
-					label_2.setText(listaNombre.get(2));
-					label_7.setText(listaScore.get(2).toString());
-					label_3.setText(listaNombre.get(3));
-					label_8.setText(listaScore.get(3).toString());
-					label_4.setText(listaNombre.get(4));
-					label_9.setText(listaScore.get(4).toString());
+					try {
+						label.setText(listaNombre.get(0));
+						label_5.setText(listaScore.get(0).toString());
+						label_1.setText(listaNombre.get(1));
+						label_6.setText(listaScore.get(1).toString());
+						label_2.setText(listaNombre.get(2));
+						label_7.setText(listaScore.get(2).toString());
+						label_3.setText(listaNombre.get(3));
+						label_8.setText(listaScore.get(3).toString());
+						label_4.setText(listaNombre.get(4));
+						label_9.setText(listaScore.get(4).toString());
+					} catch (Exception e) {
+						System.out.println("No hay tantas puntuaciones.");
+					}
+					
 					stmt.close();
 					con.close();
 				} catch (Exception e) {
@@ -101,11 +108,11 @@ public class VentanaScore {
 		
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
 		Image imagen = toolkit.getImage("src/img/Maso.png");
-		final Cursor c = toolkit.createCustomCursor(imagen , new Point(0,0), "img");
+		final Cursor c = toolkit.createCustomCursor(imagen , new Point(7,25), "img");
 		frame.setCursor(c);
 		
 		Image imagen1 = toolkit.getImage("src/img/Masogolpe.png");
-		final Cursor c1 = toolkit.createCustomCursor(imagen1, new Point(0,0), "img");
+		final Cursor c1 = toolkit.createCustomCursor(imagen1, new Point(7,25), "img");
 
 		JPanel panel = new JPanel();
 		frame.getContentPane().add(panel, BorderLayout.CENTER);

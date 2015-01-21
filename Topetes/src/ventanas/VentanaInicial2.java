@@ -64,11 +64,11 @@ public class VentanaInicial2 {
 		//Imagen del cursor cambiar lo de dentro del getImage para que cambie 
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
 		Image imagen = toolkit.getImage("src/img/Maso.png");
-		final Cursor c = toolkit.createCustomCursor(imagen , new Point(0,0), "img");
+		final Cursor c = toolkit.createCustomCursor(imagen , new Point(7,25), "img");
 		frame.setCursor (c);
 
 		Image imagen1 = toolkit.getImage("src/img/Masogolpe.png");
-		final Cursor c1 = toolkit.createCustomCursor(imagen1, new Point(0,0), "img");
+		final Cursor c1 = toolkit.createCustomCursor(imagen1, new Point(7,25), "img");
 
 
 		frame.addMouseListener(new MouseListener() {
@@ -123,14 +123,15 @@ public class VentanaInicial2 {
 			}
 		});
 		
-		btnPlay.setBounds(104, 70, 89, 23);
+		btnPlay.setBounds(104, 78, 89, 23);
 		btnPlay.setOpaque(false);
 		btnPlay.setContentAreaFilled(false);
 		btnPlay.setBorderPainted(false);
 		panel.add(btnPlay);
 
 		JLabel lblTopetes = new JLabel("TOPETES");
-		lblTopetes.setBounds(55, 11, 46, 14);
+		lblTopetes.setFont(new Font("Stencil", Font.PLAIN, 37));
+		lblTopetes.setBounds(46, 0, 202, 49);
 		panel.add(lblTopetes);
 
 		JLabel lblPlay = new JLabel("PLAY");
@@ -142,7 +143,7 @@ public class VentanaInicial2 {
 		JLabel lblScoreboard = new JLabel("SCORE");
 		lblScoreboard.setForeground(Color.BLACK);
 		lblScoreboard.setFont(new Font("Stencil", Font.PLAIN, 17));
-		lblScoreboard.setBounds(114, 104, 79, 32);
+		lblScoreboard.setBounds(119, 104, 74, 32);
 		panel.add(lblScoreboard);
 
 		JLabel lblExit = new JLabel("EXIT");
@@ -162,7 +163,7 @@ public class VentanaInicial2 {
 		panel.add(label);
 
 		JButton button = new JButton("");
-		button.setBounds(104, 93, 89, 23);
+		button.setBounds(104, 104, 89, 23);
 		button.setOpaque(false);
 		button.setContentAreaFilled(false);
 		button.setBorderPainted(false);
@@ -196,7 +197,7 @@ public class VentanaInicial2 {
 		});
 	
 		JButton button_1 = new JButton("");
-		button_1.setBounds(104, 120, 89, 23);
+		button_1.setBounds(104, 136, 89, 23);
 		button_1.setOpaque(false);
 		button_1.setContentAreaFilled(false);
 		button_1.setBorderPainted(false);
