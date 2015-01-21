@@ -162,7 +162,7 @@ public class VentanaInicial2 {
 		panel.add(label);
 
 		JButton button = new JButton("");
-		button.setBounds(104, 104, 89, 23);
+		button.setBounds(104, 104, 89, 32);
 		button.setOpaque(false);
 		button.setContentAreaFilled(false);
 		button.setBorderPainted(false);
