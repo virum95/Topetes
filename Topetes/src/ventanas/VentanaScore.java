@@ -94,8 +94,8 @@ public class VentanaScore {
 	public static void obtenerPuntuacion(Statement stmt) throws SQLException{
 		ResultSet rs = stmt.executeQuery("SELECT * FROM TABLA ORDER BY PUNTUACION DESC");
 		while(rs.next()){
-			listaNombre.add(rs.getString(2));
-			listaScore.add(Integer.parseInt(rs.getString(3)));
+			listaNombre.add(rs.getString(1));
+			listaScore.add(Integer.parseInt(rs.getString(2)));
 		}
 		rs.close();
 	}

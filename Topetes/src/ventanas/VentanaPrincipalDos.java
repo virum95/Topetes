@@ -398,26 +398,7 @@ public class VentanaPrincipalDos {
 			acaba();
 		}
 
-		public void cargaEnBD()
-		{
-			try {
-				Class.forName("org.sqlite.JDBC");
-				Connection con = null;
-				try {
-					con = DriverManager.getConnection("jdbc:sqlite:bin/Score");
-				}finally{
-
-				}
-				Statement stmt = con.createStatement();
-				String string = "INSERT INTO TABLA VALUES ('"+nombreJugador+"', "+puntuacion+")";
-				stmt.executeUpdate(string);
-				stmt.close();
-				con.close();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-
-		}
+		
 
 		/**	Método que hace que salga un animal. Elige aleatoriamente uno de los topos
 		 * 	Las posibilidades son:
@@ -521,6 +502,26 @@ public class VentanaPrincipalDos {
 			}
 		}
 		
+		public void cargaEnBD()
+		{
+			try {
+				Class.forName("org.sqlite.JDBC");
+				Connection con = null;
+				try {
+					con = DriverManager.getConnection("jdbc:sqlite:bin/Score");
+				}finally{
+
+				}
+				Statement stmt = con.createStatement();
+				String string = "INSERT INTO TABLA VALUES ('"+nombreJugador+"', "+puntuacion+")";
+				stmt.executeUpdate(string);
+				stmt.close();
+				con.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+		}
 		@Override
 		public void run() {
 			while(sigue){
@@ -553,6 +554,7 @@ public class VentanaPrincipalDos {
 							"Fin del Juego. Tu puntuacion final ha sido de "+puntuacion+". Introduce el nombre del jugador:",
 							"Game Over",
 							JOptionPane.INFORMATION_MESSAGE);
+			cargaEnBD();
 			System.exit(0);		
 		}
 		public void acaba(){
