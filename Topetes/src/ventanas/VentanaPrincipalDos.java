@@ -165,6 +165,7 @@ public class VentanaPrincipalDos {
 
 						@Override
 						public void mousePressed(MouseEvent arg0) {
+							sigue = false;
 							miVentana.setCursor(c);
 						}
 
@@ -545,7 +546,7 @@ public class VentanaPrincipalDos {
 										if (eliminados < MAX_TOPOS_PERDIDOS ) {
 											eliminados++;
 											System.out.println(eliminados);}
-										else 
+										if((getArrayAnimales()[i][j] instanceof Gatete))
 											acaba();
 									}
 								}
