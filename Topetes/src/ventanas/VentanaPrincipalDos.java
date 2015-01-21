@@ -461,7 +461,7 @@ public class VentanaPrincipalDos{
 
 		public void saleTopoRec( JPanel j, int posInicial, Animal a){
 			int posActual = (int)j.getLocation().getY();
-			if(  posInicial - posActual >= 135 && !a.isGolpeado()){
+			if(  posInicial - posActual >= 135 ){
 			}else {
 				j.setLocation((int)j.getLocation().getX(), posActual-1);
 				try {
@@ -502,7 +502,6 @@ public class VentanaPrincipalDos{
 		public void entraTopoRec( JPanel j, int posInicial, Animal a ){
 			int posActual = (int)j.getLocation().getY();
 			if(  posActual - posInicial >= 135 ){
-				a.setGolpeado(false);
 			}else {
 				j.setLocation((int)j.getLocation().getX(), posActual+1);
 				try {

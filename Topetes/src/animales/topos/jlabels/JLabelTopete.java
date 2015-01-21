@@ -10,6 +10,10 @@ import javax.swing.JLabel;
 import ventanas.VentanaPrincipal;
 import animales.topos.TipoTopo;
 
+/**	Clase que da una imagen al topo
+ * @author Gaizka
+ *
+ */
 public class JLabelTopete extends JLabel {
 
 	private static final long serialVersionUID = 741001305416508022L;

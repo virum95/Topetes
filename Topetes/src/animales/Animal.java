@@ -94,16 +94,11 @@ public abstract class Animal {
 		this.fuera = fuera;
 	}
 	
+	/**	Método que devuelve el estado del topo
+	 * @return	true si esta fuera, false si esta dentro
+	 */
 	public boolean isFuera() {
 		return fuera;
-	}
-	
-	public void setGolpeado(boolean golpeado) {
-		this.golpeado = golpeado;
-	}
-	
-	public boolean isGolpeado() {
-		return golpeado;
 	}
 	
 	@Override
