@@ -7,9 +7,7 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.Toolkit;
-import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.lang.reflect.InvocationTargetException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -154,9 +152,6 @@ public class VentanaPrincipalDos{
 				}
 				if(arrayAnimales[i][j] instanceof Gatete)
 				{
-
-					final int a = i;
-					final int b = j;
 
 					arrayAnimales[i][j].getImg().addMouseListener(new MouseAdapter()
 					{
@@ -545,10 +540,7 @@ public class VentanaPrincipalDos{
 						for (int j = 0; j < arrayAnimales[i].length; j++) {
 							// Si el topo está más tiempo del que puede estar fuera
 							if( getArrayAnimales()[i][j].getFechaCreacion() != 0 ){
-								int tiempo = TIEMPO_FUERA_TOPO*1000 -puntuacion*2;
-								if( tiempo < 100 )
-									tiempo = 100;
-								if( System.currentTimeMillis() - getArrayAnimales()[i][j].getFechaCreacion() >= ( tiempo )){
+								if( System.currentTimeMillis() - getArrayAnimales()[i][j].getFechaCreacion() >= ( TIEMPO_FUERA_TOPO*1000 -puntuacion*2 )){
 									quitaAnimal( i, j ); // Quitamos el topo
 									getArrayAnimales()[i][j].setFechaCreacion(0); // Ponemos la fecha de creacion a 0
 									// Sumamos uno a los eliminados si son menos de dos

@@ -1,14 +1,7 @@
 package animales.jlabels;
 
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Image;
-import java.awt.RenderingHints;
-import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
-import ventanas.VentanaPrincipal;
 
 /**	Clase para dar una imagen al gato
  * @author Gaizka

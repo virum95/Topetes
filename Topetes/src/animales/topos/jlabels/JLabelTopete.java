@@ -1,13 +1,8 @@
 package animales.topos.jlabels;
 
-import java.awt.Graphics2D;
-import java.awt.Image;
-import java.awt.RenderingHints;
-
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
-import ventanas.VentanaPrincipal;
 import animales.topos.TipoTopo;
 
 /**	Clase que da una imagen al topo
