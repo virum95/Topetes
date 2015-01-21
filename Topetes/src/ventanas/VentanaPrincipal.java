@@ -17,6 +17,10 @@ import java.io.Writer;
 import java.util.Random;
 
 
+/** Deprecated
+ * @author Gaizka
+ *
+ */
 public class VentanaPrincipal extends JFrame{
 
 	/**

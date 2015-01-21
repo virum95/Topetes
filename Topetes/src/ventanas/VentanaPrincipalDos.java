@@ -23,7 +23,7 @@ import animales.gatos.Gatete;
 import animales.topos.Topete;
 import animales.topos.TipoTopo;
 
-public class VentanaPrincipalDos {
+public class VentanaPrincipalDos{
 
 	protected final int X_EJE_UNO = 47;
 	protected final int X_EJE_DOS = 280;
@@ -59,7 +59,7 @@ public class VentanaPrincipalDos {
 	protected static JPanel px3;
 	protected static JPanel pPuntuacion;
 	protected static JLabel lPuntuacion;
-	
+
 
 	static String nombreJugador;
 
@@ -70,9 +70,12 @@ public class VentanaPrincipalDos {
 	protected static int eliminados;
 	protected static int puntuacion;
 	protected static boolean sigue= true;
+	protected static JFrame ventanaInicial;
 
-	public VentanaPrincipalDos () {
 
+	public VentanaPrincipalDos (JFrame frame) {
+
+		ventanaInicial = frame;
 		puntuacion = 0;
 		eliminados = 0;
 		lPuntuacion = new JLabel("Puntuación: "+puntuacion);
@@ -91,7 +94,7 @@ public class VentanaPrincipalDos {
 		lp = new JLayeredPane();
 		miVentana.setLayeredPane( lp );
 
-		
+
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
 		Image imagen = toolkit.getImage("src/img/Maso.png");
 		final Cursor c = toolkit.createCustomCursor(imagen , new Point(7,25), "img");
@@ -146,7 +149,7 @@ public class VentanaPrincipalDos {
 						public void mouseReleased(MouseEvent arg0) {
 							miVentana.setCursor(c);
 						}
-						
+
 					});
 				}
 				if(arrayAnimales[i][j] instanceof Gatete)
@@ -154,7 +157,7 @@ public class VentanaPrincipalDos {
 
 					final int a = i;
 					final int b = j;
-					
+
 					arrayAnimales[i][j].getImg().addMouseListener(new MouseAdapter()
 					{
 						@Override
@@ -178,14 +181,14 @@ public class VentanaPrincipalDos {
 		}
 
 		//				Click de raton muestra coordenadas
-//		miVentana.addMouseListener( new MouseAdapter() {
-//
-//			@Override
-//			public void mousePressed(MouseEvent e) {
-//				System.out.println(e.getX()+", "+e.getY());
-//			}
-//
-//		});
+		//		miVentana.addMouseListener( new MouseAdapter() {
+		//
+		//			@Override
+		//			public void mousePressed(MouseEvent e) {
+		//				System.out.println(e.getX()+", "+e.getY());
+		//			}
+		//
+		//		});
 
 		px1 = new JPanel();
 		px1.setBounds(560, 10, 70, 70);
@@ -380,7 +383,6 @@ public class VentanaPrincipalDos {
 		@Override
 		public void run() {
 			while(sigue){
-				
 				if(1200-puntuacion>=100)
 				{
 					if(!estamosLlenos()){
@@ -393,15 +395,18 @@ public class VentanaPrincipalDos {
 					}
 				}
 				else{
-				if(!estamosLlenos()){
-					creaAnimal();
-					try {
-						Thread.sleep( 1200 - puntuacion*2);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
+					int tiempo = 1200 - puntuacion*2;
+					if( tiempo < 0 )
+						tiempo = 1;
+					if(!estamosLlenos()){
+						creaAnimal();
+						try {
+							Thread.sleep( tiempo );
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
 					}
 				}
-			}
 			}
 			acaba();
 		}
@@ -520,6 +525,9 @@ public class VentanaPrincipalDos {
 
 				}
 				Statement stmt = con.createStatement();
+				if (nombreJugador == null) {
+					nombreJugador="Player";
+				}
 				String string = "INSERT INTO TABLA VALUES ('"+nombreJugador+"', "+puntuacion+")";
 				stmt.executeUpdate(string);
 				stmt.close();
@@ -538,7 +546,10 @@ public class VentanaPrincipalDos {
 						for (int j = 0; j < arrayAnimales[i].length; j++) {
 							// Si el topo está más tiempo del que puede estar fuera
 							if( getArrayAnimales()[i][j].getFechaCreacion() != 0 ){
-								if( System.currentTimeMillis() - getArrayAnimales()[i][j].getFechaCreacion() >= (TIEMPO_FUERA_TOPO*1000 -puntuacion*2)){
+								int tiempo = TIEMPO_FUERA_TOPO*1000 -puntuacion*2;
+								if( tiempo < 100 )
+									tiempo = 100;
+								if( System.currentTimeMillis() - getArrayAnimales()[i][j].getFechaCreacion() >= ( tiempo )){
 									quitaAnimal( i, j ); // Quitamos el topo
 									getArrayAnimales()[i][j].setFechaCreacion(0); // Ponemos la fecha de creacion a 0
 									// Sumamos uno a los eliminados si son menos de dos
@@ -551,10 +562,10 @@ public class VentanaPrincipalDos {
 												lp.add( px2, new Integer(61) );
 											if(eliminados == 3)
 												lp.add( px3, new Integer(62) );
-											}
+										}
 										if((getArrayAnimales()[i][j] instanceof Gatete) || eliminados >= MAX_TOPOS_PERDIDOS)
 											acaba();
-										
+
 									}
 								}
 							}
@@ -563,15 +574,17 @@ public class VentanaPrincipalDos {
 				}
 
 			}
-			nombreJugador = 
+			nombreJugador =
 					JOptionPane.showInputDialog(null,
 							"Fin del Juego. Tu puntuacion final ha sido de "+puntuacion+". Introduce el nombre del jugador:",
 							"Game Over",
 							JOptionPane.INFORMATION_MESSAGE);
 			cargaEnBD();
-
+			miVentana.dispose();
+			ventanaInicial.setVisible(true);
+			sigue = true;
 		}
-			
+
 		public void acaba(){
 			sigue = false;
 		}
