@@ -21,6 +21,7 @@ public abstract class Animal {
 	protected long fechaCreacion; // Fecha en la que se ha creado el topo
 	protected JLabel img;
 	protected boolean fuera;
+	protected boolean golpeado;
 
 	/** Constructor de la clase, crea un animal con 
 	 *  una posicion aleatoria en la cuadricula
@@ -87,11 +88,17 @@ public abstract class Animal {
 		this.fuera = fuera;
 	}
 	
-	private boolean getFuera() {
+	public boolean isFuera() {
 		return fuera;
 	}
 	
+	public void setGolpeado(boolean golpeado) {
+		this.golpeado = golpeado;
+	}
 	
+	public boolean isGolpeado() {
+		return golpeado;
+	}
 	
 	@Override
 	public String toString() {

@@ -32,8 +32,6 @@ public class VentanaPrincipalDos {
 	static JPanel p3;
 	static JPanel p4;
 	static JPanel p5;
-	static JPanel p6;
-	static JPanel p7;
 	static JLayeredPane lp;
 
 	static JPanel panelImagen0;
@@ -349,6 +347,12 @@ public class VentanaPrincipalDos {
 
 		}
 
+		/**	Método que hace que salga un animal. Elige aleatoriamente uno de los topos
+		 * 	Las posibilidades son:
+		 * 		60% para el topo normal
+		 * 		20% para el topo con casco
+		 * 		10% para el gato y para el topo negro
+		 */
 		public void creaAnimal () {
 			int j = 0;
 			int i;
@@ -356,36 +360,45 @@ public class VentanaPrincipalDos {
 				Random r = new Random();
 				i = r.nextInt(100);
 				if(i<61){
-					j = 0; //40
+					j = 0; //60
 				} else if (i>60 && i<71){
-					j = 3;
+					j = 3; //10
 				}else if (i>70 && i <91) {
-					j = 1;//15
+					j = 1;//20
 				}else if (i>90) {
-					j = 2;//15
+					j = 2;//10
 				}
 				i = r.nextInt(12);
 			}while(getOcupado()[i]);  //Evita que si ya hay un topo en el espacio seleccionado, se cree otro 
-			saleTopo(getArrayPaneles()[i][j]);
+			saleTopo(i, j);
 			ocupado[i] = true;
 			getArrayAnimales()[i][j].setFechaCreacion(System.currentTimeMillis());
 			getArrayAnimales()[i][j].setFuera(true);
 		}
 
+		/**	Método que quita un animal de pantalla	
+		 * @param panel		El panel en el que se encuentra el animal a quitar
+		 * @param animal	El animal que se quiere quitar
+		 */
 		public void quitaAnimal( int panel, int animal){
-			entraTopo(getArrayPaneles()[panel][animal]);
+			entraTopo(panel, animal);
 			getArrayAnimales()[panel][animal].setFuera(false);
 			ocupado[panel] = false;
 		}
 
-		public void saleTopo( JPanel j ){
+		/**	Método que hace que los topos se muevan hacia arriba. LLama a un metodo
+		 * @param j
+		 */
+		public void saleTopo( int panel, int animal ){
+			JPanel j = getArrayPaneles()[panel][animal];
+			Animal a = getArrayAnimales()[panel][animal];
 			int posInicial = (int)j.getLocation().getY();
-			saleTopoRec(j, posInicial);
+			saleTopoRec(j, posInicial, a);
 		}
 
-		private void saleTopoRec( JPanel j, int posInicial){
+		private void saleTopoRec( JPanel j, int posInicial, Animal a){
 			int posActual = (int)j.getLocation().getY();
-			if(  posInicial - posActual >= 135 ){
+			if(  posInicial - posActual >= 135 && !a.isGolpeado()){
 			}else {
 				j.setLocation((int)j.getLocation().getX(), posActual-1);
 				try {
@@ -393,13 +406,15 @@ public class VentanaPrincipalDos {
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
-				saleTopoRec(j, posInicial);
+				saleTopoRec(j, posInicial, a);
 			}
 		}
 
-		public void entraTopo( JPanel j ){
+		public void entraTopo( int panel, int animal ){
+			JPanel j = getArrayPaneles()[panel][animal];
+			Animal a = getArrayAnimales()[panel][animal];
 			int posInicial = (int)j.getLocation().getY();
-			entraTopoRec(j, posInicial);
+			entraTopoRec(j, posInicial, a);
 
 		}
 
@@ -407,9 +422,10 @@ public class VentanaPrincipalDos {
 		 * @param j
 		 * @param posInicial
 		 */
-		private void entraTopoRec( JPanel j, int posInicial ){
+		private void entraTopoRec( JPanel j, int posInicial, Animal a ){
 			int posActual = (int)j.getLocation().getY();
 			if(  posActual - posInicial >= 135 ){
+				a.setGolpeado(false);
 			}else {
 				j.setLocation((int)j.getLocation().getX(), posActual+1);
 				try {
@@ -417,7 +433,7 @@ public class VentanaPrincipalDos {
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
-				entraTopoRec(j, posInicial);
+				entraTopoRec(j, posInicial, a);
 			}
 		}
 		public void acaba(){
