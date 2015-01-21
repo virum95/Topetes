@@ -23,6 +23,8 @@ import java.util.ArrayList;
 import java.awt.Cursor;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+
 import javax.swing.JButton;
 
 public class VentanaScore {
@@ -40,7 +42,7 @@ public class VentanaScore {
 	public static JLabel label_7;
 	public static JLabel label_8;
 	public static JLabel label_9;
-	private JButton btnNewButton;
+	
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -172,11 +174,12 @@ public class VentanaScore {
 		panel.add(label_10);
 
 		// Boton invisible del cartel de BACK
-		btnNewButton = new JButton("");
+		JButton btnNewButton = new JButton("");
 		btnNewButton.setOpaque(false);
 		btnNewButton.setContentAreaFilled(false);
 		btnNewButton.setBorderPainted(false);
 		btnNewButton.setBounds(179, 195, 57, 59);
+		panel.add(btnNewButton);
 		btnNewButton.addMouseListener(new MouseAdapter() {
 
 			@Override
@@ -191,7 +194,50 @@ public class VentanaScore {
 				frame.setCursor(c1);
 			}
 		});
-		panel.add(btnNewButton);
+		
+		JLabel lblReset = new JLabel("");
+		lblReset.setIcon(new ImageIcon(VentanaScore.class.getResource("/img/reset.png")));
+		lblReset.setBounds(5, 195, 81, 80);
+		panel.add(lblReset);
+		
+		//Boton Reset
+		JButton btnReset = new JButton("");
+		btnReset.setBounds(5, 208, 74, 46);
+		btnReset.setOpaque(false);
+		btnReset.setContentAreaFilled(false);
+		btnReset.setBorderPainted(false);
+		panel.add(btnReset);
+		btnReset.addMouseListener(new MouseAdapter()  {
+			
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				frame.setCursor(c);
+				try {
+					Class.forName("org.sqlite.JDBC");
+					Connection con = null;
+					try {
+						con = DriverManager
+								.getConnection("jdbc:sqlite:bin/Score");
+					} finally {
+
+					}
+					Statement stmt = con.createStatement();
+					String s1 = "DELETE FROM TABLA";
+					stmt.executeUpdate(s1);
+					stmt.close();
+					con.close();
+					
+				} catch (Exception a) {
+				}
+			}
+			
+			@Override
+			public void mousePressed(MouseEvent e) {
+				frame.setCursor(c1);
+				
+			}
+		});
+		
 
 		// Jlabel con la imagen de fondo
 		JLabel lblNewLabel = new JLabel("");
