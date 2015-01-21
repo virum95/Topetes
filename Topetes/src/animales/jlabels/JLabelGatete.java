@@ -10,6 +10,10 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import ventanas.VentanaPrincipal;
 
+/**	Clase para dar una imagen al gato
+ * @author Gaizka
+ *
+ */
 public class JLabelGatete extends JLabel{
 
 	/**
@@ -18,7 +22,6 @@ public class JLabelGatete extends JLabel{
 	private static final long serialVersionUID = 765237937940630316L;
 
 	public JLabelGatete() { 
-//		setBorder( BorderFactory.createLineBorder( Color.red ));
 		setVisible(true);
 		setIcon(new ImageIcon("src/img/gatete.png"));
 		setBounds( 0, 0, 10, 30);
