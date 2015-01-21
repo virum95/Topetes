@@ -10,14 +10,12 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 
 import java.awt.BorderLayout;
-import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.JButton;
-
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
@@ -73,7 +71,7 @@ public class VentanaInicial2 {
 		final Cursor c1 = toolkit.createCustomCursor(imagen1, new Point(7,25), "img");
 
 
-		frame.addMouseListener(new MouseAdapter() {
+		frame.addMouseListener(new MouseListener() {
 
 			@Override
 			public void mouseReleased(MouseEvent e) {
@@ -83,6 +81,18 @@ public class VentanaInicial2 {
 			@Override
 			public void mousePressed(MouseEvent e) {
 				frame.setCursor(c1);				
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+			}			
+			@Override
+			public void mouseEntered(MouseEvent e) {
+			}
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+
 			}
 		});
 

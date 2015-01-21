@@ -3,7 +3,7 @@ package animales.topos;
 
 import excepciones.FueraDeCuadricula;
 import animales.Animal;
-import animales.jlabels.JLabelTopete;
+import animales.topos.jlabels.*;
 
 /** Clase para definir instancias lógicas de topos con posición y puntos.
  * @author Gaizka

@@ -1,12 +1,8 @@
 package ventanas;
 
 import java.awt.Color;
-import java.awt.Cursor;
-import java.awt.Image;
-import java.awt.Point;
-import java.awt.Toolkit;
-import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.lang.reflect.InvocationTargetException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -33,6 +29,7 @@ public class VentanaPrincipalDos {
 	
 	final int MAX_TOPOS_PERDIDOS = 3;
 	final int TIEMPO_FUERA_TOPO = 3; //Tiempo en segundos
+
 
 	static JFrame miVentana;
 	static JPanel p1;
@@ -67,6 +64,7 @@ public class VentanaPrincipalDos {
 		miVentana.setSize( 700, 755);
 		miVentana.setResizable(false);
 		lp = new JLayeredPane();
+		final MiRunnable2 miHilo2 = new VentanaPrincipalDos.MiRunnable2();
 
 		for (int i = 0; i < arrayAnimales.length; i++) {
 			for (int j = 0; j < arrayAnimales[i].length; j++) {
@@ -78,6 +76,50 @@ public class VentanaPrincipalDos {
 					arrayAnimales[i][j] = new Topete(TipoTopo.JUGGERNAUT);
 				if(j==3)
 					arrayAnimales[i][j] = new Gatete();
+				
+				if(arrayAnimales[i][j] instanceof Topete)
+				{
+					final int a = i;
+					final int b = j;
+					
+					arrayAnimales[i][j].getImg().addMouseListener(new MouseListener()
+					{
+
+						@Override
+						public void mouseClicked(MouseEvent arg0) {
+							((Topete)arrayAnimales[a][b]).pegaTopo();
+							
+							if(((Topete)arrayAnimales[a][b]).getVidas() == 0){
+								miHilo2.quitaAnimal(a,b);
+							}
+						}
+
+						@Override
+						public void mouseEntered(MouseEvent arg0) {
+							// TODO Auto-generated method stub
+							
+						}
+
+						@Override
+						public void mouseExited(MouseEvent arg0) {
+							// TODO Auto-generated method stub
+							
+						}
+
+						@Override
+						public void mousePressed(MouseEvent arg0) {
+							// TODO Auto-generated method stub
+							
+						}
+
+						@Override
+						public void mouseReleased(MouseEvent arg0) {
+							// TODO Auto-generated method stub
+							
+						}
+						
+					});
+				}
 			}
 		}
 
@@ -85,6 +127,17 @@ public class VentanaPrincipalDos {
 			ocupado[i]=false;
 		}
 
+		//		Click de raton muestra coordenadas
+		//		lp.addMouseListener( new MouseAdapter() {
+		//
+		//			@Override
+		//			public void mousePressed(MouseEvent e) {
+		//				System.out.println(e.getX()+" ,"+e.getY());
+		//
+		//			}
+		//		});
+
+		//        Redimensionar paneles
 
 		// Creación de los fondos 
 		p1 = new JPanel();
@@ -134,29 +187,6 @@ public class VentanaPrincipalDos {
 			e1.printStackTrace();
 		}
 
-		//Imagen del cursor cambiar lo de dentro del getImage para que cambie 
-		Toolkit toolkit = Toolkit.getDefaultToolkit();
-		Image imagen = toolkit.getImage("src/img/Maso.png");
-		final Cursor c = toolkit.createCustomCursor(imagen , new Point(7,25), "img");
-		miVentana.setCursor (c);
-
-		Image masoGolpe = toolkit.getImage("src/img/Masogolpe.png");
-		final Cursor c1 = toolkit.createCustomCursor(masoGolpe, new Point(7,25), "img");
-
-
-		miVentana.addMouseListener(new MouseAdapter() {
-
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				miVentana.setCursor(c);
-			}
-
-			@Override
-			public void mousePressed(MouseEvent e) {
-				miVentana.setCursor(c1);				
-			}
-		});
-
 
 		miVentana.setLayeredPane( lp );
 		lp.add( p5, new Integer(40) );
@@ -169,7 +199,6 @@ public class VentanaPrincipalDos {
 		miVentana.setLocationRelativeTo(null);  // Centrar en pantalla
 		miVentana.setVisible(true);
 
-		MiRunnable2 miHilo2 = new VentanaPrincipalDos.MiRunnable2();
 		Thread elHilo2 = new Thread( miHilo2 );
 		elHilo2.start();
 
