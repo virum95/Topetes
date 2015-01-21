@@ -70,6 +70,14 @@ public class Topete extends Animal{
 		return vidas;
 	}
 	
+	
+	/** Metodo para cambiar las vidas de un topo
+	 * @param puntos Nuevo valor para las vidas del topo
+	 */
+	public void setVidas(int vidas) {
+		this.vidas = vidas;
+	}
+
 	/** Metodo que le resta vida al topo
 	 * @return devuelve true si el topo es un topo pincho y false si no lo es
 	 */
