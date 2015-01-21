@@ -135,7 +135,14 @@ public class VentanaInicial2 {
 		btnPlay.addMouseListener(new MouseAdapter() { 
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				new VentanaPrincipalDos();
+				Thread t = new Thread(new Runnable() {
+				    @Override
+				    public void run() {
+				       new VentanaPrincipalDos();       
+				    }
+
+				   });
+				t.start();
 				frame.setCursor(c);
 			}
 
