@@ -1,6 +1,7 @@
 package animales.gatos;
 
 import animales.Animal;
+import animales.jlabels.JLabelGatete;
 //import animales.jlabels.*;
 
 public class Gatete extends Animal{
@@ -16,7 +17,7 @@ public class Gatete extends Animal{
 	 */
 	public Gatete() {
 		super();
-//		img = new JLabelGatete();
+		img = new JLabelGatete();
 	}
 	
 	/** Metodo que mata el gato y devuelve true para acabar la partida

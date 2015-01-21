@@ -22,17 +22,17 @@ public class JLabelTopete extends JLabel {
 		try {
 			switch (t) {
 			case NORMAL:
-				this.setIcon(new ImageIcon("src/img/topeteNormalRN.png"));
+				this.setIcon(new ImageIcon("src/img/topeteNormal.png"));
 				break;
 //			case PINCHO:
 //				this.setIcon(new ImageIcon("src/img/topeteMasaoR.png"));
 //				break;			
 
 			case CASCO:
-				this.setIcon(new ImageIcon("src/img/topeteCascoRN.png"));
+				this.setIcon(new ImageIcon("src/img/topeteCasco.png"));
 				break;
 			case JUGGERNAUT:
-				this.setIcon(new ImageIcon("src/img/topeteJugernautRN.png"));
+				this.setIcon(new ImageIcon("src/img/topeteJuggernaut.png"));
 				break;
 			case BOSS:
 				this.setText("Boss");
