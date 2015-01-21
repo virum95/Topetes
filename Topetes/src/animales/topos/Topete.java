@@ -23,7 +23,6 @@ public class Topete extends Animal{
 	public Topete( TipoTopo t) {
 		super();
 		img = new JLabelTopete(t);
-		fechaCreacion = System.currentTimeMillis();
 		tipo = t;
 		switch (t) {
 		case NORMAL:

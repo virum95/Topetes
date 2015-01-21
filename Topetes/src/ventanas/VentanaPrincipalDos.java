@@ -41,12 +41,16 @@ public class VentanaPrincipalDos {
 	static JPanel panelImagen3;
 	static JPanel panelImagen4;
 
-	private Topete[][] arrayTopos = new Topete[12][3];
+	private Animal[][] arrayAnimales = new Animal[12][3];
 	private static JPanel[][] arrayPaneles = new JPanel[12][3];
 	private boolean[] ocupado = new boolean[12];
+	protected static int eliminados;
+	protected static int puntuacion;
 
 	public VentanaPrincipalDos () {
 
+		puntuacion = 0;
+		eliminados = 0;
 		// Crear ventana inicial
 		miVentana = new JFrame("Prueba de paneles de Swing");        
 		// Acabar de crear y hacer visible ventana
@@ -55,14 +59,14 @@ public class VentanaPrincipalDos {
 		miVentana.setResizable(false);
 		lp = new JLayeredPane();
 
-		for (int i = 0; i < arrayTopos.length; i++) {
-			for (int j = 0; j < arrayTopos[i].length; j++) {
+		for (int i = 0; i < arrayAnimales.length; i++) {
+			for (int j = 0; j < arrayAnimales[i].length; j++) {
 				if(j==0)
-					arrayTopos[i][j] = new Topete(TipoTopo.NORMAL);
+					arrayAnimales[i][j] = new Topete(TipoTopo.NORMAL);
 				if(j==1)
-					arrayTopos[i][j] = new Topete(TipoTopo.CASCO);
+					arrayAnimales[i][j] = new Topete(TipoTopo.CASCO);
 				if(j==2)
-					arrayTopos[i][j] = new Topete(TipoTopo.JUGGERNAUT);
+					arrayAnimales[i][j] = new Topete(TipoTopo.JUGGERNAUT);
 
 			}
 		}
@@ -71,14 +75,15 @@ public class VentanaPrincipalDos {
 			ocupado[i]=false;
 		}
 
-		lp.addMouseListener( new MouseAdapter() {
-
-			@Override
-			public void mousePressed(MouseEvent e) {
-				System.out.println(e.getX()+" ,"+e.getY());
-
-			}
-		});
+//		Click de raton muestra coordenadas
+//		lp.addMouseListener( new MouseAdapter() {
+//
+//			@Override
+//			public void mousePressed(MouseEvent e) {
+//				System.out.println(e.getX()+" ,"+e.getY());
+//
+//			}
+//		});
 
 		//        Redimensionar paneles
 
@@ -139,8 +144,6 @@ public class VentanaPrincipalDos {
 		lp.add( p1, new Integer(0) );
 
 		//		miVentana.setLocation(2000, 100);
-
-		//		miVentana.setLocation(2000, 100);
 		miVentana.setLocationRelativeTo(null);  // Centrar en pantalla
 		miVentana.setVisible(true);
 
@@ -148,19 +151,19 @@ public class VentanaPrincipalDos {
 		Thread elHilo2 = new Thread( miHilo2 );
 		elHilo2.start();
 
-		//		saleTopo(arrayPaneles[0][1]);
-		//		saleTopo(arrayPaneles[2][1]);
-		//		saleTopo(arrayPaneles[3][1]);
-		//		saleTopo(arrayPaneles[7][1]);
-		//		
-		//		entraTopo(arrayPaneles[0][1]);
-		//		entraTopo(arrayPaneles[2][1]);
-		//		entraTopo(arrayPaneles[3][1]);
-		//		entraTopo(arrayPaneles[7][1]);
+		//				miHilo2.saleTopo(arrayPaneles[0][1]);
+		//				miHilo2.saleTopo(arrayPaneles[2][1]);
+		//				miHilo2.saleTopo(arrayPaneles[3][1]);
+		//				miHilo2.saleTopo(arrayPaneles[7][1]);
+		//				
+		//				miHilo2.entraTopo(arrayPaneles[0][1]);
+		//				miHilo2.entraTopo(arrayPaneles[2][1]);
+		//				miHilo2.entraTopo(arrayPaneles[3][1]);
+		//				miHilo2.entraTopo(arrayPaneles[7][1]);
 	}
 
-	public Topete[][] getArrayTopos() {
-		return arrayTopos;
+	public Animal[][] getArrayAnimales() {
+		return arrayAnimales;
 	}
 
 	public static JPanel[][] getArrayPaneles() {
@@ -171,65 +174,6 @@ public class VentanaPrincipalDos {
 		return ocupado;
 	}
 
-	public void saleTopo( JPanel j ){
-		int posInicial = (int)j.getLocation().getY();
-		saleTopoRec(j, posInicial);
-	}
-
-	private void saleTopoRec( JPanel j, int posInicial ){
-		int posActual = (int)j.getLocation().getY();
-		if(  posInicial - posActual >= 110 ){
-		}else {
-			j.setLocation((int)j.getLocation().getX(), posActual-1);
-			try {
-				Thread.sleep(3);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-			saleTopoRec(j, posInicial);
-		}
-	}
-
-	public void entraTopo( JPanel j ){
-		int posInicial = (int)j.getLocation().getY();
-		entraTopoRec(j, posInicial);
-	}
-
-	private void entraTopoRec( JPanel j, int posInicial ){
-		int posActual = (int)j.getLocation().getY();
-		if(  posActual - posInicial >= 110 ){
-		}else {
-			j.setLocation((int)j.getLocation().getX(), posActual+1);
-			try {
-				Thread.sleep(3);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-			entraTopoRec(j, posInicial);
-		}
-	}
-
-	public void creaAnimal () {
-		int j = 0;
-		int i;
-		do{
-			System.out.println(2);
-			Random r = new Random();
-			i = r.nextInt(100);
-			if(i<71){
-				j = 0; //40
-			}else if (i>70 && i <91) {
-				j = 1;//15
-			}else if (i>90) {
-				j = 2;//15
-			}
-			i = r.nextInt(12);
-			System.out.println(i);
-		}while(getOcupado()[i]);  //Evita que si ya hay un topo en el espacio seleccionado, se cree otro 
-		saleTopo(getArrayPaneles()[i][j]);
-		ocupado[i] = true;
-	}
-
 	public boolean estamosLlenos(){
 		for (int i = 0; i < ocupado.length; i++) {
 			if(!ocupado[i])
@@ -237,9 +181,6 @@ public class VentanaPrincipalDos {
 		}
 		return true;
 	}
-
-
-
 
 	public static void main(String[] args) {
 		new VentanaPrincipalDos();
@@ -254,7 +195,7 @@ public class VentanaPrincipalDos {
 			for (int i = 0; i < arrayPaneles.length; i++) {
 				for (int j = 0; j < arrayPaneles[i].length; j++) {
 					arrayPaneles[i][j] = new JPanel();
-					arrayPaneles[i][j].add(arrayTopos[i][j].getImg());
+					arrayPaneles[i][j].add(arrayAnimales[i][j].getImg());
 					switch (i) {
 					case 0:
 						arrayPaneles[i][j].setBounds(X_EJE_UNO, Y_EJE_UNO, 123, 141);
@@ -316,21 +257,121 @@ public class VentanaPrincipalDos {
 	}
 	class MiRunnable2 implements Runnable {
 
+		private boolean sigue = true;
+
 		@Override
 		public void run() {
-			while(true){
+			while(sigue){
 				if(!estamosLlenos()){
 					creaAnimal();
-					System.out.println(2);
 					try {
 						Thread.sleep( 1200 );
 					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				}
+
+				for (int i = 0; i < arrayAnimales.length; i++) {
+					for (int j = 0; j < arrayAnimales[i].length; j++) {
+						// Si el topo está más tiempo del que puede estar fuera
+						if( getArrayAnimales()[i][j].getFechaCreacion() != 0 ){
+							if( System.currentTimeMillis() - getArrayAnimales()[i][j].getFechaCreacion() >= 3000){
+								quitaAnimal( i, j ); // Quitamos el topo
+								getArrayAnimales()[i][j].setFechaCreacion(0); // Ponemos la fecha de creacion a 0
+								// Sumamos uno a los eliminados si son menos de dos
+								if( eliminados < 2 )
+									eliminados++;
+								else
+									acaba();
+							}
+						}
+					}
+				}
+
+				//TODO: Golpe de maso quita 
+
+			}
+			JOptionPane.showInputDialog(null,
+			"Fin del Juego. Tu puntuacion final ha sido de "+VentanaPrincipal.getVentana().puntuacion+". Introduce el nombre del jugador:", 
+			"Game Over",
+			JOptionPane.INFORMATION_MESSAGE);
+
+
+		}
+
+		public void creaAnimal () {
+			int j = 0;
+			int i;
+			do{
+				Random r = new Random();
+				i = r.nextInt(100);
+				if(i<71){
+					j = 0; //40
+				}else if (i>70 && i <91) {
+					j = 1;//15
+				}else if (i>90) {
+					j = 2;//15
+				}
+				i = r.nextInt(12);
+			}while(getOcupado()[i]);  //Evita que si ya hay un topo en el espacio seleccionado, se cree otro 
+			saleTopo(getArrayPaneles()[i][j]);
+			ocupado[i] = true;
+			getArrayAnimales()[i][j].setFechaCreacion(System.currentTimeMillis());
+			getArrayAnimales()[i][j].setFuera(true);
+		}
+
+		public void quitaAnimal( int panel, int animal){
+			entraTopo(getArrayPaneles()[panel][animal]);
+			getArrayAnimales()[panel][animal].setFuera(false);
+			ocupado[panel] = false;
+		}
+
+		public void saleTopo( JPanel j ){
+			int posInicial = (int)j.getLocation().getY();
+			saleTopoRec(j, posInicial);
+		}
+
+		private void saleTopoRec( JPanel j, int posInicial ){
+			int posActual = (int)j.getLocation().getY();
+			if(  posInicial - posActual >= 110 ){
+			}else {
+				j.setLocation((int)j.getLocation().getX(), posActual-1);
+				try {
+					Thread.sleep(3);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				saleTopoRec(j, posInicial);
 			}
 		}
+
+		public void entraTopo( JPanel j ){
+			int posInicial = (int)j.getLocation().getY();
+			entraTopoRec(j, posInicial);
+			
+		}
+
+		/** Metodo recursivo que hace que los topos vuelvan a entrar
+		 * @param j
+		 * @param posInicial
+		 */
+		private void entraTopoRec( JPanel j, int posInicial ){
+			int posActual = (int)j.getLocation().getY();
+			if(  posActual - posInicial >= 110 ){
+			}else {
+				j.setLocation((int)j.getLocation().getX(), posActual+1);
+				try {
+					Thread.sleep(3);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				entraTopoRec(j, posInicial);
+			}
+		}
+		public void acaba(){
+			sigue = false;
+		}
+
 	}
 
 }
