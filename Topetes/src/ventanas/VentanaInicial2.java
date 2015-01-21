@@ -26,7 +26,7 @@ import java.awt.Color;
 public class VentanaInicial2 {
 
 	private JFrame frame;
-
+	static Thread t;
 	/**
 	 * Launch the application.
 	 */
@@ -135,8 +135,16 @@ public class VentanaInicial2 {
 		btnPlay.addMouseListener(new MouseAdapter() { 
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				new VentanaPrincipalDos();
+				t = new Thread(new Runnable() {
+				    @Override
+				    public void run() {
+				       VentanaPrincipalDos ventana= new VentanaPrincipalDos();   
+				    }
+
+				   });
+				t.start();
 				frame.setCursor(c);
+				frame.dispose();
 			}
 
 			@Override

@@ -6,6 +6,7 @@ import java.awt.Cursor;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.Toolkit;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.lang.reflect.InvocationTargetException;
@@ -88,6 +89,7 @@ public class VentanaPrincipalDos {
 		lp = new JLayeredPane();
 		miVentana.setLayeredPane( lp );
 
+		
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
 		Image imagen = toolkit.getImage("src/img/Maso.png");
 		final Cursor c = toolkit.createCustomCursor(imagen , new Point(7,25), "img");
@@ -115,14 +117,9 @@ public class VentanaPrincipalDos {
 				{
 					final int a = i;
 					final int b = j;
-
 					arrayAnimales[i][j].getImg().addMouseListener(new MouseAdapter()
 					{
 
-						@Override
-						public void mouseReleased(MouseEvent arg0) {
-							miVentana.setCursor(c);
-						}
 						@Override
 						public void mousePressed(MouseEvent arg0) {
 							miVentana.setCursor(c1);
@@ -143,6 +140,11 @@ public class VentanaPrincipalDos {
 							}
 						}
 
+						@Override
+						public void mouseReleased(MouseEvent arg0) {
+							miVentana.setCursor(c);
+						}
+						
 					});
 				}
 				if(arrayAnimales[i][j] instanceof Gatete)
@@ -150,31 +152,18 @@ public class VentanaPrincipalDos {
 
 					final int a = i;
 					final int b = j;
-
-					arrayAnimales[i][j].getImg().addMouseListener(new MouseListener(){
-
-						@Override
-						public void mouseClicked(MouseEvent arg0) {
-
-						}
-
-						@Override
-						public void mouseEntered(MouseEvent arg0) {
-						}
-
-						@Override
-						public void mouseExited(MouseEvent arg0) {
-						}
-
+					
+					arrayAnimales[i][j].getImg().addMouseListener(new MouseAdapter()
+					{
 						@Override
 						public void mousePressed(MouseEvent arg0) {
 							sigue = false;
-							miVentana.setCursor(c);
+							miVentana.setCursor(c1);
 						}
 
 						@Override
 						public void mouseReleased(MouseEvent arg0) {
-							miVentana.setCursor(c1);
+							miVentana.setCursor(c);
 						}
 
 					});
@@ -187,18 +176,14 @@ public class VentanaPrincipalDos {
 		}
 
 		//				Click de raton muestra coordenadas
-		miVentana.addMouseListener( new MouseAdapter() {
-
-			@Override
-			public void mousePressed(MouseEvent e) {
-				System.out.println(e.getX()+", "+e.getY());
-			}
-
-			@Override
-			public void mouseReleased(MouseEvent arg0) {
-				miVentana.setCursor(c);
-			}
-		});
+//		miVentana.addMouseListener( new MouseAdapter() {
+//
+//			@Override
+//			public void mousePressed(MouseEvent e) {
+//				System.out.println(e.getX()+", "+e.getY());
+//			}
+//
+//		});
 
 		px1 = new JPanel();
 		px1.setBounds(560, 10, 70, 70);
@@ -397,6 +382,19 @@ public class VentanaPrincipalDos {
 		@Override
 		public void run() {
 			while(sigue){
+				
+				if(1200-puntuacion>=100)
+				{
+					if(!estamosLlenos()){
+						creaAnimal();
+						try {
+							Thread.sleep( 200 );
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
+					}
+				}
+				else{
 				if(!estamosLlenos()){
 					creaAnimal();
 					try {
@@ -405,6 +403,7 @@ public class VentanaPrincipalDos {
 						e.printStackTrace();
 					}
 				}
+			}
 			}
 			acaba();
 		}
@@ -541,7 +540,7 @@ public class VentanaPrincipalDos {
 						for (int j = 0; j < arrayAnimales[i].length; j++) {
 							// Si el topo está más tiempo del que puede estar fuera
 							if( getArrayAnimales()[i][j].getFechaCreacion() != 0 ){
-								if( System.currentTimeMillis() - getArrayAnimales()[i][j].getFechaCreacion() >= TIEMPO_FUERA_TOPO*1000 - puntuacion){
+								if( System.currentTimeMillis() - getArrayAnimales()[i][j].getFechaCreacion() >= (TIEMPO_FUERA_TOPO*1000 -puntuacion*2)){
 									quitaAnimal( i, j ); // Quitamos el topo
 									getArrayAnimales()[i][j].setFechaCreacion(0); // Ponemos la fecha de creacion a 0
 									// Sumamos uno a los eliminados si son menos de dos
@@ -557,6 +556,7 @@ public class VentanaPrincipalDos {
 											}
 										if((getArrayAnimales()[i][j] instanceof Gatete) || eliminados >= MAX_TOPOS_PERDIDOS)
 											acaba();
+										
 									}
 								}
 							}
@@ -571,8 +571,9 @@ public class VentanaPrincipalDos {
 							"Game Over",
 							JOptionPane.INFORMATION_MESSAGE);
 			cargaEnBD();
-			System.exit(0);		
+			System.exit(0);
 		}
+			
 		public void acaba(){
 			sigue = false;
 		}
