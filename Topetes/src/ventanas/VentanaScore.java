@@ -23,8 +23,6 @@ import java.util.ArrayList;
 import java.awt.Cursor;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-
 import javax.swing.JButton;
 
 public class VentanaScore {
@@ -226,9 +224,11 @@ public class VentanaScore {
 					stmt.executeUpdate(s1);
 					stmt.close();
 					con.close();
-					
+					obtenerPuntuacion(stmt);				
 				} catch (Exception a) {
 				}
+				frame.repaint();
+				frame.revalidate();
 			}
 			
 			@Override
