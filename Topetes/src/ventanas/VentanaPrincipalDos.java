@@ -58,7 +58,7 @@ public class VentanaPrincipalDos {
 	protected static JPanel px3;
 	protected static JPanel pPuntuacion;
 	protected static JLabel lPuntuacion;
-	
+
 
 	static String nombreJugador;
 
@@ -89,7 +89,7 @@ public class VentanaPrincipalDos {
 		lp = new JLayeredPane();
 		miVentana.setLayeredPane( lp );
 
-		
+
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
 		Image imagen = toolkit.getImage("src/img/Maso.png");
 		final Cursor c = toolkit.createCustomCursor(imagen , new Point(7,25), "img");
@@ -144,7 +144,7 @@ public class VentanaPrincipalDos {
 						public void mouseReleased(MouseEvent arg0) {
 							miVentana.setCursor(c);
 						}
-						
+
 					});
 				}
 				if(arrayAnimales[i][j] instanceof Gatete)
@@ -152,7 +152,7 @@ public class VentanaPrincipalDos {
 
 					final int a = i;
 					final int b = j;
-					
+
 					arrayAnimales[i][j].getImg().addMouseListener(new MouseAdapter()
 					{
 						@Override
@@ -176,14 +176,14 @@ public class VentanaPrincipalDos {
 		}
 
 		//				Click de raton muestra coordenadas
-//		miVentana.addMouseListener( new MouseAdapter() {
-//
-//			@Override
-//			public void mousePressed(MouseEvent e) {
-//				System.out.println(e.getX()+", "+e.getY());
-//			}
-//
-//		});
+		//		miVentana.addMouseListener( new MouseAdapter() {
+		//
+		//			@Override
+		//			public void mousePressed(MouseEvent e) {
+		//				System.out.println(e.getX()+", "+e.getY());
+		//			}
+		//
+		//		});
 
 		px1 = new JPanel();
 		px1.setBounds(560, 10, 70, 70);
@@ -382,7 +382,7 @@ public class VentanaPrincipalDos {
 		@Override
 		public void run() {
 			while(sigue){
-				
+
 				if(1200-puntuacion>=100)
 				{
 					if(!estamosLlenos()){
@@ -395,15 +395,15 @@ public class VentanaPrincipalDos {
 					}
 				}
 				else{
-				if(!estamosLlenos()){
-					creaAnimal();
-					try {
-						Thread.sleep( 1200 - puntuacion*2);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
+					if(!estamosLlenos()){
+						creaAnimal();
+						try {
+							Thread.sleep( 1200 - puntuacion*2);
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
 					}
 				}
-			}
 			}
 			acaba();
 		}
@@ -522,6 +522,9 @@ public class VentanaPrincipalDos {
 
 				}
 				Statement stmt = con.createStatement();
+				if (nombreJugador == null) {
+					nombreJugador="Player";
+				}
 				String string = "INSERT INTO TABLA VALUES ('"+nombreJugador+"', "+puntuacion+")";
 				stmt.executeUpdate(string);
 				stmt.close();
@@ -553,10 +556,10 @@ public class VentanaPrincipalDos {
 												lp.add( px2, new Integer(61) );
 											if(eliminados == 3)
 												lp.add( px3, new Integer(62) );
-											}
+										}
 										if((getArrayAnimales()[i][j] instanceof Gatete) || eliminados >= MAX_TOPOS_PERDIDOS)
 											acaba();
-										
+
 									}
 								}
 							}
@@ -565,15 +568,15 @@ public class VentanaPrincipalDos {
 				}
 
 			}
-			nombreJugador = 
+			nombreJugador =
 					JOptionPane.showInputDialog(null,
 							"Fin del Juego. Tu puntuacion final ha sido de "+puntuacion+". Introduce el nombre del jugador:",
 							"Game Over",
 							JOptionPane.INFORMATION_MESSAGE);
-			cargaEnBD();
+				cargaEnBD();
 			System.exit(0);
 		}
-			
+
 		public void acaba(){
 			sigue = false;
 		}
