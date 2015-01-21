@@ -43,7 +43,7 @@ public class VentanaPrincipalDos {
 	static JPanel panelImagen2;
 	static JPanel panelImagen3;
 	static JPanel panelImagen4;
-	
+
 	static String nombreJugador;
 
 	private Animal[][] arrayAnimales = new Animal[12][4];
@@ -81,15 +81,15 @@ public class VentanaPrincipalDos {
 			ocupado[i]=false;
 		}
 
-//		Click de raton muestra coordenadas
-//		lp.addMouseListener( new MouseAdapter() {
-//
-//			@Override
-//			public void mousePressed(MouseEvent e) {
-//				System.out.println(e.getX()+" ,"+e.getY());
-//
-//			}
-//		});
+		//		Click de raton muestra coordenadas
+		//		lp.addMouseListener( new MouseAdapter() {
+		//
+		//			@Override
+		//			public void mousePressed(MouseEvent e) {
+		//				System.out.println(e.getX()+" ,"+e.getY());
+		//
+		//			}
+		//		});
 
 		//        Redimensionar paneles
 
@@ -154,25 +154,27 @@ public class VentanaPrincipalDos {
 		miVentana.setVisible(true);
 
 		MiRunnable2 miHilo2 = new VentanaPrincipalDos.MiRunnable2();
-//		Thread elHilo2 = new Thread( miHilo2 );
-//		elHilo2.start();
+		Thread elHilo2 = new Thread( miHilo2 );
+		elHilo2.start();
 
-						miHilo2.saleTopo(arrayPaneles[0][0]);
-						miHilo2.saleTopo(arrayPaneles[2][1]);
-						miHilo2.saleTopo(arrayPaneles[3][2]);
-						miHilo2.saleTopo(arrayPaneles[7][3]);
-						try {
-							Thread.sleep(7000);
-						} catch (InterruptedException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-						miHilo2.entraTopo(arrayPaneles[0][0]);
-						miHilo2.entraTopo(arrayPaneles[2][1]);
-						miHilo2.entraTopo(arrayPaneles[3][2]);
-						miHilo2.entraTopo(arrayPaneles[7][3]);
+		//						miHilo2.saleTopo(arrayPaneles[0][0]);
+		//						miHilo2.saleTopo(arrayPaneles[2][1]);
+		//						miHilo2.saleTopo(arrayPaneles[3][2]);
+		//						miHilo2.saleTopo(arrayPaneles[7][3]);
+		//						try {
+		//							Thread.sleep(7000);
+		//						} catch (InterruptedException e) {
+		//							e.printStackTrace();
+		//						}
+		//						miHilo2.entraTopo(arrayPaneles[0][0]);
+		//						miHilo2.entraTopo(arrayPaneles[2][1]);
+		//						miHilo2.entraTopo(arrayPaneles[3][2]);
+		//						miHilo2.entraTopo(arrayPaneles[7][3]);
 	}
 
+	/** Método que devuelve el array de 
+	 * @return
+	 */
 	public Animal[][] getArrayAnimales() {
 		return arrayAnimales;
 	}
@@ -290,28 +292,29 @@ public class VentanaPrincipalDos {
 								quitaAnimal( i, j ); // Quitamos el topo
 								getArrayAnimales()[i][j].setFechaCreacion(0); // Ponemos la fecha de creacion a 0
 								// Sumamos uno a los eliminados si son menos de dos
-								if( eliminados < 200 )
-									eliminados++;
-								else
-									acaba();
+								if(!(getArrayAnimales()[i][j] instanceof Gatete)){
+									if (eliminados < 2 ) 
+										eliminados++;
+									else 
+										acaba();
+								}
 							}
 						}
 					}
+
+					//TODO: Golpe de maso quita topo y suma puntuacion
+
 				}
 
-				//TODO: Golpe de maso quita topo y suma puntuacion
-
 			}
-
-			nombreJugador = 
-					JOptionPane.showInputDialog(null,
-			"Fin del Juego. Tu puntuacion final ha sido de "+VentanaPrincipal.getVentana().puntuacion+". Introduce el nombre del jugador:",
-			"Game Over",
-			JOptionPane.INFORMATION_MESSAGE);
-
+				nombreJugador = 
+						JOptionPane.showInputDialog(null,
+								"Fin del Juego. Tu puntuacion final ha sido de "+VentanaPrincipal.getVentana().puntuacion+". Introduce el nombre del jugador:",
+								"Game Over",
+								JOptionPane.INFORMATION_MESSAGE);
 
 		}
-		
+
 		public void cargaEnBD()
 		{
 			try {
@@ -330,7 +333,7 @@ public class VentanaPrincipalDos {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			
+
 		}
 
 		public void creaAnimal () {
@@ -339,8 +342,10 @@ public class VentanaPrincipalDos {
 			do{
 				Random r = new Random();
 				i = r.nextInt(100);
-				if(i<71){
+				if(i<61){
 					j = 0; //40
+				} else if (i>60 && i<71){
+					j = 3;
 				}else if (i>70 && i <91) {
 					j = 1;//15
 				}else if (i>90) {
@@ -382,7 +387,7 @@ public class VentanaPrincipalDos {
 		public void entraTopo( JPanel j ){
 			int posInicial = (int)j.getLocation().getY();
 			entraTopoRec(j, posInicial);
-			
+
 		}
 
 		/** Metodo recursivo que hace que los topos vuelvan a entrar

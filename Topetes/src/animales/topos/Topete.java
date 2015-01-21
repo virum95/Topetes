@@ -29,22 +29,13 @@ public class Topete extends Animal{
 			vidas = 1;
 			puntos = 5;
 			break;
-//		case PINCHO:
-//			vidas = 1;		
-//			puntos = 0;
-//			break;
-
 		case CASCO:
-			vidas = 3;
-			puntos = 25;
+			vidas = 2;
+			puntos = 15;
 			break;
 		case JUGGERNAUT:
-			vidas = 5;	
-			puntos = 50;
-			break;
-		case BOSS:
-			vidas = 10;
-			puntos = 500;
+			vidas = 3;	
+			puntos = 30;
 			break;
 		default:
 			break;
