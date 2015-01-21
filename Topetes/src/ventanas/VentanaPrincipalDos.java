@@ -563,7 +563,7 @@ public class VentanaPrincipalDos {
 							"Game Over",
 							JOptionPane.INFORMATION_MESSAGE);
 			cargaEnBD();
-			System.exit(0);		
+			System.exit(0);
 		}
 		public void acaba(){
 			sigue = false;
