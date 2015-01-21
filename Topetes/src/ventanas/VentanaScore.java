@@ -23,8 +23,10 @@ import java.util.ArrayList;
 import java.awt.Cursor;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+
 import javax.swing.JButton;
 import javax.swing.border.BevelBorder;
+
 import java.awt.Color;
 
 public class VentanaScore {
@@ -60,16 +62,21 @@ public class VentanaScore {
 					}
 					Statement stmt = con.createStatement();
 					obtenerPuntuacion(stmt);
-					label.setText(listaNombre.get(0));
-					label_5.setText(listaScore.get(0).toString());
-					label_1.setText(listaNombre.get(1));
-					label_6.setText(listaScore.get(1).toString());
-					label_2.setText(listaNombre.get(2));
-					label_7.setText(listaScore.get(2).toString());
-					label_3.setText(listaNombre.get(3));
-					label_8.setText(listaScore.get(3).toString());
-					label_4.setText(listaNombre.get(4));
-					label_9.setText(listaScore.get(4).toString());
+					try {
+						label.setText(listaNombre.get(0));
+						label_5.setText(listaScore.get(0).toString());
+						label_1.setText(listaNombre.get(1));
+						label_6.setText(listaScore.get(1).toString());
+						label_2.setText(listaNombre.get(2));
+						label_7.setText(listaScore.get(2).toString());
+						label_3.setText(listaNombre.get(3));
+						label_8.setText(listaScore.get(3).toString());
+						label_4.setText(listaNombre.get(4));
+						label_9.setText(listaScore.get(4).toString());
+					} catch (Exception e) {
+						System.out.println("No hay tantas puntuaciones.");
+					}
+					
 					stmt.close();
 					con.close();
 				} catch (Exception e) {
