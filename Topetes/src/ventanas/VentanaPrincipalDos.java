@@ -102,21 +102,28 @@ public class VentanaPrincipalDos {
 
 					arrayAnimales[i][j].getImg().addMouseListener(new MouseAdapter()
 					{
-						@Override
-						public void mousePressed(MouseEvent arg0) {
-							((Topete)arrayAnimales[a][b]).pegaTopo();
-
-							miVentana.setCursor(c1);
-							if(((Topete)arrayAnimales[a][b]).getVidas() == 0){
-								miHilo3.quitaAnimal(a,b);
-								getArrayAnimales()[a][b].setFechaCreacion(0); // Ponemos la fecha de creacion a 0
-								puntuacion+=((Topete)arrayAnimales[a][b]).getPuntos();
-							}
-						}
 
 						@Override
 						public void mouseReleased(MouseEvent arg0) {
 							miVentana.setCursor(c);
+						}
+						@Override
+						public void mousePressed(MouseEvent arg0) {
+							miVentana.setCursor(c);
+							((Topete)arrayAnimales[a][b]).pegaTopo();
+							
+							if(((Topete)arrayAnimales[a][b]).getVidas() == 0){
+								miHilo3.quitaAnimal(a,b);
+								getArrayAnimales()[a][b].setFechaCreacion(0); // Ponemos la fecha de creacion a 0
+								puntuacion+=((Topete)arrayAnimales[a][b]).getPuntos();
+								if(((Topete)arrayAnimales[a][b]).getTipo() == TipoTopo.NORMAL)
+									((Topete)arrayAnimales[a][b]).setVidas(1);
+								if(((Topete)arrayAnimales[a][b]).getTipo() == TipoTopo.CASCO)
+									((Topete)arrayAnimales[a][b]).setVidas(2);
+								if(((Topete)arrayAnimales[a][b]).getTipo() == TipoTopo.JUGGERNAUT)
+									((Topete)arrayAnimales[a][b]).setVidas(3);
+								
+							}
 						}
 
 					});
@@ -371,7 +378,7 @@ public class VentanaPrincipalDos {
 			acaba();
 		}
 
-		
+
 
 		public void acaba(){
 			sigue = false;
@@ -386,29 +393,30 @@ public class VentanaPrincipalDos {
 		 */
 		public void creaAnimal() {
 
-				int j = 0;
-				int i;
-				do{
-					Random r = new Random();
-					i = r.nextInt(100);
-					if(i<61){
-						j = 0; //60
-					} else if (i>60 && i<71){
-						j = 3; //10
-					}else if (i>70 && i <91) {
-						j = 1;//20
-					}else if (i>90) {
-						j = 2;//10
-					}
-					i = r.nextInt(12);
-				}while(getOcupado()[i]);  //Evita que si ya hay un topo en el espacio seleccionado, se cree otro 
-				saleTopo(i, j);
-				ocupado[i] = true;
-				getArrayAnimales()[i][j].setFechaCreacion(System.currentTimeMillis());
-				getArrayAnimales()[i][j].setFuera(true);
+			int j = 0;
+			int i;
+			do{
+				Random r = new Random();
+				i = r.nextInt(100);
+				if(i<61){
+					j = 0; //60
+				} else if (i>60 && i<71){
+					j = 3; //10
+				}else if (i>70 && i <91) {
+					j = 1;//20
+				}else if (i>90) {
+					j = 2;//10
+				}
+				i = r.nextInt(12);
+			}while(getOcupado()[i]);  //Evita que si ya hay un topo en el espacio seleccionado, se cree otro 
+			saleTopo(i, j);
+			ocupado[i] = true;
+			getArrayAnimales()[i][j].setFechaCreacion(System.currentTimeMillis());
+			getArrayAnimales()[i][j].setFuera(true);
 		}
-		
-		/**	Método que hace que los topos se muevan hacia arriba. LLama a un metodo
+
+		/**	Método que hace que los topos se muevan hacia arriba. LLama a un metodo 
+		 * 	recursivo para que el movimiento sea poco a poco
 		 * @param j
 		 */
 		public void saleTopo( int panel, int animal ){
@@ -431,7 +439,7 @@ public class VentanaPrincipalDos {
 				saleTopoRec(j, posInicial, a);
 			}
 		}
-		
+
 	}
 
 	class MiRunnable3 implements Runnable {
@@ -472,7 +480,7 @@ public class VentanaPrincipalDos {
 				entraTopoRec(j, posInicial, a);
 			}
 		}
-		
+
 		public void cargaEnBD()
 		{
 			try {
@@ -493,7 +501,7 @@ public class VentanaPrincipalDos {
 			}
 
 		}
-		
+
 		@Override
 		public void run() {
 			while(sigue){
