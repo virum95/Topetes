@@ -17,7 +17,6 @@ public class Gatete extends Animal{
 	public Gatete() {
 		super();
 		img = new JLabelGatete();
-		fechaCreacion = System.currentTimeMillis();
 	}
 	
 	/** Metodo que mata el gato y devuelve true para acabar la partida

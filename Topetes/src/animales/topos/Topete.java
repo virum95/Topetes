@@ -23,29 +23,19 @@ public class Topete extends Animal{
 	public Topete( TipoTopo t) {
 		super();
 		img = new JLabelTopete(t);
-		fechaCreacion = System.currentTimeMillis();
 		tipo = t;
 		switch (t) {
 		case NORMAL:
 			vidas = 1;
 			puntos = 5;
 			break;
-//		case PINCHO:
-//			vidas = 1;		
-//			puntos = 0;
-//			break;
-
 		case CASCO:
-			vidas = 3;
-			puntos = 25;
+			vidas = 2;
+			puntos = 15;
 			break;
 		case JUGGERNAUT:
-			vidas = 5;	
-			puntos = 50;
-			break;
-		case BOSS:
-			vidas = 10;
-			puntos = 500;
+			vidas = 3;	
+			puntos = 30;
 			break;
 		default:
 			break;
@@ -85,11 +75,7 @@ public class Topete extends Animal{
 	 */
 	public boolean pegaTopo() {
 		vidas--;
-		if(tipo == TipoTopo.PINCHO)
-			{
-			return true;
-			}
-		else return false;
+		return false;
 	}
 	
 	
@@ -98,22 +84,7 @@ public class Topete extends Animal{
 		return "Topo: "+super.toString();
 	}
 	
-	public static void main(String[] args) {
-		Topete t1 = new Topete(TipoTopo.PINCHO);			
-		System.out.println("Posicion X del topete: "+t1.getPosX());
-		try {
-			t1.setPosX(9);
-		} catch (FueraDeCuadricula e) {
-			System.out.println("Fuera de la cuadricula");
-			e.printStackTrace();
-		}
-		try {
-			t1.setPosX(2);
-		} catch (FueraDeCuadricula e) {
-			System.out.println("Fuera de la cuadricula");
-			e.printStackTrace();
-		}
-		System.out.println(t1);
+	public static void main(String[] args) {	
 	}
 
 }
