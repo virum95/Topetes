@@ -3,6 +3,7 @@ package ventanas;
 import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.Cursor;
+import java.awt.Font;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.Toolkit;
@@ -75,8 +76,9 @@ public class VentanaPrincipalDos {
 		puntuacion = 0;
 		eliminados = 0;
 		lPuntuacion = new JLabel("Puntuación: "+puntuacion);
+		lPuntuacion.setFont(new Font("Stencil", Font.PLAIN, 14));
 		pPuntuacion = new JPanel();
-		pPuntuacion.setBounds(5, 5, 100, 100);
+		pPuntuacion.setBounds(5, 5, 200, 100);
 		pPuntuacion.add(lPuntuacion);
 		pPuntuacion.setOpaque(false);
 
@@ -297,10 +299,6 @@ public class VentanaPrincipalDos {
 		return true;
 	}
 
-	public static void main(String[] args) {
-		new VentanaPrincipalDos();
-
-	}
 
 	/** Clase que permite lanzar un hilo para introducir todos los animales en 
 	 * 	la ventana. Se hace en un hilo para que el hilo principal espere a que 
@@ -571,16 +569,11 @@ public class VentanaPrincipalDos {
 							"Game Over",
 							JOptionPane.INFORMATION_MESSAGE);
 			cargaEnBD();
-			System.exit(0);
+
 		}
 			
 		public void acaba(){
 			sigue = false;
 		}
-
-
 	}
 }
-
-
-

@@ -10,14 +10,12 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 
 import java.awt.BorderLayout;
-import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.JButton;
-
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
@@ -26,7 +24,7 @@ import java.awt.Color;
 public class VentanaInicial2 {
 
 	private JFrame frame;
-	static Thread t;
+
 	/**
 	 * Launch the application.
 	 */
@@ -50,12 +48,15 @@ public class VentanaInicial2 {
 		initialize();
 	}
 
+	/**
+	 * Initialize the contents of the frame.
+	 */
 	private void initialize() {
 		frame = new JFrame();
 		frame.setBounds(100, 100, 278, 368);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		//		frame.setResizable(false);
 
-		//Panel principal
 		JPanel panel = new JPanel();
 		frame.getContentPane().add(panel, BorderLayout.CENTER);
 		panel.setLayout(null);
@@ -69,8 +70,8 @@ public class VentanaInicial2 {
 		Image imagen1 = toolkit.getImage("src/img/Masogolpe.png");
 		final Cursor c1 = toolkit.createCustomCursor(imagen1, new Point(7,25), "img");
 
-		//Cambia el cursor cada vez que se clica
-		frame.addMouseListener(new MouseAdapter() {
+
+		frame.addMouseListener(new MouseListener() {
 
 			@Override
 			public void mouseReleased(MouseEvent e) {
@@ -81,87 +82,93 @@ public class VentanaInicial2 {
 			public void mousePressed(MouseEvent e) {
 				frame.setCursor(c1);				
 			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+			}			
+			@Override
+			public void mouseEntered(MouseEvent e) {
+			}
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+
+			}
 		});
 
-		//Label de TOPETES (arriba del todo)
-		JLabel lblTopetes = new JLabel("TOPETES");
-		lblTopetes.setFont(new Font("Stencil", Font.PLAIN, 37));
-		lblTopetes.setBounds(46, 0, 202, 49);
-		panel.add(lblTopetes);
-
-		//Label de PLAY
-		JLabel lblPlay = new JLabel("PLAY");
-		lblPlay.setForeground(new Color(0, 0, 0));
-		lblPlay.setFont(new Font("Stencil", Font.PLAIN, 17));
-		lblPlay.setBounds(126, 78, 64, 32);
-		panel.add(lblPlay);
-
-		//Label de SCORE
-		JLabel lblScoreboard = new JLabel("SCORE");
-		lblScoreboard.setForeground(Color.BLACK);
-		lblScoreboard.setFont(new Font("Stencil", Font.PLAIN, 17));
-		lblScoreboard.setBounds(119, 104, 74, 32);
-		panel.add(lblScoreboard);
-
-		//Label de EXIT
-		JLabel lblExit = new JLabel("EXIT");
-		lblExit.setForeground(Color.BLACK);
-		lblExit.setFont(new Font("Stencil", Font.PLAIN, 17));
-		lblExit.setBounds(126, 127, 64, 32);
-		panel.add(lblExit);
-
-		//Label con el cartel
-		JLabel label_1 = new JLabel("");
-		label_1.setIcon(new ImageIcon(VentanaInicial2.class.getResource("/img/carte1l.png")));
-		label_1.setBounds(10, 21, 238, 254);
-		panel.add(label_1);
-
-		//Label con el fondo de la ventana
-		JLabel label = new JLabel("");
-		label.setIcon(new ImageIcon(VentanaInicial2.class.getResource("/img/fondoventanainicial.png")));
-		label.setBounds(0, 0, 262, 329);
-		panel.add(label);
-
-		//Los botones estan invisibles detras de los dibujos y los de arriba son jlabels
-		//Boton de play
 		JButton btnPlay = new JButton("");
+		btnPlay.addMouseListener(new MouseListener() {
+			
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				frame.setCursor(c);
+			}
+			
+			@Override
+			public void mousePressed(MouseEvent e) {
+				frame.setCursor(c1);
+			}
+			
+			@Override
+			public void mouseExited(MouseEvent e) {
+			}
+			
+			@Override
+			public void mouseEntered(MouseEvent e) {
+			}
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
+			}
+		});
+		
 		btnPlay.setBounds(104, 78, 89, 23);
 		btnPlay.setOpaque(false);
 		btnPlay.setContentAreaFilled(false);
 		btnPlay.setBorderPainted(false);
 		panel.add(btnPlay);
 
+		JLabel lblTopetes = new JLabel("TOPETES");
+		lblTopetes.setFont(new Font("Stencil", Font.PLAIN, 37));
+		lblTopetes.setBounds(46, 0, 202, 49);
+		panel.add(lblTopetes);
 
-		btnPlay.addMouseListener(new MouseAdapter() { 
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				t = new Thread(new Runnable() {
-				    @Override
-				    public void run() {
-				       VentanaPrincipalDos ventana= new VentanaPrincipalDos();   
-				    }
+		JLabel lblPlay = new JLabel("PLAY");
+		lblPlay.setForeground(new Color(0, 0, 0));
+		lblPlay.setFont(new Font("Stencil", Font.PLAIN, 17));
+		lblPlay.setBounds(126, 78, 64, 32);
+		panel.add(lblPlay);
 
-				   });
-				t.start();
-				frame.setCursor(c);
-				frame.dispose();
-			}
+		JLabel lblScoreboard = new JLabel("SCORE");
+		lblScoreboard.setForeground(Color.BLACK);
+		lblScoreboard.setFont(new Font("Stencil", Font.PLAIN, 17));
+		lblScoreboard.setBounds(119, 104, 74, 32);
+		panel.add(lblScoreboard);
 
-			@Override
-			public void mousePressed(MouseEvent e) {
-				frame.setCursor(c1);
-			}
-		});
+		JLabel lblExit = new JLabel("EXIT");
+		lblExit.setForeground(Color.BLACK);
+		lblExit.setFont(new Font("Stencil", Font.PLAIN, 17));
+		lblExit.setBounds(126, 127, 64, 32);
+		panel.add(lblExit);
 
-		//Boton de scoreboard
+		JLabel label_1 = new JLabel("");
+		label_1.setIcon(new ImageIcon(VentanaInicial2.class.getResource("/img/carte1l.png")));
+		label_1.setBounds(10, 21, 238, 254);
+		panel.add(label_1);
+
+		JLabel label = new JLabel("");
+		label.setIcon(new ImageIcon(VentanaInicial2.class.getResource("/img/fondoventanainicial.png")));
+		label.setBounds(0, 0, 262, 329);
+		panel.add(label);
+
 		JButton button = new JButton("");
 		button.setBounds(104, 104, 89, 32);
 		button.setOpaque(false);
 		button.setContentAreaFilled(false);
 		button.setBorderPainted(false);
 		panel.add(button);
-		button.addMouseListener(new MouseAdapter() {
-
+		button.addMouseListener(new MouseListener() {
+			
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				frame.setCursor(c);
@@ -169,29 +176,52 @@ public class VentanaInicial2 {
 				ventana.main(null);
 				frame.dispose();
 			}
-
+			
 			@Override
 			public void mousePressed(MouseEvent e) {
 				frame.setCursor(c1);
 			}
+			
+			@Override
+			public void mouseExited(MouseEvent e) {
+			}
+			
+			@Override
+			public void mouseEntered(MouseEvent e) {
+			}
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
+			}
 		});
-
-		//Boton de Exit
+	
 		JButton button_1 = new JButton("");
 		button_1.setBounds(104, 136, 89, 23);
 		button_1.setOpaque(false);
 		button_1.setContentAreaFilled(false);
 		button_1.setBorderPainted(false);
-		button_1.addMouseListener(new MouseAdapter() {
-
+		button_1.addMouseListener(new MouseListener() {
+			
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				System.exit(1);
 			}
-
+			
 			@Override
 			public void mousePressed(MouseEvent e) {
 				frame.setCursor(c1);
+			}
+			
+			@Override
+			public void mouseExited(MouseEvent e) {
+			}
+			
+			@Override
+			public void mouseEntered(MouseEvent e) {
+			}
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
 			}
 		});
 		panel.add(button_1);
