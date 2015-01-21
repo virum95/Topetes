@@ -75,11 +75,7 @@ public class Topete extends Animal{
 	 */
 	public boolean pegaTopo() {
 		vidas--;
-		if(tipo == TipoTopo.PINCHO)
-			{
-			return true;
-			}
-		else return false;
+		return false;
 	}
 	
 	
@@ -88,22 +84,7 @@ public class Topete extends Animal{
 		return "Topo: "+super.toString();
 	}
 	
-	public static void main(String[] args) {
-		Topete t1 = new Topete(TipoTopo.PINCHO);			
-		System.out.println("Posicion X del topete: "+t1.getPosX());
-		try {
-			t1.setPosX(9);
-		} catch (FueraDeCuadricula e) {
-			System.out.println("Fuera de la cuadricula");
-			e.printStackTrace();
-		}
-		try {
-			t1.setPosX(2);
-		} catch (FueraDeCuadricula e) {
-			System.out.println("Fuera de la cuadricula");
-			e.printStackTrace();
-		}
-		System.out.println(t1);
+	public static void main(String[] args) {	
 	}
 
 }

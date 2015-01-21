@@ -24,6 +24,9 @@ public class VentanaPrincipalDos {
 	final int Y_EJE_DOS = 336;
 	final int Y_EJE_TRES = 530;
 	final int Y_EJE_CUATRO = 710;
+	
+	final int MAX_TOPOS_PERDIDOS = 3;
+	final int TIEMPO_FUERA_TOPO = 3; //Tiempo en segundos
 
 
 	static JFrame miVentana;
@@ -301,12 +304,12 @@ public class VentanaPrincipalDos {
 					for (int j = 0; j < arrayAnimales[i].length; j++) {
 						// Si el topo está más tiempo del que puede estar fuera
 						if( getArrayAnimales()[i][j].getFechaCreacion() != 0 ){
-							if( System.currentTimeMillis() - getArrayAnimales()[i][j].getFechaCreacion() >= 3000){
+							if( System.currentTimeMillis() - getArrayAnimales()[i][j].getFechaCreacion() >= TIEMPO_FUERA_TOPO*1000){
 								quitaAnimal( i, j ); // Quitamos el topo
 								getArrayAnimales()[i][j].setFechaCreacion(0); // Ponemos la fecha de creacion a 0
 								// Sumamos uno a los eliminados si son menos de dos
 								if(!(getArrayAnimales()[i][j] instanceof Gatete)){
-									if (eliminados < 200 ) 
+									if (eliminados < MAX_TOPOS_PERDIDOS ) 
 										eliminados++;
 									else 
 										acaba();
@@ -320,7 +323,7 @@ public class VentanaPrincipalDos {
 			}
 				nombreJugador = 
 						JOptionPane.showInputDialog(null,
-								"Fin del Juego. Tu puntuacion final ha sido de "+VentanaPrincipal.getVentana().puntuacion+". Introduce el nombre del jugador:",
+								"Fin del Juego. Tu puntuacion final ha sido de "+puntuacion+". Introduce el nombre del jugador:",
 								"Game Over",
 								JOptionPane.INFORMATION_MESSAGE);
 				System.exit(0);			
@@ -337,7 +340,7 @@ public class VentanaPrincipalDos {
 
 				}
 				Statement stmt = con.createStatement();
-				String string = "INSERT INTO TABLA VALUES ('"+nombreJugador+"', "+VentanaPrincipal.getVentana().puntuacion+")";
+				String string = "INSERT INTO TABLA VALUES ('"+nombreJugador+"', "+puntuacion+")";
 				stmt.executeUpdate(string);
 				stmt.close();
 				con.close();
