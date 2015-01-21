@@ -80,6 +80,7 @@ public class Topete extends Animal{
 	 * @return devuelve true si el topo es un topo pincho y false si no lo es
 	 */
 	public boolean pegaTopo() {
+		if(isFuera())
 		vidas--;
 		return false;
 	}

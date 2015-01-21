@@ -125,32 +125,18 @@ public class VentanaPrincipalDos {
 									miVentana.setCursor(c1);
 									((Topete) arrayAnimales[a][b]).pegaTopo();
 
-									if (((Topete) arrayAnimales[a][b])
-											.getVidas() == 0) {
+									if (((Topete) arrayAnimales[a][b]).getVidas() == 0 && getArrayAnimales()[a][b].isFuera() ) {
 										miHilo3.quitaAnimal(a, b);
-										getArrayAnimales()[a][b]
-												.setFechaCreacion(0); // Ponemos
-																		// la
-																		// fecha
-																		// de
-																		// creacion
-																		// a 0
-										puntuacion += ((Topete) arrayAnimales[a][b])
-												.getPuntos();
-										lPuntuacion.setText("Puntuación: "
-												+ puntuacion);
-										if (((Topete) arrayAnimales[a][b])
-												.getTipo() == TipoTopo.NORMAL)
-											((Topete) arrayAnimales[a][b])
-													.setVidas(1);
-										if (((Topete) arrayAnimales[a][b])
-												.getTipo() == TipoTopo.CASCO)
-											((Topete) arrayAnimales[a][b])
-													.setVidas(2);
-										if (((Topete) arrayAnimales[a][b])
-												.getTipo() == TipoTopo.JUGGERNAUT)
-											((Topete) arrayAnimales[a][b])
-													.setVidas(3);
+										getArrayAnimales()[a][b].setFuera(false);
+										getArrayAnimales()[a][b].setFechaCreacion(0); // Ponemos la fecha de creacion a 0
+										puntuacion += ((Topete) arrayAnimales[a][b]).getPuntos();
+										lPuntuacion.setText("Puntuación: "+ puntuacion);
+										if (((Topete) arrayAnimales[a][b]).getTipo() == TipoTopo.NORMAL)
+											((Topete) arrayAnimales[a][b]).setVidas(1);
+										if (((Topete) arrayAnimales[a][b]).getTipo() == TipoTopo.CASCO)
+											((Topete) arrayAnimales[a][b]).setVidas(2);
+										if (((Topete) arrayAnimales[a][b]).getTipo() == TipoTopo.JUGGERNAUT)
+											((Topete) arrayAnimales[a][b]).setVidas(3);
 
 									}
 								}
